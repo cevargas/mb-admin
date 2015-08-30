@@ -1,0 +1,6 @@
+/* bootstrap hack */
+
+.radio label, .checkbox label {
+	padding-left:0 !important;
+}
+
