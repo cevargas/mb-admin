@@ -20,7 +20,7 @@ class Login extends CI_Controller {
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		
-		$this->load->model('Login_model');
+		$this->load->model('Usuarios_model');
 		
 		//se tiver usuario logado, redireciona para dashboard
 		if($this->session->has_userdata('logged_in') === true) {
@@ -54,7 +54,7 @@ class Login extends CI_Controller {
 
 		try {
 			//consulta no banco de dados se o usuario existe e se esta ativo	
-			$usuario = $this->Login_model->checkLogin($email, $this->input->post('senha', true));
+			$usuario = $this->Usuarios_model->checkLogin($email, $this->input->post('senha', true));
 								   
 		} catch(Exception $e){
 			log_message('error', $e->getMessage());

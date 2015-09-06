@@ -47,9 +47,6 @@
             	 <button type="submit" class="btn btn-primary">Salvar</button>
                  <a href="<?php echo base_url()?>admin/grupos" class="btn btn-white ">Voltar</a>
             </div>
-        </div>
-
-	</form>
-    
+        </div>    
     <?php echo form_close();?>
 </div>

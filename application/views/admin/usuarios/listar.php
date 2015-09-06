@@ -40,12 +40,13 @@
                                 data-toggle="tooltip" data-placement="top" title="Editar">
                             		<i class="fa fa-wrench"></i>
                         </a>
-                        
+                        <?php if($usuarios->id != $this->session->userdata('usuario_id')) :?>
                         <a href="<?php echo base_url()?>admin/usuarios/excluir/<?php echo $usuarios->id;?>" 
                                 class="btn btn-info btn-bitbucket btn-xs" 
                                 data-toggle="tooltip" data-placement="top" title="Excluir">
                                     <i class="fa fa-trash"></i>
                         </a>
+                        <?php endif;?>
                     </td>
                 </tr>
              <?php

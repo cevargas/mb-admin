@@ -91,18 +91,35 @@ class Usuarios extends CI_Controller {
 		$this->form_validation->set_rules('nome', 'Nome', 'trim|required');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 		$this->form_validation->set_rules('grupo', 'Grupo', 'trim|required');
-		$this->form_validation->set_rules('senha', 'Senha', 'trim|required');
-		
-		//criptografa a senha
-		$senha = $this->Usuarios_model->cryptPass($this->input->post('email', true), $this->input->post('senha', true));
+	
+		//validacao e teste da senha no cadastro
+		if($this->input->post('alterar_senha', true) == 0 and !$this->input->post('id')) {
+			$this->form_validation->set_rules('senha', 'Senha', 'trim|required');
+			$this->form_validation->set_rules('conf_senha', 'Confirmação da Senha', 'required|matches[senha]');
+			
+			//criptografa a senha
+			$senha = $this->Usuarios_model->cryptPass($this->input->post('email', true), $this->input->post('senha', true));
+		}		
+		//validacao e testa da senha na alteracao do cadastro
+		elseif($this->input->post('alterar_senha', true) == 1 and $this->input->post('id')) {
+			$this->form_validation->set_rules('senha_atual', 'Senha Atual', 'trim|required|callback_checkSenhaAtual');
+			$this->form_validation->set_rules('nova_senha', 'Nova Senha', 'trim|required');
+			$this->form_validation->set_rules('conf_nova_senha', 'Confirmação da Nova Senha', 'trim|required|matches[nova_senha]');
+			
+			//criptografa a senha
+			$senha = $this->Usuarios_model->cryptPass($this->input->post('email', true), $this->input->post('nova_senha', true));
+		}
 		
 		$data = array(
 		   'nome' => $this->input->post('nome', true),
 		   'email' => $this->input->post('email', true),
 		   'id_grupo' => $this->input->post('grupo', true),
-		   'senha' => $senha,
 		   'status' => ($this->input->post('status', true)) ? $this->input->post('status', true) : 0,
 		);
+		
+		if($senha) {
+			$data['senha'] = $senha;
+		}
 		
 		//editar
 		if(trim(is_numeric($this->input->post('id')))) {
@@ -191,6 +208,29 @@ class Usuarios extends CI_Controller {
 		else {
 			$this->set_error();	
 		}
+	}
+	
+	//verificacao da senha atual
+	public function checkSenhaAtual($senha) {
+
+		try {
+			
+			$email = $this->input->post('email', true);
+			
+			$senha = $this->Usuarios_model->cryptPass($email, $senha);				
+			$checksenha = $this->Usuarios_model->getUsuarioCheckSenha($email, $senha);
+
+			if($checksenha) {
+				return true;
+			}
+			else {
+				$this->form_validation->set_message('checkSenhaAtual', 'Senha atual inválida!');
+				return false;
+			}
+								   
+		} catch(Exception $e){
+			log_message('error', $e->getMessage());
+        }
 	}
 	
 	public function set_success($mensagem = NULL) {

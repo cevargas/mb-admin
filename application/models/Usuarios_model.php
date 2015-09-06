@@ -7,6 +7,27 @@ class Usuarios_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	public function checkLogin($email, $senha) {
+		
+		//criptografa a senha	
+		$senha = $this->cryptPass($email, $senha);
+		
+		$this->db->select('usuarios.nome AS usuarioNome,
+							 grupos.nome AS grupoNome, 
+							 usuarios.id AS usuarioId, 
+							 grupos.id AS grupoId');
+							 
+		$this->db->from('usuarios');
+		$this->db->join('grupos', 'usuarios.id_grupo = grupos.id');
+		$this->db->where('usuarios.email', $email);
+		$this->db->where('usuarios.senha', $senha);
+		$this->db->where('usuarios.status', 1);
+		$this->db->where('grupos.status', 1);
+		
+		$query = $this->db->get();
+		return $query->row();
+	}   
+	
 	public function getList() {
 		
 		$this->db->select('usuarios.*, grupos.nome AS grupoNome');
@@ -42,6 +63,18 @@ class Usuarios_model extends CI_Model {
 		
 		return $result;
 	} 
+	
+	public function getUsuarioCheckSenha($email, $senha) {
+		
+		$this->db->select('usuarios.id');
+		$this->db->from('usuarios');	
+		$this->db->where('usuarios.email', $email);
+		$this->db->where('usuarios.senha', $senha);
+		$query = $this->db->get();
+		$result = $query->row();	
+		
+		return $result;
+	}
 	
 	public function countUsuariosByGrupo($grupoId) {
 		
@@ -100,6 +133,5 @@ class Usuarios_model extends CI_Model {
 	
 	public function cryptPass($email, $senha){
 		return hash('sha256', $senha . $email);
-	}
-	
+	}	
 }

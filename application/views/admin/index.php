@@ -21,10 +21,16 @@
     
     <!-- iCheck -->
     <link href="<?php echo base_url()?>public/css/plugins/iCheck/custom.css" rel="stylesheet">
+    
+    <!-- Switchery -->
+    <link href="<?php echo base_url()?>public/css/plugins/switchery/switchery.css" rel="stylesheet">
 
+	<!-- Inspinia -->
     <link href="<?php echo base_url()?>public/css/animate.css" rel="stylesheet">
     <link href="<?php echo base_url()?>public/css/style.css" rel="stylesheet">
-    <link href="<?php echo base_url()?>public/css/admin.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="<?php echo base_url()?>public/admin/css/styles.css" rel="stylesheet">
  
 </head>
 
@@ -47,7 +53,7 @@
                                 </span> 
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a href="<?php echo base_url()?>admin/usuarios/edit">Perfil</a></li>
+                                <li><a href="<?php echo base_url()?>admin/usuarios/editar/<?php echo $this->session->userdata('usuario_id');?>">Perfil</a></li>
                                 <li><a href="<?php echo base_url()?>admin/logout">Sair</a></li>
                             </ul>
                         </div>
@@ -146,10 +152,6 @@
     <script src="<?php echo base_url()?>public/js/plugins/peity/jquery.peity.min.js"></script>
     <script src="<?php echo base_url()?>public/js/demo/peity-demo.js"></script>
 
-    <!-- Custom and plugin javascript -->
-    <script src="<?php echo base_url()?>public/js/inspinia.js"></script>
-    <script src="<?php echo base_url()?>public/js/plugins/pace/pace.min.js"></script>
-
     <!-- jQuery UI DA PROBLEMA COM O TOOLTIP ****************
     <script src="<?php echo base_url()?>public/js/plugins/jquery-ui/jquery-ui.min.js"></script>-->
 
@@ -170,9 +172,26 @@
     
     <!-- iCheck -->
     <script src="<?php echo base_url()?>public/js/plugins/iCheck/icheck.min.js"></script>
+    
+    <!-- Switchery -->
+    <script src="<?php echo base_url()?>public/js/plugins/switchery/switchery.js"></script>
+    
+    <!-- Jquery Validate -->
+    <script src="<?php echo base_url()?>public/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="<?php echo base_url()?>public/js/plugins/validate/additional-methods.min.js"></script>
+    <script src="<?php echo base_url()?>public/js/plugins/validate/localization/messages_pt_BR.min.js"></script>  
+    
+    <!-- Custom and plugin javascript -->
+    <script src="<?php echo base_url()?>public/js/inspinia.js"></script>
+    <script src="<?php echo base_url()?>public/js/plugins/pace/pace.min.js"></script>
+    
+    <!-- Custom  -->
+    <script src="<?php echo base_url()?>public/admin/js/scripts.js"></script>
 
     <script>
         $(document).ready(function() {
+			
+			APP.init();
 			
 			<?php 
 				if($this->session->flashdata('error_msg') != NULL) :
