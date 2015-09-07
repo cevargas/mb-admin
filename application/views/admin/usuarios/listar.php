@@ -1,4 +1,4 @@
-﻿<div class="ibox float-e-margins">
+<div class="ibox float-e-margins">
     <div class="ibox-title">
         <h5>USUÁRIOS </h5>        
         <div class="pull-right">
@@ -10,55 +10,81 @@
         </div>
     </div>
     
-    <div class="ibox-content">    
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Grupo</th>
-                <th>Status</th>
-                <th>Opções</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-			foreach($listar_usuarios as $usuarios):
-            ?>
+    <div class="ibox-content">  
+   		<div class="row">
+            <div class="col-sm-4 pull-right">
+            
+            	<?php echo form_open( base_url( 'admin/usuarios/pesquisar' ), array( 'id' => 'form-pesquisa', 'method' => 'post' ) ); ?>
+                <div class="input-group">
+                    <input type="text" name="termo" placeholder="Digite um termo" class="input-sm form-control" 
+                    	value="<?php if(isset($termo)) echo $termo;?>">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-sm btn-primary">Pesquisar</button> 
+                    </span>
+                </div>
+                <?php echo form_close();?>
+            </div>
+    	</div>
+    	<div class="table-responsive"> 
+            <table class="table table-striped">
+                <thead>
                 <tr>
-                    <td><?php echo $usuarios->id;?></td>
-                    <td><?php echo $usuarios->nome?></td>
-                    <td><?php echo $usuarios->email?></td>
-                    <td><?php echo $usuarios->grupoNome?></td>
-                    <td>
-						<?php echo ($usuarios->status == 1) ? '<i class="fa fa-check text-navy"></i> Ativo' : '<i class="fa fa-check text-primary"></i> Inativo';?>
-                    </td>
-                    <td>                    	
-                    	<a href="<?php echo base_url()?>admin/usuarios/editar/<?php echo $usuarios->id;?>" 
-                        		class="btn btn-info btn-bitbucket btn-xs tooltips"
-                                data-placement="top" title="Editar">
-                            		<i class="fa fa-wrench"></i>
-                        </a>
-                        <?php /*echo base_url()?>admin/usuarios/excluir/<?php echo $usuarios->id; */?>
-                        <?php if($usuarios->id != $this->session->userdata('usuario_id')) :?>
-                        <button type="button" class="btn btn-info btn-bitbucket btn-xs tooltips modalConfirm" 
-                                data-toggle="modal" data-placement="top" title="Excluir" 
-                                data-id="<?php echo $usuarios->id;?>" data-value="<?php echo $usuarios->nome?>"
-                                data-url="<?php echo base_url()?>admin/usuarios/excluir/<?php echo $usuarios->id;?>"
-                                data-target="#modal-confirm">
-                                    <i class="fa fa-trash"></i>
-                        </button>
-                        <?php endif;?>
-                    </td>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Grupo</th>
+                    <th>Status</th>
+                    <th>Opções</th>
                 </tr>
-             <?php
-			 endforeach;
-			 ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php
+                foreach($listar_usuarios as $usuarios):
+                ?>
+                    <tr>
+                        <td><?php echo $usuarios->id;?></td>
+                        <td><?php echo $usuarios->nome?></td>
+                        <td><?php echo $usuarios->email?></td>
+                        <td><?php echo $usuarios->grupoNome?></td>
+                        <td>
+                            <?php echo ($usuarios->status == 1) ? '<i class="fa fa-check text-navy"></i> Ativo' : '<i class="fa fa-check text-primary"></i> Inativo';?>
+                        </td>
+                        <td>                    	
+                            <a href="<?php echo base_url()?>admin/usuarios/editar/<?php echo $usuarios->id;?>" 
+                                    class="btn btn-info btn-bitbucket btn-xs tooltips"
+                                    data-placement="top" title="Editar">
+                                        <i class="fa fa-wrench"></i>
+                            </a>
+                            <?php if($usuarios->id != $this->session->userdata('usuario_id')) :?>
+                            <button type="button" class="btn btn-info btn-bitbucket btn-xs tooltips modalConfirm" 
+                                    data-toggle="modal" data-placement="top" title="Excluir" 
+                                    data-id="<?php echo $usuarios->id;?>" data-value="<?php echo $usuarios->nome?>"
+                                    data-url="<?php echo base_url()?>admin/usuarios/excluir/<?php echo $usuarios->id;?>"
+                                    data-target="#modal-confirm">
+                                        <i class="fa fa-trash"></i>
+                            </button>
+                            <?php endif;?>
+                        </td>
+                    </tr>
+                 <?php
+                  	endforeach;
+				 
+                  	if(count($listar_usuarios) == 0):
+                 ?>                 
+                  <tr>
+                        <td colspan="6">Nenhum informação para exibir.</td>
+                  </tr>      
+                 <?php endif;?>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <?php echo $paginacao; ?>
+            </div>
+        </div>
     </div>
-    
+
     <div class="modal inmodal" id="modal-confirm" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">

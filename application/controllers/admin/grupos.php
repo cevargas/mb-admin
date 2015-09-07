@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -26,11 +26,11 @@ class Grupos extends CI_Controller {
 		if($this->acl->has_perm() == false) {
 			$this->set_error('Você não possui permissão para acessar '. strtoupper($this->uri->segment(2, 0)));
 		}
-		
-		$this->load->helper('form');
-		$this->load->library('form_validation');
+	
 		$this->load->model('Grupos_model');
 		$this->load->model('Usuarios_model');
+		
+		$this->load->library('pagination');
 	}	
 	
 	public function index() {		
@@ -38,10 +38,48 @@ class Grupos extends CI_Controller {
 	}
 	
 	public function listar() {
-
-		$grupos = $this->Grupos_model->getList();
 		
 		$data = array();
+		
+		//paginacao
+		$config['base_url'] = base_url()."admin/grupos/index";
+		$config['total_rows'] = $this->Grupos_model->countAll();
+		$config['uri_segment'] = 4;
+		
+		$this->pagination->initialize($config); 	
+		
+		$data['paginacao'] = $this->pagination->create_links();
+		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+
+		$grupos = $this->Grupos_model->getList($this->config->item('per_page'), $data['page']);
+		
+		$data['programa'] = 'Grupos';
+		$data['acao'] = 'Lista de Grupos';
+        $data['view'] = 'admin/grupos/listar'; 
+		$data['listar_grupos'] = $grupos;
+		
+		$this->load->view('admin/index', $data);
+	}
+	
+	public function pesquisar() {
+		
+		$data = array();
+		
+		$termo = ($this->input->post('termo')) ? $this->input->post('termo') : $this->uri->segment(4);
+		$data['termo'] = $termo;
+
+		//paginacao
+		$config['base_url'] = base_url()."admin/grupos/pesquisar/".$termo;
+		$config['total_rows'] = $this->Grupos_model->getPesquisaNumRows($termo);
+		$config['uri_segment'] = 5;
+		
+		$this->pagination->initialize($config); 	
+		
+		$data['paginacao'] = $this->pagination->create_links();
+		$data['page'] = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+		
+		$grupos = $this->Grupos_model->getPesquisa($this->config->item('per_page'), $data['page'], $termo);
+		
 		$data['programa'] = 'Grupos';
 		$data['acao'] = 'Lista de Grupos';
         $data['view'] = 'admin/grupos/listar'; 

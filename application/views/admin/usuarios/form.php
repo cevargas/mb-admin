@@ -18,18 +18,21 @@
        <div class="form-group">
         	<label class="col-sm-2 control-label">Grupo</label>
             <div class="col-sm-6">
-  
+   
 			   <?php foreach($listar_grupo as $grupos) :
 			   
 			   			$check = '';
+						$disabled = '';
 						if(isset($usuario))
 			   				if($grupos->id == $usuario->id_grupo) 
 								$check = 'checked';
-						else								
+							if($grupos->id == $this->session->userdata('grupo_id'))
+								$disabled = 'disabled';
+						else						
 			   ?>
                     <div class="radio i-checks">
                         <label for="grupo">                         
-                        	<input type="radio" <?php echo $check;?> value="<?php echo $grupos->id?>" name="grupo"> 
+                        	<input type="radio" <?php echo $check;?> <?php echo $disabled;?> value="<?php echo $grupos->id?>" name="grupo"> 
                             <?php echo $grupos->nome?>
                         </label>
                     </div>

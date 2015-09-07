@@ -7,6 +7,10 @@ class Usuarios_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	public function countAll(){		
+		return $this->db->count_all('usuarios');	
+	}
+	
 	public function checkLogin($email, $senha) {
 		
 		$this->db->select('usuarios.nome AS usuarioNome,
@@ -31,14 +35,45 @@ class Usuarios_model extends CI_Model {
 		return false;
 	}   
 	
-	public function getList() {
+	public function getList($limit=0, $offset=20) {
 		
 		$this->db->select('usuarios.*, grupos.nome AS grupoNome');
 		$this->db->from('usuarios');
 		$this->db->order_by('nome', 'ASC');
 		$this->db->join('grupos', 'grupos.id = usuarios.id_grupo');
+		$this->db->limit($limit, $offset);
 		$query = $this->db->get();
+		
 		$result = $query->result();		
+		
+		return $result;
+	}   
+	
+	public function getPesquisa($limit=0, $offset=20, $termo) {
+
+		$this->db->select('usuarios.*, grupos.nome AS grupoNome');
+		$this->db->from('usuarios');
+		$this->db->join('grupos', 'grupos.id = usuarios.id_grupo');
+		$this->db->like('usuarios.nome', $termo);
+		$this->db->or_like('usuarios.email',$termo);
+		$this->db->limit($limit, $offset);
+		$query = $this->db->get();
+		
+		$result = $query->result();		
+		
+		return $result;
+	} 
+	
+	public function getPesquisaNumRows($termo) {
+
+		$this->db->select('usuarios.*, grupos.nome AS grupoNome');
+		$this->db->from('usuarios');
+		$this->db->join('grupos', 'grupos.id = usuarios.id_grupo');
+		$this->db->like('usuarios.nome', $termo);
+		$this->db->or_like('usuarios.email',$termo);
+		$query = $this->db->get();
+		
+		$result = $query->num_rows();		
 		
 		return $result;
 	}   

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -10,6 +10,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 | controller/admin/usuarios
 | 
+| habilita profiler 
+| $this->output->enable_profiler(TRUE);
 */
 
 class Usuarios extends CI_Controller {
@@ -27,9 +29,7 @@ class Usuarios extends CI_Controller {
 			$this->session->set_flashdata('error_msg', 'Você não possui permissão para acessar '. strtoupper($this->uri->segment(2, 0)));
 			redirect('admin/dashboard', 'refresh');
 		}
-		
-		$this->load->helper('form');
-		$this->load->library('form_validation');
+	
 		$this->load->model('Grupos_model');
 		$this->load->model('Usuarios_model');
 	}	
@@ -39,8 +39,47 @@ class Usuarios extends CI_Controller {
 	}
 	
 	public function listar() {
+		
+		$data = array();
 
-		$usuarios = $this->Usuarios_model->getList();
+		//paginacao
+		$config['base_url'] = base_url()."admin/usuarios/index";
+		$config['total_rows'] = $this->Usuarios_model->countAll();
+		$config['uri_segment'] = 4;
+		
+		$this->pagination->initialize($config); 	
+		
+		$data['paginacao'] = $this->pagination->create_links();		
+		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+
+		$usuarios = $this->Usuarios_model->getList($this->config->item('per_page'), $data['page']);
+				
+		$data['programa'] = 'Usuários';
+		$data['acao'] = 'Lista de Usuários';
+		$data['listar_usuarios'] = $usuarios;
+        $data['view'] = 'admin/usuarios/listar'; 
+	
+		$this->load->view('admin/index', $data);
+	}
+	
+	public function pesquisar() {
+		
+		$data = array();
+		
+		$termo = ($this->input->post('termo')) ? $this->input->post('termo') : $this->uri->segment(4);
+		$data['termo'] = $termo;
+
+		//paginacao
+		$config['base_url'] = base_url()."admin/usuarios/pesquisar/".$termo;
+		$config['total_rows'] = $this->Usuarios_model->getPesquisaNumRows($termo);
+		$config['uri_segment'] = 5;
+		
+		$this->pagination->initialize($config); 	
+		
+		$data['paginacao'] = $this->pagination->create_links();
+		$data['page'] = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+		
+		$usuarios = $this->Usuarios_model->getPesquisa($this->config->item('per_page'), $data['page'], $termo);
 		
 		$data['programa'] = 'Usuários';
 		$data['acao'] = 'Lista de Usuários';
@@ -131,7 +170,7 @@ class Usuarios extends CI_Controller {
 			if($usuario) {
 				
 				//se o email for diferente do que esta armazenado para o usuario
-				//significa que ele foi alterar, entao testa se o novo email
+				//significa que ele foi alterado, entao testa se o novo email
 				//esta cadastrado
 				if($usuario->email != $this->input->post('email', true)) {
 					

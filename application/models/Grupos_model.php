@@ -7,16 +7,46 @@ class Grupos_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	public function getList() {
+	public function countAll(){		
+		return $this->db->count_all('grupos');	
+	}
+	
+	public function getList($limit=0, $offset=20) {
 		
 		$this->db->select('*');
 		$this->db->from('grupos');
 		$this->db->order_by('nome', 'ASC');
+		$this->db->limit($limit, $offset);
 		$query = $this->db->get();
 		$result = $query->result();		
 		
 		return $result;
 	}   
+	
+	public function getPesquisa($limit=0, $offset=20, $termo) {
+
+		$this->db->select('*');
+		$this->db->from('grupos');
+		$this->db->like('nome', $termo);
+		$this->db->limit($limit, $offset);
+		$query = $this->db->get();
+		
+		$result = $query->result();		
+		
+		return $result;
+	} 
+	
+	public function getPesquisaNumRows($termo) {
+
+		$this->db->select('*');
+		$this->db->from('grupos');
+		$this->db->like('grupos.nome', $termo);
+		$query = $this->db->get();
+		
+		$result = $query->num_rows();		
+		
+		return $result;
+	}  
 	
 	public function getGrupo($id) {
 		
