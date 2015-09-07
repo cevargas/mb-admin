@@ -25,17 +25,13 @@
                 	placeholder="Descrição" value="<?php echo (isset($grupo)) ? $grupo->descricao : set_value('descricao');?>">
             </div>
         </div>
-        
+
 		<div class="form-group">
         	<label class="col-sm-2 control-label">Ativo</label>
-			<div class="col-sm-6">            	
-            	<label class="checkbox-inline i-checks">
-                	<input type="checkbox" <?php echo (isset($grupo) and $grupo->restricao == 1) ? 'disabled' : '';?>
-                        value="1" 
-                        id="status"
-                        name="status"
-                         <?php echo (isset($grupo) and $grupo->status == 1) ? "checked" : "";?>>
-                </label>               
+			<div class="col-sm-6">             
+            	 <input type="checkbox" class="js-switch" value="1" id="status" name="status" 
+					<?php echo (isset($grupo) and $grupo->restricao == 1) ? "disabled" : "";?>
+					<?php echo (isset($grupo) and $grupo->status == 1) ? "checked" : "";?>>  
             </div>
         </div>
         
@@ -43,9 +39,9 @@
         
         <div class="form-group">        	
             <div class="col-sm-offset-2 col-sm-8">    
-            	 <input type="hidden" name="id" value="<?php echo (isset($grupo)) ? $grupo->id : NULL;?>" />         
+            	 <input type="hidden" name="id" value="<?php echo (isset($grupo)) ? $grupo->id : NULL;?>" />
+                 <a href="<?php echo base_url()?>admin/grupos" class="btn btn-white ">Voltar</a>    
             	 <button type="submit" class="btn btn-primary">Salvar</button>
-                 <a href="<?php echo base_url()?>admin/grupos" class="btn btn-white ">Voltar</a>
             </div>
         </div>    
     <?php echo form_close();?>

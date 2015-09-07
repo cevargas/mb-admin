@@ -9,23 +9,26 @@ class Usuarios_model extends CI_Model {
 	
 	public function checkLogin($email, $senha) {
 		
-		//criptografa a senha	
-		$senha = $this->cryptPass($email, $senha);
-		
 		$this->db->select('usuarios.nome AS usuarioNome,
 							 grupos.nome AS grupoNome, 
+							 usuarios.senha AS senha,
 							 usuarios.id AS usuarioId, 
-							 grupos.id AS grupoId');
-							 
+							 grupos.id AS grupoId');				 
 		$this->db->from('usuarios');
 		$this->db->join('grupos', 'usuarios.id_grupo = grupos.id');
 		$this->db->where('usuarios.email', $email);
-		$this->db->where('usuarios.senha', $senha);
 		$this->db->where('usuarios.status', 1);
 		$this->db->where('grupos.status', 1);
-		
 		$query = $this->db->get();
-		return $query->row();
+		$result = $query->row();
+		
+		$hash = $result->senha;		
+		$check = $this->passVerify($senha, $hash);
+
+		if($check === true)
+			return $result;
+
+		return false;
 	}   
 	
 	public function getList() {
@@ -42,7 +45,7 @@ class Usuarios_model extends CI_Model {
 	
 	public function getUsuario($id) {
 		
-		$this->db->select('usuarios.*, grupos.id AS grupoId, grupos.nome AS grupoNome');
+		$this->db->select('usuarios.*, grupos.id AS grupoId, grupos.nome AS grupoNome, grupos.restricao AS restricao');
 		$this->db->from('usuarios');	
 		$this->db->where('usuarios.id', $id);
 		$this->db->join('grupos', 'grupos.id = usuarios.id_grupo');
@@ -66,10 +69,9 @@ class Usuarios_model extends CI_Model {
 	
 	public function getUsuarioCheckSenha($email, $senha) {
 		
-		$this->db->select('usuarios.id');
+		$this->db->select('usuarios.senha');
 		$this->db->from('usuarios');	
 		$this->db->where('usuarios.email', $email);
-		$this->db->where('usuarios.senha', $senha);
 		$query = $this->db->get();
 		$result = $query->row();	
 		
@@ -131,7 +133,17 @@ class Usuarios_model extends CI_Model {
 		}		
 	} 
 	
-	public function cryptPass($email, $senha){
-		return hash('sha256', $senha . $email);
+	public function cryptPass($senha){
+
+		$options = [
+			'cost' => 8,
+			'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+		];
+		
+		return password_hash($senha, PASSWORD_BCRYPT, $options);
+	}
+	
+	public function passVerify($senha, $hash) {
+		return password_verify($senha, $hash);	
 	}	
 }

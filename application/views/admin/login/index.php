@@ -11,11 +11,11 @@
 
     <title>Moblin Admin</title>
 
-    <link href="<?php echo base_url()?>public/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url()?>public/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>public/template/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>public/template/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <link href="<?php echo base_url()?>public/css/animate.css" rel="stylesheet">
-    <link href="<?php echo base_url()?>public/css/style.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>public/template/css/animate.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>public/template/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -31,8 +31,8 @@
         </div>
     </div>
 
-    <script src="<?php echo base_url()?>public/js/jquery-2.1.1.js"></script>
-    <script src="<?php echo base_url()?>public/js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/jquery-2.1.1.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/bootstrap.min.js"></script>
 
 </body>
 </html>

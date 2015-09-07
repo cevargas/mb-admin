@@ -1,6 +1,20 @@
 
 APP = {
 	
+	//Modal confirm
+	confirmModal: function(){
+		$('#modal-confirm').on('show.bs.modal', function(e) {
+			var url = $(e.relatedTarget).data('url');
+			var value = $(e.relatedTarget).data('value')
+			$(e.currentTarget).find("#paramValue").html( value );
+			$(e.currentTarget).find("#linkConfirm").attr('href', url);
+		});
+		
+		$('#modal-confirm').on('hidden.bs.modal', function () {
+			$(this).removeData();
+		});
+	},
+	
 	//iCheck
 	iCheck: function(){
 		$('input[type="radio"]').on('ifChecked', function(event){
@@ -41,8 +55,8 @@ APP = {
 				grupo: "required",
 				nome: "required",
 				email: {
-				  required: true,
-				  email: true
+					required: true,
+					email: true
 				},
 				senha: {
 					required: {
@@ -125,10 +139,42 @@ APP = {
 		});
 	},
 	
+	//form validacao form grupos
+	validateGrupos: function(){
+		
+		$("#form-grupos").validate({
+			errorElement: 'label',
+			errorClass: 'error',
+			focusInvalid: false,
+			ignore: "",
+			rules: {
+				descricao: "required",
+				nome: "required"	
+			},
+			messages: {
+				descricao: "Informe uma descrição para o Grupo",
+				nome: "Informe um Nome para o Grupo"
+			},
+			errorPlacement: function (error, element) { 				
+				if (element.parent().parent().parent(".i-checks").size() > 0) {
+					error.appendTo(element.parent().parent().parent().parent("div:first"));
+				}
+				else {
+					error.insertAfter(element);
+				}
+			},
+			submitHandler: function(form) {	
+				form.submit();
+			}
+		});
+	},
+	
 	init: function(){
 		this.jsSwitch();
 		this.validateUsuarios();
+		this.validateGrupos();
 		this.iCheck();
 		this.altPass();
+		this.confirmModal();
 	}
 };

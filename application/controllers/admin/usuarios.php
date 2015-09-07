@@ -64,7 +64,7 @@ class Usuarios extends CI_Controller {
 	
 	public function editar($id = NULL) {
 		
-		if(trim(is_numeric($id))) {
+		if(trim(is_numeric((int)$id))) {
 		
 			$usuario = $this->Usuarios_model->getUsuario($id);			
 			$grupos = $this->Grupos_model->getList();
@@ -98,7 +98,7 @@ class Usuarios extends CI_Controller {
 			$this->form_validation->set_rules('conf_senha', 'Confirmação da Senha', 'required|matches[senha]');
 			
 			//criptografa a senha
-			$senha = $this->Usuarios_model->cryptPass($this->input->post('email', true), $this->input->post('senha', true));
+			$senha = $this->Usuarios_model->cryptPass($this->input->post('senha', true));
 		}		
 		//validacao e testa da senha na alteracao do cadastro
 		elseif($this->input->post('alterar_senha', true) == 1 and $this->input->post('id')) {
@@ -107,8 +107,10 @@ class Usuarios extends CI_Controller {
 			$this->form_validation->set_rules('conf_nova_senha', 'Confirmação da Nova Senha', 'trim|required|matches[nova_senha]');
 			
 			//criptografa a senha
-			$senha = $this->Usuarios_model->cryptPass($this->input->post('email', true), $this->input->post('nova_senha', true));
+			$senha = $this->Usuarios_model->cryptPass($this->input->post('nova_senha', true));
 		}
+		
+		
 		
 		$data = array(
 		   'nome' => $this->input->post('nome', true),
@@ -117,12 +119,12 @@ class Usuarios extends CI_Controller {
 		   'status' => ($this->input->post('status', true)) ? $this->input->post('status', true) : 0,
 		);
 		
-		if($senha) {
+		if(isset($senha)) {
 			$data['senha'] = $senha;
 		}
 		
 		//editar
-		if(trim(is_numeric($this->input->post('id')))) {
+		if(trim($this->input->post('id'))) {
 			
 			$usuario = $this->Usuarios_model->getUsuario($this->input->post('id', true));
 			
@@ -133,10 +135,10 @@ class Usuarios extends CI_Controller {
 				//esta cadastrado
 				if($usuario->email != $this->input->post('email', true)) {
 					
-					$checkemail = $this->Usuarios_model->getUsuarioParam('usuarios.email', $this->input->post('email', true));
+					$checkemail = $this->checkEmail($this->input->post('email', true));
 					
 					if($checkemail) {
-						$this->set_error($this->input->post('email', true) .  "não esta disponível!");	
+						$this->set_error("Opss... O email " . $this->input->post('email', true) .  " não esta disponível!");	
 					}				
 				}			
 					
@@ -155,11 +157,12 @@ class Usuarios extends CI_Controller {
 		}
 		else {		
 		
-			if ($this->form_validation->run() == TRUE) {			
-				$checkemail = $this->Usuarios_model->getUsuarioParam('usuarios.email', $this->input->post('email', true));
+			if ($this->form_validation->run() == TRUE) {
+						
+				$checkemail = $this->checkEmail($this->input->post('email', true));
 			
 				if($checkemail) {
-					$this->set_error($this->input->post('email', true) . " não esta disponível!");	
+					$this->set_error("Opss... O email " .$this->input->post('email', true) . " não esta disponível!");	
 				}	
 					
 				$this->Usuarios_model->insert($data);		
@@ -172,33 +175,21 @@ class Usuarios extends CI_Controller {
 		}
 	}
 	
-	public function excluir($id) {		
-		
-		if(trim(is_numeric($id))) {
+	public function excluir($id) {
+
+		if(trim(is_numeric((int)$id))) {
 			
-			$grupo = $this->Grupos_model->getGrupo($id);
+			$usuario = $this->Usuarios_model->getUsuario($id);
 
 			//testa se o grupo existe			
-			if($grupo) {
+			if($usuario) {
 			
-				//testa se o grupo pode ser excluir
-				if($grupo->restricao == 1) {
-					$this->set_error("Grupo " . $grupo->nome . " possui Restrição e não pode ser excluído!");
-				}
-				else if($grupo->status == 1) {
-					$this->set_error("Grupo " . $grupo->nome . " está Ativo e não pode ser excluído!");
+				if($usuario->status == 1) {
+					$this->set_error("Usuário " . $usuario->nome . " está Ativo e não pode ser excluído! Desative-o antes.");
 				}	
-				else {
-					//testa se o grupo tem usuarios vinculados
-					$usuarios = $this->Usuarios_model->countUsuariosByGrupo($id);	
-
-					if($usuarios > 0) {
-						$this->set_error("Grupo " . $grupo->nome . " possui Usuários vinculados e não pode ser excluído!");
-					}						
-					else {				
-						$this->Grupos_model->delete($id);						
-						$this->set_success("Usuário excluído com Sucesso.");	
-					}
+				else {				
+					$this->Usuarios_model->delete($id);						
+					$this->set_success("Usuário excluído com Sucesso.");
 				}
 			}
 			else {
@@ -210,23 +201,26 @@ class Usuarios extends CI_Controller {
 		}
 	}
 	
+	//verifica se o email existe..caso ele seja alterado ou incluido quando cadastrar um usuario
+	function checkEmail($email){		
+		return $this->Usuarios_model->getUsuarioParam('usuarios.email', $this->input->post('email', true));
+	}
+	
 	//verificacao da senha atual
 	public function checkSenhaAtual($senha) {
 
 		try {
 			
 			$email = $this->input->post('email', true);
-			
-			$senha = $this->Usuarios_model->cryptPass($email, $senha);				
-			$checksenha = $this->Usuarios_model->getUsuarioCheckSenha($email, $senha);
+			$hash = $this->Usuarios_model->getUsuarioCheckSenha($email, $senha);
+			$checksenha = $this->Usuarios_model->passVerify($senha, $hash->senha);
 
-			if($checksenha) {
-				return true;
-			}
-			else {
+			if($checksenha === false) {			
 				$this->form_validation->set_message('checkSenhaAtual', 'Senha atual inválida!');
 				return false;
 			}
+			
+			return true;
 								   
 		} catch(Exception $e){
 			log_message('error', $e->getMessage());

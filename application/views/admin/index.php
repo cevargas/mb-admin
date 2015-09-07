@@ -10,24 +10,24 @@
 
     <title>Moblin Admin</title>
     
-    <link href="<?php echo base_url()?>public/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url()?>public/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>public/template/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>public/template/font-awesome/css/font-awesome.css" rel="stylesheet">
 
     <!-- Toastr style -->
-    <link href="<?php echo base_url()?>public/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>public/template/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     
     <!-- Gritter -->
-    <link href="<?php echo base_url()?>public/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>public/template/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
     
     <!-- iCheck -->
-    <link href="<?php echo base_url()?>public/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>public/template/css/plugins/iCheck/custom.css" rel="stylesheet">
     
     <!-- Switchery -->
-    <link href="<?php echo base_url()?>public/css/plugins/switchery/switchery.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>public/template/css/plugins/switchery/switchery.css" rel="stylesheet">
 
 	<!-- Inspinia -->
-    <link href="<?php echo base_url()?>public/css/animate.css" rel="stylesheet">
-    <link href="<?php echo base_url()?>public/css/style.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>public/template/css/animate.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>public/template/css/style.css" rel="stylesheet">
     
     <!-- Custom CSS -->
     <link href="<?php echo base_url()?>public/admin/css/styles.css" rel="stylesheet">
@@ -42,7 +42,7 @@
                     <li class="nav-header">
                         <div class="dropdown profile-element"> 
                         	<span>
-                           		<img alt="image" class="img-circle" src="<?php echo base_url()?>public/img/small_profile.jpg" />
+                           		<img alt="image" class="img-circle" src="<?php echo base_url()?>public/template/img/small_profile.jpg" />
                             </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear"> 
@@ -136,54 +136,54 @@
 	</div><!-- #wrapper --> 
     
     <!-- Mainly scripts -->
-    <script src="<?php echo base_url()?>public/js/jquery-2.1.1.js"></script>
-    <script src="<?php echo base_url()?>public/js/bootstrap.min.js"></script>
-    <script src="<?php echo base_url()?>public/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="<?php echo base_url()?>public/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/jquery-2.1.1.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- Flot -->
-    <script src="<?php echo base_url()?>public/js/plugins/flot/jquery.flot.js"></script>
-    <script src="<?php echo base_url()?>public/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="<?php echo base_url()?>public/js/plugins/flot/jquery.flot.spline.js"></script>
-    <script src="<?php echo base_url()?>public/js/plugins/flot/jquery.flot.resize.js"></script>
-    <script src="<?php echo base_url()?>public/js/plugins/flot/jquery.flot.pie.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/flot/jquery.flot.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/flot/jquery.flot.spline.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/flot/jquery.flot.pie.js"></script>
 
     <!-- Peity -->
-    <script src="<?php echo base_url()?>public/js/plugins/peity/jquery.peity.min.js"></script>
-    <script src="<?php echo base_url()?>public/js/demo/peity-demo.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/demo/peity-demo.js"></script>
 
     <!-- jQuery UI DA PROBLEMA COM O TOOLTIP ****************
     <script src="<?php echo base_url()?>public/js/plugins/jquery-ui/jquery-ui.min.js"></script>-->
 
     <!-- GITTER -->
-    <script src="<?php echo base_url()?>public/js/plugins/gritter/jquery.gritter.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/gritter/jquery.gritter.min.js"></script>
 
     <!-- Sparkline -->
-    <script src="<?php echo base_url()?>public/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/sparkline/jquery.sparkline.min.js"></script>
 
     <!-- Sparkline demo data  -->
-    <script src="<?php echo base_url()?>public/js/demo/sparkline-demo.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/demo/sparkline-demo.js"></script>
 
     <!-- ChartJS -->
-    <script src="<?php echo base_url()?>public/js/plugins/chartJs/Chart.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/chartJs/Chart.min.js"></script>
 
     <!-- Toastr -->
-    <script src="<?php echo base_url()?>public/js/plugins/toastr/toastr.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/toastr/toastr.min.js"></script>
     
     <!-- iCheck -->
-    <script src="<?php echo base_url()?>public/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/iCheck/icheck.min.js"></script>
     
     <!-- Switchery -->
-    <script src="<?php echo base_url()?>public/js/plugins/switchery/switchery.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/switchery/switchery.js"></script>
     
     <!-- Jquery Validate -->
-    <script src="<?php echo base_url()?>public/js/plugins/validate/jquery.validate.min.js"></script>
-    <script src="<?php echo base_url()?>public/js/plugins/validate/additional-methods.min.js"></script>
-    <script src="<?php echo base_url()?>public/js/plugins/validate/localization/messages_pt_BR.min.js"></script>  
+    <script src="<?php echo base_url()?>public/template/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/validate/additional-methods.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/validate/localization/messages_pt_BR.min.js"></script>  
     
     <!-- Custom and plugin javascript -->
-    <script src="<?php echo base_url()?>public/js/inspinia.js"></script>
-    <script src="<?php echo base_url()?>public/js/plugins/pace/pace.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/inspinia.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/pace/pace.min.js"></script>
     
     <!-- Custom  -->
     <script src="<?php echo base_url()?>public/admin/js/scripts.js"></script>
@@ -201,7 +201,7 @@
 						closeButton: true,
 						progressBar: true,
 						showMethod: 'slideDown',
-						timeOut: 4000
+						timeOut: 6000
 					};
 					toastr.error('<?php echo $this->session->flashdata('error_msg');?>', 'Alerta!');
 	
@@ -219,7 +219,7 @@
 						closeButton: true,
 						progressBar: true,
 						showMethod: 'slideDown',
-						timeOut: 4000
+						timeOut: 6000
 					};
 					toastr.success('<?php echo $this->session->flashdata('success_msg');?>', 'Sucesso!');
 	

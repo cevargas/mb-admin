@@ -9,7 +9,7 @@
 		if(strlen(validation_errors()) > 0):
 		?>
         	<div class="alert alert-danger">	
-				<?php echo validation_errors(); ?>
+				<?php echo validation_errors();?>
             </div>
 		<?php
 		endif;	
@@ -25,8 +25,7 @@
 						if(isset($usuario))
 			   				if($grupos->id == $usuario->id_grupo) 
 								$check = 'checked';
-						else
-								
+						else								
 			   ?>
                     <div class="radio i-checks">
                         <label for="grupo">                         
@@ -121,8 +120,9 @@
 		<div class="form-group">
         	<label class="col-sm-2 control-label">Ativo</label>
 			<div class="col-sm-6">
-                <input type="checkbox" class="js-switch" value="1" id="status" 
-                	name="status" <?php echo (isset($usuario) and $usuario->status == 1) ? "checked" : "";?>>      
+                <input type="checkbox" class="js-switch" value="1" id="status" name="status"
+               		 <?php echo (isset($usuario) and $usuario->status == 1) ? "checked" : "";?>
+                     <?php echo (isset($usuario) and $usuario->id == $this->session->userdata('usuario_id')) ? "disabled" : "";?>>      
             </div>
         </div>
         
@@ -130,9 +130,9 @@
         
         <div class="form-group">        	
             <div class="col-sm-offset-2 col-sm-8">    
-            	 <input type="hidden" name="id" value="<?php echo (isset($usuario)) ? $usuario->id : NULL;?>" />         
-            	 <button type="submit" class="btn btn-primary">Salvar</button>
-                 <a href="<?php echo base_url()?>admin/usuarios" class="btn btn-white ">Voltar</a>
+            	 <input type="hidden" name="id" value="<?php echo (isset($usuario)) ? $usuario->id : NULL;?>" /> 
+                 <a href="<?php echo base_url()?>admin/usuarios" class="btn btn-white ">Voltar</a>        
+            	 <button type="submit" class="btn btn-primary">Salvar</button>                 
             </div>
         </div>   
     <?php echo form_close();?>

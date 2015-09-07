@@ -59,9 +59,9 @@ class Grupos extends CI_Controller {
 		$this->load->view('admin/index', $data);		
 	}
 	
-	public function editar($id = NULL) {
+	public function editar($id) {
 		
-		if(trim(is_numeric($id))) {
+		if(trim(is_numeric((int)$id))) {
 		
 			$grupo = $this->Grupos_model->getGrupo($id);
 			 
@@ -81,10 +81,10 @@ class Grupos extends CI_Controller {
 		}
 	}
 	
-	public function salvar() {	
-	
+	public function salvar() {
+		
 		//editar
-		if(trim(is_numeric($this->input->post('id')))) {
+		if(trim($this->input->post('id'))) {
 
 			$grupo = $this->Grupos_model->getGrupo($this->input->post('id'));
 			
@@ -159,7 +159,7 @@ class Grupos extends CI_Controller {
 	
 	public function excluir($id) {		
 		
-		if(trim(is_numeric($id))) {
+		if(trim(is_numeric((int)$id))) {
 			
 			$grupo = $this->Grupos_model->getGrupo($id);
 

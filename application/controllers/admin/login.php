@@ -53,15 +53,16 @@ class Login extends CI_Controller {
 	public function verificacao_login($email) {
 
 		try {
+
 			//consulta no banco de dados se o usuario existe e se esta ativo	
 			$usuario = $this->Usuarios_model->checkLogin($email, $this->input->post('senha', true));
-								   
+				   
 		} catch(Exception $e){
 			log_message('error', $e->getMessage());
         }
 		
-		//se encontrar o usuario	
-		if(isset($usuario)) {
+		//se encontrar o usuario
+		if(isset($usuario) and $usuario !== false) {
 
 			//seta paramentros de sessao
 			$data_session_set = array('logged_in' => true, 
