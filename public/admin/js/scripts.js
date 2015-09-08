@@ -1,5 +1,25 @@
 
 APP = {
+
+	select2Comp: function(){
+		
+	 	function formatResult(item) {
+          if(!item.id) {
+            return item.text;
+          }
+          return '<i class="fa '+ item.text+'"></i> ' + item.text;
+        }
+		
+		function formatSelection(item) {
+		  return '<i class="fa '+ item.text+'"></i> ' + item.text;
+        }
+		
+		$('select.select2').select2({
+ 			allowClear: true,
+			formatResult: formatResult,
+			formatSelection: formatSelection
+		});
+	},
 	
 	//Modal confirm
 	confirmModal: function(){
@@ -176,5 +196,6 @@ APP = {
 		this.iCheck();
 		this.altPass();
 		this.confirmModal();
+		this.select2Comp();
 	}
 };

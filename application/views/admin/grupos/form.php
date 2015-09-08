@@ -25,6 +25,33 @@
                 	placeholder="Descrição" value="<?php echo (isset($grupo)) ? $grupo->descricao : set_value('descricao');?>">
             </div>
         </div>
+        
+        <div class="form-group">
+        	<label class="col-sm-2 control-label">Programas</label>
+            <div class="col-sm-6">
+            	
+					<?php	
+						
+						
+						/*
+						TEM QUE BUSCAR OS PROGRAMAS PAIS...E DEPOIS OS FILHOS
+						*/	
+						
+						foreach($programas as $programa):
+						?>
+                            <div class="checkbox i-checks" style="">
+                                <label>                         
+                                    <input type="checkbox" value="<?php echo $programa->id?>" name="programas[]"> 
+                                    <?php echo $programa->nome?>
+                                </label>
+                            </div>
+      
+                   	<?php						
+						endforeach;
+					?>                 
+                
+            </div>
+        </div>
 
 		<div class="form-group">
         	<label class="col-sm-2 control-label">Ativo</label>

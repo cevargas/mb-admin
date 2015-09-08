@@ -1,20 +1,21 @@
 <div class="ibox float-e-margins">
     <div class="ibox-title">
-        <h5>USUÁRIOS </h5>        
+        <h5>PROGRAMAS </h5>        
         <div class="pull-right">
-        	<a href="<?php echo base_url()?>admin/usuarios/novo"
+        	<a href="<?php echo base_url()?>admin/programas/novo"
             	class="btn btn-info btn-xs btn-bitbucket tooltips" 
-            	data-placement="top" title="Novo Usuário">
+            	data-placement="top" title="Novo Programa">
             	<i class="fa fa-asterisk"></i>&nbsp;Adicionar
             </a>
         </div>
     </div>
     
-    <div class="ibox-content">  
-   		<div class="row">
+    <div class="ibox-content">    
+    
+    	<div class="row">
             <div class="col-sm-4 pull-right">
             
-            	<?php echo form_open( base_url( 'admin/usuarios/pesquisar' ), array( 'id' => 'form-pesquisa', 'method' => 'post' ) ); ?>
+            	<?php echo form_open( base_url( 'admin/programas/pesquisar' ), array( 'id' => 'form-pesquisa', 'method' => 'post' ) ); ?>
                 <div class="input-group">
                     <input type="text" name="termo" placeholder="Digite um termo" class="input-sm form-control" 
                     	value="<?php if(isset($termo)) echo $termo;?>">
@@ -25,51 +26,48 @@
                 <?php echo form_close();?>
             </div>
     	</div>
-    	<div class="table-responsive"> 
+        <div class="table-responsive"> 
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th>#</th>
                     <th>Nome</th>
-                    <th>Email</th>
-                    <th>Grupo</th>
+                    <th>Descrição</th>
                     <th>Status</th>
                     <th>Opções</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                foreach($listar_usuarios as $usuarios):
+                foreach($listar_programas as $programas):
                 ?>
                     <tr>
-                        <td><?php echo $usuarios->id;?></td>
-                        <td><?php echo $usuarios->nome?></td>
-                        <td><?php echo $usuarios->email?></td>
-                        <td><?php echo $usuarios->grupoNome?></td>
+                        <td><?php echo $programas->id;?></td>
+                        <td><?php echo $programas->nome?></td>
+                        <td><?php echo $programas->descricao?></td>
                         <td>
-                            <?php echo ($usuarios->status == 1) ? '<i class="fa fa-check text-navy"></i> Ativo' : '<i class="fa fa-check text-primary"></i> Inativo';?>
+                            <?php echo ($programas->status == 1) ? '<i class="fa fa-check text-navy"></i> Ativo' : '<i class="fa fa-check text-primary"></i> Inativo';?>
                         </td>
                         <td>                    	
-                            <a href="<?php echo base_url()?>admin/usuarios/editar/<?php echo $usuarios->id;?>" 
+                            <a href="<?php echo base_url()?>admin/programas/editar/<?php echo $programas->id;?>" 
                                     class="btn btn-info btn-bitbucket btn-xs tooltips"
                                     data-placement="top" title="Editar">
                                         <i class="fa fa-wrench"></i>
-                            </a>
-                            <?php if($usuarios->id != $this->session->userdata('usuario_id')) :?>
+                            </a>                        
                             <button type="button" class="btn btn-info btn-bitbucket btn-xs tooltips modalConfirm" 
-                                    data-toggle="modal" data-placement="top" title="Excluir" 
-                                    data-id="<?php echo $usuarios->id;?>" data-value="<?php echo $usuarios->nome?>"
-                                    data-url="<?php echo base_url()?>admin/usuarios/excluir/<?php echo $usuarios->id;?>"
-                                    data-target="#modal-confirm">
-                                        <i class="fa fa-trash"></i>
-                            </button>
-                            <?php endif;?>
+                                data-toggle="modal" data-placement="top" title="Excluir" 
+                                data-id="<?php echo $programas->id;?>" data-value="<?php echo $programas->nome?>"
+                                data-url="<?php echo base_url()?>admin/programas/excluir/<?php echo $programas->id;?>"
+                                data-target="#modal-confirm">
+                                    <i class="fa fa-trash"></i>
+                            </button>                               
+
                         </td>
                     </tr>
                  <?php
-                  	endforeach;
+                 endforeach;
 				 
-                  	if(count($listar_usuarios) == 0):
+				 if(count($listar_programas) == 0):
                  ?>                 
                   <tr>
                         <td colspan="6">Nenhum informação para exibir.</td>
@@ -77,14 +75,14 @@
                  <?php endif;?>
                 </tbody>
             </table>
-        </div>
+		</div>
         <div class="row">
             <div class="col-md-12 text-right">
                 <?php echo $paginacao; ?>
             </div>
-        </div>
+        </div>            
     </div>
-
+    
     <div class="modal inmodal" id="modal-confirm" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
@@ -103,6 +101,5 @@
                 </div>
             </div>
         </div>
-    </div>
-        
+    </div>    
 </div>

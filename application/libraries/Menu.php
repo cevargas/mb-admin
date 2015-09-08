@@ -95,7 +95,7 @@ class Menu {
 					if($this->CI->uri->segment(2, 0) == $option['value']->url) {
 						$activeSub = 'active';		
 					}					
-					$html .= '<li class="'.$activeSub.'"><a href="'.base_url().'admin/'.$option['value']->url.'">' . $option['value']->programaNome . '</a></li>';
+					$html .= '<li class="'.$activeSub.'"><a href="'.base_url().'admin/'.$option['value']->url.'"><i class="fa '.$option['value']->icone.'"></i>' . $option['value']->programaNome . '</a></li>';
 				}
 			}
 			// 3) Current parent has no more children:

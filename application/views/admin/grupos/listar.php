@@ -3,8 +3,8 @@
         <h5>GRUPOS DE USUÁRIOS </h5>        
         <div class="pull-right">
         	<a href="<?php echo base_url()?>admin/grupos/novo"
-            	class="btn btn-info btn-xs btn-bitbucket" 
-            	data-toggle="tooltip" data-placement="top" title="Novo Grupo">
+            	class="btn btn-info btn-xs btn-bitbucket tooltips" 
+            	data-placement="top" title="Novo Grupo">
             	<i class="fa fa-asterisk"></i>&nbsp;Adicionar
             </a>
         </div>
@@ -50,8 +50,8 @@
                         </td>
                         <td>                    	
                             <a href="<?php echo base_url()?>admin/grupos/editar/<?php echo $grupos->id;?>" 
-                                    class="btn btn-info btn-bitbucket btn-xs"
-                                    data-toggle="tooltip" data-placement="top" title="Editar">
+                                    class="btn btn-info btn-bitbucket btn-xs tooltips"
+                                    data-placement="top" title="Editar">
                                         <i class="fa fa-wrench"></i>
                             </a>                        
                             <?php if($grupos->restricao == 0 and $grupos->id != $this->session->userdata('grupo_id')) :?>      

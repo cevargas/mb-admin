@@ -29,8 +29,7 @@ class Grupos extends CI_Controller {
 	
 		$this->load->model('Grupos_model');
 		$this->load->model('Usuarios_model');
-		
-		$this->load->library('pagination');
+		$this->load->model('Programas_model');
 	}	
 	
 	public function index() {		
@@ -52,7 +51,7 @@ class Grupos extends CI_Controller {
 		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 
 		$grupos = $this->Grupos_model->getList($this->config->item('per_page'), $data['page']);
-		
+
 		$data['programa'] = 'Grupos';
 		$data['acao'] = 'Lista de Grupos';
         $data['view'] = 'admin/grupos/listar'; 
@@ -90,6 +89,10 @@ class Grupos extends CI_Controller {
 	
 	public function novo() {
 		
+		$data = array();
+		
+		$data['programas'] = $this->Programas_model->getProgramas();
+		
 		$data['programa'] = 'Grupos';
 		$data['acao'] = 'Adicionar Novo Grupo';
 		$data['view'] = 'admin/grupos/form'; 
@@ -99,8 +102,13 @@ class Grupos extends CI_Controller {
 	
 	public function editar($id) {
 		
+		$data = array();
+		
 		if(trim(is_numeric((int)$id))) {
 		
+			$data['programas'] = $this->Programas_model->getProgramas();
+			//$data['grupo_programas'] = $this->Grupos_model->getGruposProgramas($id);
+
 			$grupo = $this->Grupos_model->getGrupo($id);
 			 
 			if(!$grupo) {

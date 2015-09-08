@@ -91,6 +91,8 @@ class Usuarios extends CI_Controller {
 	
 	public function novo() {
 		
+		$data = array();
+		
 		$grupos = $this->Grupos_model->getList();
 		
 		$data['programa'] = 'Usuários';
@@ -102,6 +104,8 @@ class Usuarios extends CI_Controller {
 	}
 	
 	public function editar($id = NULL) {
+		
+		$data = array();
 		
 		if(trim(is_numeric((int)$id))) {
 		
@@ -148,9 +152,7 @@ class Usuarios extends CI_Controller {
 			//criptografa a senha
 			$senha = $this->Usuarios_model->cryptPass($this->input->post('nova_senha', true));
 		}
-		
-		
-		
+
 		$data = array(
 		   'nome' => $this->input->post('nome', true),
 		   'email' => $this->input->post('email', true),

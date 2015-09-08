@@ -39,8 +39,8 @@ class Usuarios_model extends CI_Model {
 		
 		$this->db->select('usuarios.*, grupos.nome AS grupoNome');
 		$this->db->from('usuarios');
-		$this->db->order_by('nome', 'ASC');
 		$this->db->join('grupos', 'grupos.id = usuarios.id_grupo');
+		$this->db->order_by('nome', 'ASC');
 		$this->db->limit($limit, $offset);
 		$query = $this->db->get();
 		
@@ -55,7 +55,8 @@ class Usuarios_model extends CI_Model {
 		$this->db->from('usuarios');
 		$this->db->join('grupos', 'grupos.id = usuarios.id_grupo');
 		$this->db->like('usuarios.nome', $termo);
-		$this->db->or_like('usuarios.email',$termo);
+		$this->db->or_like('usuarios.email', $termo);
+		$this->db->order_by('usuarios.nome', 'ASC');
 		$this->db->limit($limit, $offset);
 		$query = $this->db->get();
 		
@@ -71,6 +72,7 @@ class Usuarios_model extends CI_Model {
 		$this->db->join('grupos', 'grupos.id = usuarios.id_grupo');
 		$this->db->like('usuarios.nome', $termo);
 		$this->db->or_like('usuarios.email',$termo);
+		$this->db->order_by('usuarios.nome', 'ASC');
 		$query = $this->db->get();
 		
 		$result = $query->num_rows();		

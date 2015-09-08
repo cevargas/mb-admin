@@ -29,6 +29,10 @@
     <link href="<?php echo base_url()?>public/template/css/animate.css" rel="stylesheet">
     <link href="<?php echo base_url()?>public/template/css/style.css" rel="stylesheet">
     
+    <!-- Select2 -->
+    <link href="<?php echo base_url()?>public/template/js/plugins/select2/select2.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>public/template/js/plugins/select2/custom.css" rel="stylesheet">
+    
     <!-- Custom CSS -->
     <link href="<?php echo base_url()?>public/admin/css/styles.css" rel="stylesheet">
  
@@ -184,6 +188,9 @@
     <!-- Custom and plugin javascript -->
     <script src="<?php echo base_url()?>public/template/js/inspinia.js"></script>
     <script src="<?php echo base_url()?>public/template/js/plugins/pace/pace.min.js"></script>
+    
+    <!-- Select2 -->
+    <script src="<?php echo base_url()?>public/template/js/plugins/select2/select2.min.js"></script>
     
     <!-- Custom  -->
     <script src="<?php echo base_url()?>public/admin/js/scripts.js"></script>
