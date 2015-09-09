@@ -15,6 +15,7 @@ class Programas_model extends CI_Model {
 		
 		$this->db->select('*');
 		$this->db->from('programas');
+		$this->db->where('status', 1);
 		$this->db->order_by('nome', 'ASC');
 		$this->db->limit($limit, $offset);
 		$query = $this->db->get();
@@ -28,6 +29,7 @@ class Programas_model extends CI_Model {
 
 		$this->db->select('*');
 		$this->db->from('programas');
+		$this->db->where('status', 1);
 		$this->db->like('nome', $termo);
 		$this->db->or_like('descricao', $termo);
 		$this->db->order_by('nome', 'ASC');
@@ -43,6 +45,7 @@ class Programas_model extends CI_Model {
 
 		$this->db->select('*');
 		$this->db->from('programas');
+		$this->db->where('status', 1);
 		$this->db->like('nome', $termo);
 		$this->db->or_like('descricao', $termo);
 		$query = $this->db->get();
@@ -64,24 +67,25 @@ class Programas_model extends CI_Model {
 	} 
 	
 	public function getProgramas() {
-		
-		$this->db->select('programas.*, programas.parent AS programaPai');
+
+		$this->db->select('programas.*, programas.id AS idPrograma, programas.parent AS programaPai, programas.nome AS programaNome');
 		$this->db->from('programas');
+		$this->db->where('status', 1);
 		$this->db->order_by('nome', 'ASC');
 		
 		$query = $this->db->get();
-
 		$result = $query->result();
 		
 		return $result;
 	} 
 	
 	public function getProgramasParam($param, $field) {
-		
-		$this->db->select('*');
+
+		$this->db->select('programas.*, programas.parent AS programaPai');
 		$this->db->from('programas');	
+		$this->db->where('status', 1);
 		$this->db->where($param, $field);
-		$retul = $this->db->get();		
+		$result = $this->db->get();		
 		
 		return $result;
 	} 

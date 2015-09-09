@@ -91,7 +91,7 @@ class Grupos extends CI_Controller {
 		
 		$data = array();
 		
-		$data['programas'] = $this->Programas_model->getProgramas();
+		$data['programas'] = $this->Programas_model->getProgramasParam('parent', 0);
 		
 		$data['programa'] = 'Grupos';
 		$data['acao'] = 'Adicionar Novo Grupo';
@@ -105,12 +105,12 @@ class Grupos extends CI_Controller {
 		$data = array();
 		
 		if(trim(is_numeric((int)$id))) {
-		
-			$data['programas'] = $this->Programas_model->getProgramas();
-			//$data['grupo_programas'] = $this->Grupos_model->getGruposProgramas($id);
-
+			
 			$grupo = $this->Grupos_model->getGrupo($id);
-			 
+			
+			$programas = $this->Programas_model->getProgramas('parent', 0);
+			$data['programas'] = $this->builtProgramas($programas);
+
 			if(!$grupo) {
 				$this->set_error();	
 			}					 
@@ -125,6 +125,61 @@ class Grupos extends CI_Controller {
 		else {
 			$this->set_error();	
 		}
+	}
+	
+	function builtProgramas($items) {
+		
+		$html = '';
+		$parent = 0;
+		$parent_stack = array();
+		
+		$children = array();
+		foreach ( $items as $item )		
+			$children[$item->programaPai][] = $item;
+
+		while ( ( $option = each( $children[$parent] ) ) || ( $parent > 0 ) )
+		{
+			if ( !empty( $option ) )
+			{	
+				if ( !empty( $children[$option['value']->idPrograma] ) )
+				{
+					$html .= '<li>';
+				
+					 //$html .= '<div class="checkbox i-checks">';
+					   //$html .=  '<label>';                     
+						  $html .=  '<input type="checkbox" class="pai" value="'.$option['value']->idPrograma.'" name="programas[]"> ';
+						  $html .=  $option['value']->programaNome;
+					   //$html .= '</label>';
+					//$html .=  '</div>';
+					
+					if($parent == 0) 				
+						$html .= '<ul>'; 
+					else
+						$html .= '<ul>'; 	
+
+					array_push( $parent_stack, $parent );
+					$parent = $option['value']->idPrograma;
+				}			
+				else {	
+				
+					 //$html .= '<div class="checkbox i-checks" style="margin-left:30px;">';
+					  // $html .=  '<label>';   
+					      $html .= '<li>';         
+						  $html .=  '<input type="checkbox" class="filho" value="'.$option['value']->idPrograma.'" name="programas[]"> ';
+						  $html .=  $option['value']->programaNome;
+						  $html .= '</li>';     
+					   //$html .= '</label>';
+					//$html .=  '</div>';
+				}
+			}		
+			else
+			{
+				$html .= '</ul></li>';
+				$parent = array_pop( $parent_stack );
+			}
+		}		
+	
+		return $html;
 	}
 	
 	public function salvar() {

@@ -1,5 +1,21 @@
 
 APP = {
+	
+	iCheckProgramas: function(){
+		
+		//revisar aqui nao funciona
+	  $('input[name="programas[]"]').on('click', function() {
+                var that = $(this);
+                var parentUL = that.parent().parent();
+			var parentChk = parentUL.parent().find("input:first");
+					var oneChecked = false;
+					parentUL.find("input").each(function(){oneChecked = oneChecked || this.checked;});
+					console.log(oneChecked);
+					parentChk.attr("checked", oneChecked);
+		});
+			
+		//ifUnchecked
+	},
 
 	select2Comp: function(){
 		
@@ -197,5 +213,6 @@ APP = {
 		this.altPass();
 		this.confirmModal();
 		this.select2Comp();
+		this.iCheckProgramas();
 	}
 };
