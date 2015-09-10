@@ -2,3 +2,11 @@
 .radio label, .checkbox label {
 	padding-left:0 !important;
 }
+
+ul {
+	list-style:none;
+}
+
+li {
+	list-style-type:none;
+}

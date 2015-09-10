@@ -2,19 +2,51 @@
 APP = {
 	
 	iCheckProgramas: function(){
-		
-		//revisar aqui nao funciona
-	  $('input[name="programas[]"]').on('click', function() {
-                var that = $(this);
-                var parentUL = that.parent().parent();
-			var parentChk = parentUL.parent().find("input:first");
-					var oneChecked = false;
-					parentUL.find("input").each(function(){oneChecked = oneChecked || this.checked;});
-					console.log(oneChecked);
-					parentChk.attr("checked", oneChecked);
-		});
+
+	  	$('input[name="programas[]"]').on('click', function() {
+
+			//trata quando o usuario clica em um checkbox pai
+			if($(this).hasClass('pai')) {
+				
+				if($(this).is(':checked') == true) {
+					
+					$(this).next('ul').find('li').each(function(index, element) {
+						$(element).find('input:checkbox').prop("checked", true);
+					});	
+					
+				}
+				else {
+					$(this).next('ul').find('li').each(function(index, element) {
+						$(element).find('input:checkbox').prop("checked", false);
+					});
+				}
+			}
+			//trata quando o usuario clica em um checkbox filho
+			else {
+				var pegaPaiDoFilho = $(this).closest('ul').parent('li').find('input:checkbox:first');
+				if( $(pegaPaiDoFilho).hasClass('pai') ) {
+					
+					if($(pegaPaiDoFilho).is(':checked') == true) {
+	
+						//FALTA TESTAR AQUI QUANDO DESMARCAR TODOS OS FILHOS TEM QUE
+						//DESMARCAR O PAI TAMBEM
+						
+						$(pegaPaiDoFilho).next('ul').find('li').each(function(index, element) {
+							
+							if($(element).find('input').is(':checked') == true) {
+								//aqui tem que testar
+							}							
+						
+						});
+					}
+					else {
+						$(pegaPaiDoFilho).prop("checked", true);
+					}
+				}
+			}
 			
-		//ifUnchecked
+		});
+
 	},
 
 	select2Comp: function(){
