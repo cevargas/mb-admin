@@ -1,7 +1,7 @@
 
 APP = {
 	
-	iCheckProgramas: function(){
+	checkProgramas: function(){
 
 	  	$('input[name="programas[]"]').on('click', function() {
 
@@ -23,30 +23,21 @@ APP = {
 			}
 			//trata quando o usuario clica em um checkbox filho
 			else {
-				var pegaPaiDoFilho = $(this).closest('ul').parent('li').find('input:checkbox:first');
+				var pegaPaiDoFilho = $(this).closest('ul').parent('li').find('input:checkbox:first').not(this);
 				if( $(pegaPaiDoFilho).hasClass('pai') ) {
 					
-					if($(pegaPaiDoFilho).is(':checked') == true) {
-	
-						//FALTA TESTAR AQUI QUANDO DESMARCAR TODOS OS FILHOS TEM QUE
-						//DESMARCAR O PAI TAMBEM
-						
-						$(pegaPaiDoFilho).next('ul').find('li').each(function(index, element) {
-							
-							if($(element).find('input').is(':checked') == true) {
-								//aqui tem que testar
-							}							
-						
-						});
+					if($(pegaPaiDoFilho).is(':checked') == true) {	
+					
+						if($(pegaPaiDoFilho).next('ul').find('li').find('input:checked').length == 0) {
+							$(pegaPaiDoFilho).prop("checked", false);
+						}
 					}
 					else {
 						$(pegaPaiDoFilho).prop("checked", true);
 					}
 				}
-			}
-			
+			}			
 		});
-
 	},
 
 	select2Comp: function(){
@@ -245,6 +236,6 @@ APP = {
 		this.altPass();
 		this.confirmModal();
 		this.select2Comp();
-		this.iCheckProgramas();
+		this.checkProgramas();
 	}
 };

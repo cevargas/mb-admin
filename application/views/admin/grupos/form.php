@@ -28,11 +28,13 @@
 
         <div class="form-group">
         	<label class="col-sm-2 control-label">Programas</label>
-            <div class="col-sm-6">            	
+            <div class="col-sm-8">   
+          
 				<?php
 					if(isset($programas))
-                    	echo '<ul>'.$programas.'</ul>';
-                ?>                
+                    	echo '<ul class="programas">'.$programas.'</ul>';
+                ?> 
+                  
             </div>
         </div>
 
