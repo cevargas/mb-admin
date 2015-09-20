@@ -63,7 +63,7 @@ class Programas extends CI_Controller {
 		
 		$data = array();
 		
-		$termo = ($this->input->post('termo')) ? $this->input->post('termo') : $this->uri->segment(4);
+		$termo = ($this->input->post('termo', true)) ? $this->input->post('termo', true) : $this->uri->segment(4);
 		$data['termo'] = $termo;
 
 		//paginacao

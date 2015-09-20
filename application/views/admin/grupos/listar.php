@@ -1,31 +1,27 @@
 <div class="ibox float-e-margins">
     <div class="ibox-title">
-        <h5>GRUPOS DE USUÁRIOS </h5>        
-        <div class="pull-right">
+        <h5>GRUPOS DE USUÁRIOS </h5>
+         <div class="pull-right">        
         	<a href="<?php echo base_url()?>admin/grupos/novo"
-            	class="btn btn-info btn-xs btn-bitbucket tooltips" 
+            	class="btn btn-info btn-sm btn-bitbucket tooltips" 
             	data-placement="top" title="Novo Grupo">
             	<i class="fa fa-asterisk"></i>&nbsp;Adicionar
             </a>
-        </div>
+        </div>        
+        <div class="col-sm-4 pull-right">
+			<?php echo form_open( base_url( 'admin/grupos/pesquisar' ), array( 'id' => 'form-pesquisa', 'method' => 'post' ) ); ?>
+            <div class="input-group">
+            <input type="text" name="termo" placeholder="Digite um termo" class="input-sm form-control" 
+                value="<?php if(isset($termo)) echo $termo;?>">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-sm btn-primary">Pesquisar</button> 
+            </span>
+            </div>
+            <?php echo form_close();?>
+        </div>       
     </div>
     
     <div class="ibox-content">    
-    
-    	<div class="row">
-            <div class="col-sm-4 pull-right">
-            
-            	<?php echo form_open( base_url( 'admin/grupos/pesquisar' ), array( 'id' => 'form-pesquisa', 'method' => 'post' ) ); ?>
-                <div class="input-group">
-                    <input type="text" name="termo" placeholder="Digite um termo" class="input-sm form-control" 
-                    	value="<?php if(isset($termo)) echo $termo;?>">
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-sm btn-primary">Pesquisar</button> 
-                    </span>
-                </div>
-                <?php echo form_close();?>
-            </div>
-    	</div>
         <div class="table-responsive"> 
             <table class="table table-striped">
                 <thead>

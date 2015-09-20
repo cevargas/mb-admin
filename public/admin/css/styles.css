@@ -3,12 +3,25 @@
 	padding-left:0 !important;
 }
 
-ul.programas {
-	list-style:none;
-	padding:0;
-	margin-top:5px;
+.input-mini {
+  width: 45px !important;
 }
 
-ul.programas li {
-	list-style-type:none;
+.input-xsmall {
+  width: 80px !important;
+}
+
+.input-small {
+  width: 145px !important;
+}
+
+.input-medium {
+  width: 240px !important;
+}
+.input-large {
+  width: 320px !important;
+}
+
+.input-xlarge {
+  width: 420px !important;
 }

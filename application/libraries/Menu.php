@@ -31,7 +31,13 @@ class Menu {
 		//pega id do usuario da sessao
 		$grupo_id = $this->CI->session->userdata('grupo_id');		
 		
-		$this->CI->db->select('programas.id AS idPrograma, programas.icone, programas.url, grupos.nome AS grupoNome, programas.nome AS programaNome, programas.parent AS programaPai');
+		$this->CI->db->select('programas.id AS idPrograma, 
+								programas.icone, 
+								programas.url, 
+								grupos.nome AS grupoNome, 
+								programas.nome AS programaNome, 
+								programas.parent AS programaPai');
+								
 		$this->CI->db->from('grupos_programas');
 		$this->CI->db->join('programas', 'programas.id = grupos_programas.id_programa');
 		$this->CI->db->join('grupos', 'grupos.id =  grupos_programas.id_grupo');

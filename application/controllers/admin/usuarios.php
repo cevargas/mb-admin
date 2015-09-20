@@ -12,6 +12,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | 
 | habilita profiler 
 | $this->output->enable_profiler(TRUE);
+|
+| print da query, executar no metodo em Models
+| $this->db->last_query();
 */
 
 class Usuarios extends CI_Controller {
@@ -66,7 +69,7 @@ class Usuarios extends CI_Controller {
 		
 		$data = array();
 		
-		$termo = ($this->input->post('termo')) ? $this->input->post('termo') : $this->uri->segment(4);
+		$termo = ($this->input->post('termo', true)) ? $this->input->post('termo', true) : $this->uri->segment(4);
 		$data['termo'] = $termo;
 
 		//paginacao

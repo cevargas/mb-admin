@@ -30,6 +30,7 @@ class Grupos extends CI_Controller {
 		$this->load->model('Grupos_model');
 		$this->load->model('Usuarios_model');
 		$this->load->model('Programas_model');
+		$this->load->model('Permissoes_model');
 	}	
 	
 	public function index() {		
@@ -64,7 +65,7 @@ class Grupos extends CI_Controller {
 		
 		$data = array();
 		
-		$termo = ($this->input->post('termo')) ? $this->input->post('termo') : $this->uri->segment(4);
+		$termo = ($this->input->post('termo', true)) ? $this->input->post('termo', true) : $this->uri->segment(4);
 		$data['termo'] = $termo;
 
 		//paginacao
@@ -86,12 +87,13 @@ class Grupos extends CI_Controller {
 		
 		$this->load->view('admin/index', $data);
 	}
-	
+
 	public function novo() {
 		
 		$data = array();
 		
-		$data['programas'] = $this->Programas_model->getProgramasParam('parent', 0);
+		$data['programas'] = $this->Programas_model->getProgramas();
+		$data['permissoes'] = $this->Permissoes_model->getPermissoes();
 		
 		$data['programa'] = 'Grupos';
 		$data['acao'] = 'Adicionar Novo Grupo';
@@ -104,12 +106,15 @@ class Grupos extends CI_Controller {
 		
 		$data = array();
 		
-		if(trim(is_numeric((int)$id))) {
+		if(trim(is_int((int)$id))) {
 			
 			$grupo = $this->Grupos_model->getGrupo($id);
 			
-			$programas = $this->Programas_model->getProgramas('parent', 0);
-			$data['programas'] = $this->builtProgramas($programas);
+			$data['programas'] = $this->Programas_model->getProgramas();
+			$data['programas_grupos'] = $this->Grupos_model->getGruposProgramas($id);
+				
+			$data['permissoes'] = $this->Permissoes_model->getPermissoes();
+			$data['permissoes_grupos'] = $this->Grupos_model->getGruposPermissoes($id);
 
 			if(!$grupo) {
 				$this->set_error();	
@@ -127,61 +132,6 @@ class Grupos extends CI_Controller {
 		}
 	}
 	
-	function builtProgramas($items) {
-		
-		$html = '';
-		$parent = 0;
-		$parent_stack = array();
-		
-		$children = array();
-		foreach ( $items as $item )		
-			$children[$item->programaPai][] = $item;
-
-		while ( ( $option = each( $children[$parent] ) ) || ( $parent > 0 ) )
-		{
-			if ( !empty( $option ) )
-			{	
-				if ( !empty( $children[$option['value']->idPrograma] ) )
-				{
-					$html .= '<li>';
-				
-					 //$html .= '<div class="checkbox i-checks">';
-					   //$html .=  '<label>';                     
-						  $html .=  '<input type="checkbox" class="pai" value="'.$option['value']->idPrograma.'" name="programas[]"> ';
-						  $html .=  $option['value']->programaNome;
-					   //$html .= '</label>';
-					//$html .=  '</div>';
-					
-					if($parent == 0) 				
-						$html .= '<ul>'; 
-					else
-						$html .= '<ul>'; 	
-
-					array_push( $parent_stack, $parent );
-					$parent = $option['value']->idPrograma;
-				}			
-				else {	
-				
-					 //$html .= '<div class="checkbox i-checks" style="margin-left:30px;">';
-					  // $html .=  '<label>';   
-					      $html .= '<li>';         
-						  $html .=  '<input type="checkbox" class="filho" value="'.$option['value']->idPrograma.'" name="programas[]"> ';
-						  $html .=  $option['value']->programaNome;
-						  $html .= '</li>';     
-					   //$html .= '</label>';
-					//$html .=  '</div>';
-				}
-			}		
-			else
-			{
-				$html .= '</ul></li>';
-				$parent = array_pop( $parent_stack );
-			}
-		}		
-	
-		return $html;
-	}
-	
 	public function salvar() {
 		
 		//editar
@@ -195,6 +145,8 @@ class Grupos extends CI_Controller {
 					
 					$this->form_validation->set_rules('nome', 'Nome', 'trim|required');
 					$this->form_validation->set_rules('descricao', 'Descrição', 'trim|required|max_length[255]');
+					$this->form_validation->set_rules('programas_grupos[]', 'Programas', 'trim|required');
+					$this->form_validation->set_rules('permissoes_grupos[]', 'Permissões', 'trim|required');
 
   					if ($this->form_validation->run() == TRUE) {						
 						
@@ -226,7 +178,44 @@ class Grupos extends CI_Controller {
 					}
 				}
 
-				$this->Grupos_model->update($data, $this->input->post('id'));					
+				$this->Grupos_model->update($data, $this->input->post('id'));
+				
+				//grupos programas
+				if($this->input->post('programas_grupos')) {
+					$this->Grupos_model->deleteGruposProgramas($this->input->post('id'));
+					
+					foreach($this->input->post('programas_grupos') as $gp) {
+
+						$p = $this->Programas_model->getProgramasParam('id', $gp);
+						$pai = $p->programaPai;						
+						//tem que consultar se o grupo e o programa pai ja estao na table grupos_programas
+						$check = $this->Grupos_model->checkGruposProgramas($pai, $this->input->post('id'));
+
+						if(!$check) {	
+							$datapai['id_grupo'] = $this->input->post('id');
+							$datapai['id_programa'] = $pai;							
+							$this->Grupos_model->insertGruposProgramas($datapai);
+						}
+
+						$datap['id_grupo'] = $this->input->post('id');
+						$datap['id_programa'] = $gp;
+						$this->Grupos_model->insertGruposProgramas($datap);
+
+					}			
+				}
+				
+				//grupos permissoes
+				if($this->input->post('permissoes_grupos')) {
+					$this->Grupos_model->deleteGruposPermissoes($this->input->post('id'));
+					
+					foreach($this->input->post('permissoes_grupos') as $gp) {
+						
+						$datac['id_grupo'] = $this->input->post('id');
+						$datac['id_permissao'] = $gp;
+						$this->Grupos_model->insertGruposPermissoes($datac);
+					}					
+				}
+			
 				$this->set_success("Grupo editado com Sucesso.");
 			}
 			else {
@@ -238,6 +227,8 @@ class Grupos extends CI_Controller {
 			
 			$this->form_validation->set_rules('nome', 'Nome', 'trim|required');
 			$this->form_validation->set_rules('descricao', 'Descrição', 'trim|required|max_length[255]');
+			$this->form_validation->set_rules('programas_grupos[]', 'Programas', 'trim|required');
+			$this->form_validation->set_rules('permissoes_grupos[]', 'Permissões', 'trim|required');
 
 			if ($this->form_validation->run() == TRUE) {
 				
@@ -248,7 +239,41 @@ class Grupos extends CI_Controller {
 				   'restricao' => 0
 				);		
 								
-				$this->Grupos_model->insert($data);		
+				$this->Grupos_model->insert($data);
+				
+				//grupos programas
+				if($this->input->post('programas_grupos')) {
+
+					foreach($this->input->post('programas_grupos') as $gp) {
+						
+						$p = $this->Programas_model->getProgramasParam('id', $gp);
+						$pai = $p->programaPai;						
+						//tem que consultar se o grupo e o programa pai ja estao na table grupos_programas
+						$check = $this->Grupos_model->checkGruposProgramas($pai, $this->input->post('id'));
+
+						if(!$check) {	
+							$datapai['id_grupo'] = $this->input->post('id');
+							$datapai['id_programa'] = $pai;							
+							$this->Grupos_model->insertGruposProgramas($datapai);
+						}
+
+						$datap['id_grupo'] = $this->input->post('id');
+						$datap['id_programa'] = $gp;
+						$this->Grupos_model->insertGruposProgramas($datap);
+					}					
+				}
+				
+				//grupos permissoes
+				if($this->input->post('permissoes_grupos')) {
+					
+					foreach($this->input->post('permissoes_grupos') as $gp) {
+						
+						$datac['id_grupo'] = $this->input->post('id');
+						$datac['id_permissao'] = $gp;
+						$this->Grupos_model->insertGruposPermissoes($datac);
+					}			
+				}				
+				
 				$this->set_success("Grupo adicionado com Sucesso.");
 			}
 			else {										
@@ -260,7 +285,7 @@ class Grupos extends CI_Controller {
 	
 	public function excluir($id) {		
 		
-		if(trim(is_numeric((int)$id))) {
+		if(trim(is_integer((int)$id))) {
 			
 			$grupo = $this->Grupos_model->getGrupo($id);
 

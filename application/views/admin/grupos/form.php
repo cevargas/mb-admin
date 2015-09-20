@@ -25,16 +25,59 @@
                 	placeholder="Descrição" value="<?php echo (isset($grupo)) ? $grupo->descricao : set_value('descricao');?>">
             </div>
         </div>
-
+        
         <div class="form-group">
         	<label class="col-sm-2 control-label">Programas</label>
-            <div class="col-sm-8">   
-          
-				<?php
-					if(isset($programas))
-                    	echo '<ul class="programas">'.$programas.'</ul>';
-                ?> 
-                  
+            <div class="col-sm-6">     
+            	<select name="programas_grupos[]" class="form-control select2 input-large" multiple="multiple">
+ 				<?php
+					if(isset($programas)) {						
+						foreach($programas as $programa):	
+							if($programa->programaPai == 0) {
+								echo "<optgroup label=".$programa->programaNome.">";							
+								$hasChildren = false;
+								foreach($programas as $prog): 	
+									if($programa->idPrograma == $prog->programaPai) {										
+										$sel = '';
+										if(isset($programas_grupos)) {
+											foreach($programas_grupos as $gp) :
+												if($gp->id == $prog->idPrograma)
+													$sel = 'selected';
+											endforeach;
+										}										
+										$hasChildren = true;
+										echo "<option value='".$prog->idPrograma."' ".$sel.">".$prog->programaNome."</option>";
+									}									
+								endforeach;								
+								if($hasChildren == true)
+									echo "</optgroup>";
+							}
+						endforeach;
+					}
+                ?>
+                </select> 
+            </div>
+        </div>
+
+ 		<div class="form-group">
+        	<label class="col-sm-2 control-label">Permissões</label>
+            <div class="col-sm-6">
+            	<select name="permissoes_grupos[]" class="form-control select2 input-large" multiple="multiple">
+ 				<?php
+					if(isset($permissoes)) {
+						foreach($permissoes as $permissao):
+							$sel = '';
+							if(isset($permissoes_grupos)) {
+								foreach($permissoes_grupos as $pg) :
+									if($pg->id_permissao == $permissao->id)
+										$sel = 'selected';
+								endforeach;
+							}					
+							echo "<option value='".$permissao->id."' ".$sel.">".$permissao->nome."</option>";						
+						endforeach;
+					}
+                ?>
+                </select> 
             </div>
         </div>
 

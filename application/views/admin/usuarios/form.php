@@ -23,12 +23,12 @@
 			   
 			   			$check = '';
 						$disabled = '';
-						if(isset($usuario))
+						if(isset($usuario)) {
 			   				if($grupos->id == $usuario->id_grupo) 
 								$check = 'checked';
-							if($grupos->id == $this->session->userdata('grupo_id'))
-								$disabled = 'disabled';
-						else						
+							//if($grupos->id == $this->session->userdata('grupo_id'))
+								//$disabled = 'disabled';
+						}					
 			   ?>
                     <div class="radio i-checks">
                         <label for="grupo">                         

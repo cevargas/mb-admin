@@ -53,6 +53,7 @@ class Acl {
 		}
 		else {
 			log_message('debug', 'Sem permissoes definidas em Entities\GruposPermissoes');
+			$this->CI->session->sess_destroy();	
 			exit("403 Forbidden");
 		}
 	}
@@ -70,6 +71,7 @@ class Acl {
 			}
 		}
 		log_message('debug', 'Session de permissoes nao retornou valor');
+		$this->CI->session->sess_destroy();	
 		exit("403 Forbidden");
 	}	
 }

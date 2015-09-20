@@ -1,15 +1,15 @@
 <div class="ibox float-e-margins">
     <div class="ibox-title">
-        <h5>USUÁRIOS </h5>        
+        <h5>PERMISSÕES </h5>        
         <div class="pull-right">
-        	<a href="<?php echo base_url()?>admin/usuarios/novo"
+        	<a href="<?php echo base_url()?>admin/permissoes/novo"
             	class="btn btn-info btn-sm btn-bitbucket tooltips" 
-            	data-placement="top" title="Novo Usuário">
+            	data-placement="top" title="Nova Permissão">
             	<i class="fa fa-asterisk"></i>&nbsp;Adicionar
             </a>
         </div>
-        <div class="col-sm-4 pull-right">
-            <?php echo form_open( base_url( 'admin/usuarios/pesquisar' ), array( 'id' => 'form-pesquisa', 'method' => 'post' ) ); ?>
+        <div class="col-sm-4 pull-right">            
+			<?php echo form_open( base_url( 'admin/permissoes/pesquisar' ), array( 'id' => 'form-pesquisa', 'method' => 'post' ) ); ?>
             <div class="input-group">
                 <input type="text" name="termo" placeholder="Digite um termo" class="input-sm form-control" 
                     value="<?php if(isset($termo)) echo $termo;?>">
@@ -21,53 +21,47 @@
         </div>
     </div>
     
-    <div class="ibox-content">  
-   		
-    	<div class="table-responsive"> 
+    <div class="ibox-content">    
+        <div class="table-responsive"> 
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th>#</th>
                     <th>Nome</th>
-                    <th>Email</th>
-                    <th>Grupo</th>
-                    <th>Status</th>
+                    <th>Chave</th>
+                    <th>Controlador</th>
                     <th>Opções</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                foreach($listar_usuarios as $usuarios):
+                foreach($permissoes as $permissao):
                 ?>
                     <tr>
-                        <td><?php echo $usuarios->id;?></td>
-                        <td><?php echo $usuarios->nome?></td>
-                        <td><?php echo $usuarios->email?></td>
-                        <td><?php echo $usuarios->grupoNome?></td>
-                        <td>
-                            <?php echo ($usuarios->status == 1) ? '<i class="fa fa-check text-navy"></i> Ativo' : '<i class="fa fa-check text-primary"></i> Inativo';?>
-                        </td>
+                        <td><?php echo $permissao->id;?></td>
+                        <td><?php echo $permissao->nome?></td>
+                        <td><?php echo $permissao->chave?></td>
+                        <td><?php echo $permissao->controlador?></td>
                         <td>                    	
-                            <a href="<?php echo base_url()?>admin/usuarios/editar/<?php echo $usuarios->id;?>" 
+                            <a href="<?php echo base_url()?>admin/permissoes/editar/<?php echo $permissao->id;?>" 
                                     class="btn btn-info btn-bitbucket btn-xs tooltips"
                                     data-placement="top" title="Editar">
                                         <i class="fa fa-wrench"></i>
-                            </a>
-                            <?php if($usuarios->id != $this->session->userdata('usuario_id')) :?>
+                            </a>                        
                             <button type="button" class="btn btn-info btn-bitbucket btn-xs tooltips modalConfirm" 
-                                    data-toggle="modal" data-placement="top" title="Excluir" 
-                                    data-id="<?php echo $usuarios->id;?>" data-value="<?php echo $usuarios->nome?>"
-                                    data-url="<?php echo base_url()?>admin/usuarios/excluir/<?php echo $usuarios->id;?>"
-                                    data-target="#modal-confirm">
-                                        <i class="fa fa-trash"></i>
-                            </button>
-                            <?php endif;?>
+                                data-toggle="modal" data-placement="top" title="Excluir" 
+                                data-id="<?php echo $permissao->id;?>" data-value="<?php echo $permissao->nome?>"
+                                data-url="<?php echo base_url()?>admin/permissoes/excluir/<?php echo $permissao->id;?>"
+                                data-target="#modal-confirm">
+                                    <i class="fa fa-trash"></i>
+                            </button>                               
+
                         </td>
                     </tr>
                  <?php
-                  	endforeach;
+                 endforeach;
 				 
-                  	if(count($listar_usuarios) == 0):
+				 if(count($permissoes) == 0):
                  ?>                 
                   <tr>
                         <td colspan="6">Nenhum informação para exibir.</td>
@@ -75,14 +69,14 @@
                  <?php endif;?>
                 </tbody>
             </table>
-        </div>
+		</div>
         <div class="row">
             <div class="col-md-12 text-right">
                 <?php echo $paginacao; ?>
             </div>
-        </div>
+        </div>            
     </div>
-
+    
     <div class="modal inmodal" id="modal-confirm" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
@@ -101,6 +95,5 @@
                 </div>
             </div>
         </div>
-    </div>
-        
+    </div>    
 </div>

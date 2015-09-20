@@ -1,44 +1,5 @@
 
 APP = {
-	
-	checkProgramas: function(){
-
-	  	$('input[name="programas[]"]').on('click', function() {
-
-			//trata quando o usuario clica em um checkbox pai
-			if($(this).hasClass('pai')) {
-				
-				if($(this).is(':checked') == true) {
-					
-					$(this).next('ul').find('li').each(function(index, element) {
-						$(element).find('input:checkbox').prop("checked", true);
-					});	
-					
-				}
-				else {
-					$(this).next('ul').find('li').each(function(index, element) {
-						$(element).find('input:checkbox').prop("checked", false);
-					});
-				}
-			}
-			//trata quando o usuario clica em um checkbox filho
-			else {
-				var pegaPaiDoFilho = $(this).closest('ul').parent('li').find('input:checkbox:first').not(this);
-				if( $(pegaPaiDoFilho).hasClass('pai') ) {
-					
-					if($(pegaPaiDoFilho).is(':checked') == true) {	
-					
-						if($(pegaPaiDoFilho).next('ul').find('li').find('input:checked').length == 0) {
-							$(pegaPaiDoFilho).prop("checked", false);
-						}
-					}
-					else {
-						$(pegaPaiDoFilho).prop("checked", true);
-					}
-				}
-			}			
-		});
-	},
 
 	select2Comp: function(){
 		
@@ -57,6 +18,10 @@ APP = {
  			allowClear: true,
 			formatResult: formatResult,
 			formatSelection: formatSelection
+		});
+		
+		$("select.select2").on("change", function (e) {  
+			$(this).valid(); 
 		});
 	},
 	
@@ -208,11 +173,15 @@ APP = {
 			ignore: "",
 			rules: {
 				descricao: "required",
-				nome: "required"	
+				nome: "required",
+				'programas_grupos[]': "required",
+				'permissoes_grupos[]': "required"
 			},
 			messages: {
 				descricao: "Informe uma descrição para o Grupo",
-				nome: "Informe um Nome para o Grupo"
+				nome: "Informe um Nome para o Grupo",
+				'programas_grupos[]': "Selecione os Programas que este Grupo terá Acesso.",
+				'permissoes_grupos[]': "Selecione as Permissões que este Grupo terá Acesso."
 			},
 			errorPlacement: function (error, element) { 				
 				if (element.parent().parent().parent(".i-checks").size() > 0) {
@@ -236,6 +205,5 @@ APP = {
 		this.altPass();
 		this.confirmModal();
 		this.select2Comp();
-		this.checkProgramas();
 	}
 };

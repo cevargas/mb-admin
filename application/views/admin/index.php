@@ -33,7 +33,7 @@
     <link href="<?php echo base_url()?>public/template/js/plugins/select2/select2.css" rel="stylesheet">
     <link href="<?php echo base_url()?>public/template/js/plugins/select2/custom.css" rel="stylesheet">   
     
-    <link href="<?php echo base_url()?>public/template/css/plugins/bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">   
+    <!--link href="<?php echo base_url()?>public/template/css/plugins/bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet"-->   
     
     <!-- Custom CSS -->
     <link href="<?php echo base_url()?>public/admin/css/styles.css" rel="stylesheet">
@@ -183,7 +183,7 @@
     <script src="<?php echo base_url()?>public/template/js/plugins/switchery/switchery.js"></script>
     
     <!-- Jquery Validate -->
-    <script src="<?php echo base_url()?>public/template/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="<?php echo base_url()?>public/template/js/plugins/validate/jquery.validate.js"></script>
     <script src="<?php echo base_url()?>public/template/js/plugins/validate/additional-methods.min.js"></script>
     <script src="<?php echo base_url()?>public/template/js/plugins/validate/localization/messages_pt_BR.min.js"></script>  
     

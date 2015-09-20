@@ -1,22 +1,21 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Programas_model extends CI_Model {
+class Permissoes_model extends CI_Model {
 	
 	public function __construct() {
 		parent::__construct();
 	}
 	
 	public function countAll(){		
-		return $this->db->count_all('programas');	
+		return $this->db->count_all('permissoes');	
 	} 
 	
 	public function getList($limit=0, $offset=20) {
 		
 		$this->db->select('*');
-		$this->db->from('programas');
-		$this->db->where('status', 1);
-		$this->db->order_by('nome', 'ASC');
+		$this->db->from('permissoes');
+		$this->db->order_by('controlador', 'ASC');
 		$this->db->limit($limit, $offset);
 		$query = $this->db->get();
 		
@@ -28,8 +27,7 @@ class Programas_model extends CI_Model {
 	public function getPesquisa($limit=0, $offset=20, $termo) {
 
 		$this->db->select('*');
-		$this->db->from('programas');
-		$this->db->where('status', 1);
+		$this->db->from('permissoes');
 		$this->db->like('nome', $termo);
 		$this->db->or_like('descricao', $termo);
 		$this->db->order_by('nome', 'ASC');
@@ -44,8 +42,7 @@ class Programas_model extends CI_Model {
 	public function getPesquisaNumRows($termo) {
 
 		$this->db->select('*');
-		$this->db->from('programas');
-		$this->db->where('status', 1);
+		$this->db->from('permissoes');
 		$this->db->like('nome', $termo);
 		$this->db->or_like('descricao', $termo);
 		$query = $this->db->get();
@@ -55,10 +52,10 @@ class Programas_model extends CI_Model {
 		return $result;
 	}   
 	
-	public function getPrograma($id) {
+	public function getPermissao($id) {
 		
-		$this->db->select('programas.*, programas.parent AS programaPai');
-		$this->db->from('programas');
+		$this->db->select('*');
+		$this->db->from('permissoes');
 		$this->db->where('id', $id);
 		$query = $this->db->get();
 		$result = $query->row();		
@@ -66,15 +63,10 @@ class Programas_model extends CI_Model {
 		return $result;
 	} 
 	
-	public function getProgramas() {
+	public function getPermissoes() {
 
-		$this->db->select('programas.*, 
-							programas.id AS idPrograma, 
-							programas.parent AS programaPai,
-							programas.nome AS programaNome');
-							
-		$this->db->from('programas');
-		$this->db->where('status', 1);
+		$this->db->select('*');							
+		$this->db->from('permissoes');
 		$this->db->order_by('nome', 'ASC');
 		
 		$query = $this->db->get();
@@ -83,14 +75,12 @@ class Programas_model extends CI_Model {
 		return $result;
 	} 
 	
-	public function getProgramasParam($param, $field) {
+	public function getPermissoesParam($param, $field) {
 
-		$this->db->select('programas.*, programas.parent AS programaPai');
-		$this->db->from('programas');	
-		$this->db->where('status', 1);
+		$this->db->select('*');
+		$this->db->from('permissoes');	
 		$this->db->where($param, $field);
-		$query = $this->db->get();
-		$result = $query->row();
+		$result = $this->db->get();		
 		
 		return $result;
 	} 
@@ -99,7 +89,7 @@ class Programas_model extends CI_Model {
 		
 		try {
 						
-			$result = $this->db->insert('programas', $data);				
+			$result = $this->db->insert('permissoes', $data);				
 			return $result;	
 				 
 		} catch (Exception $e) {			
@@ -113,7 +103,7 @@ class Programas_model extends CI_Model {
 		try {
 			
 			$this->db->where('id', $id);
-			$result = $this->db->update('programas', $data); 
+			$result = $this->db->update('permissoes', $data); 
 					
 			return $result;	
 				 
@@ -128,7 +118,7 @@ class Programas_model extends CI_Model {
 		try {
 			
 			$this->db->where('id', $id);
-			$result = $this->db->delete('programas'); 
+			$result = $this->db->delete('permissoes'); 
 					
 			return $result;	
 				 

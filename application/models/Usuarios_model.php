@@ -26,11 +26,13 @@ class Usuarios_model extends CI_Model {
 		$query = $this->db->get();
 		$result = $query->row();
 		
-		$hash = $result->senha;		
-		$check = $this->passVerify($senha, $hash);
-
-		if($check === true)
-			return $result;
+		if($result) {
+			$hash = $result->senha;
+			$check = $this->passVerify($senha, $hash);
+	
+			if($check === true)
+				return $result;
+		}
 
 		return false;
 	}   
