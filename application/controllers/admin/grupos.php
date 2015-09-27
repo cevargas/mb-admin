@@ -266,13 +266,12 @@ class Grupos extends CI_Controller {
 				//grupos permissoes
 				if($this->input->post('permissoes_grupos')) {
 					
-					foreach($this->input->post('permissoes_grupos') as $gp) {
-						
+					foreach($this->input->post('permissoes_grupos') as $gp) {						
 						$datac['id_grupo'] = $this->input->post('id');
 						$datac['id_permissao'] = $gp;
 						$this->Grupos_model->insertGruposPermissoes($datac);
 					}			
-				}				
+				}
 				
 				$this->set_success("Grupo adicionado com Sucesso.");
 			}
@@ -283,10 +282,10 @@ class Grupos extends CI_Controller {
 		}
 	}
 	
-	public function excluir($id) {		
+	public function excluir($id) {
 		
-		if(trim(is_integer((int)$id))) {
-			
+		if(trim((int)$id)) {
+		
 			$grupo = $this->Grupos_model->getGrupo($id);
 
 			//testa se o grupo existe			
@@ -295,9 +294,11 @@ class Grupos extends CI_Controller {
 				//testa se o grupo pode ser excluir
 				if($grupo->restricao == 1) {
 					$this->set_error("Grupo " . $grupo->nome . " possui Restrição e não pode ser excluído!");
+					return;
 				}
 				else if($grupo->status == 1) {
 					$this->set_error("Grupo " . $grupo->nome . " está Ativo e não pode ser excluído!");
+					return;
 				}	
 				else {
 					//testa se o grupo tem usuarios vinculados
@@ -305,6 +306,7 @@ class Grupos extends CI_Controller {
 
 					if($usuarios > 0) {
 						$this->set_error("Grupo " . $grupo->nome . " possui Usuários vinculados e não pode ser excluído!");
+						return;
 					}						
 					else {				
 						$this->Grupos_model->delete($id);						
@@ -314,11 +316,13 @@ class Grupos extends CI_Controller {
 			}
 			else {
 				$this->set_error();	
+				return;
 			}
 		}
 		else {
 			$this->set_error();	
-		}
+			return;
+		}		
 	}
 	
 	public function set_success($mensagem = NULL) {

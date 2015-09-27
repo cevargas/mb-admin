@@ -30,7 +30,7 @@ class Usuarios_model extends CI_Model {
 			$hash = $result->senha;
 			$check = $this->passVerify($senha, $hash);
 	
-			if($check === true)
+			if($check === TRUE)
 				return $result;
 		}
 
@@ -84,7 +84,10 @@ class Usuarios_model extends CI_Model {
 	
 	public function getUsuario($id) {
 		
-		$this->db->select('usuarios.*, grupos.id AS grupoId, grupos.nome AS grupoNome, grupos.restricao AS restricao');
+		$this->db->select('usuarios.*, 
+							grupos.id AS grupoId, 
+							grupos.nome AS grupoNome, 
+							grupos.restricao AS restricao');
 		$this->db->from('usuarios');	
 		$this->db->where('usuarios.id', $id);
 		$this->db->join('grupos', 'grupos.id = usuarios.id_grupo');
@@ -96,7 +99,8 @@ class Usuarios_model extends CI_Model {
 	
 	public function getUsuarioParam($param, $field) {
 		
-		$this->db->select('usuarios.*, grupos.id AS grupoId, grupos.nome AS grupoNome');
+		$this->db->select('usuarios.*, grupos.id AS grupoId, 
+							grupos.nome AS grupoNome');
 		$this->db->from('usuarios');	
 		$this->db->where($param, $field);
 		$this->db->join('grupos', 'grupos.id = usuarios.id_grupo');
@@ -174,10 +178,10 @@ class Usuarios_model extends CI_Model {
 	
 	public function cryptPass($senha){
 
-		$options = [
+		$options = array(
 			'cost' => 8,
 			'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
-		];
+		);
 		
 		return password_hash($senha, PASSWORD_BCRYPT, $options);
 	}

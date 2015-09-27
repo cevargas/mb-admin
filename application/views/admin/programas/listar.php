@@ -2,6 +2,11 @@
     <div class="ibox-title">
         <h5>PROGRAMAS </h5>        
         <div class="pull-right">
+        	<a href="<?php echo base_url()?>admin/programas"
+            	class="btn btn-info btn-sm btn-bitbucket tooltips" 
+            	data-placement="top" title="Recarregar Programas">
+            	<i class="fa fa-refresh"></i>&nbsp;Recarregar
+            </a>
         	<a href="<?php echo base_url()?>admin/programas/novo"
             	class="btn btn-info btn-sm btn-bitbucket tooltips" 
             	data-placement="top" title="Novo Programa">

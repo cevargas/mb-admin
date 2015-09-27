@@ -97,7 +97,7 @@ class Permissoes extends CI_Controller {
 	
 	public function editar($id) {
 		
-		if(trim(is_numeric((int)$id))) {
+		if(trim((int)$id)) {
 		
 			$permissao = $this->Permissoes_model->getPermissao($id);
 			 
@@ -176,7 +176,7 @@ class Permissoes extends CI_Controller {
 	
 	public function excluir($id) {		
 		
-		if(trim(is_numeric((int)$id))) {
+		if(trim((int)$id)) {
 			
 			$permissao = $this->Permissoes_model->getPermissao($id);
 

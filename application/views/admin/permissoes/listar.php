@@ -2,6 +2,11 @@
     <div class="ibox-title">
         <h5>PERMISSÕES </h5>        
         <div class="pull-right">
+        	<a href="<?php echo base_url()?>admin/permissoes"
+            	class="btn btn-info btn-sm btn-bitbucket tooltips" 
+            	data-placement="top" title="Recarregar Permissões">
+            	<i class="fa fa-refresh"></i>&nbsp;Recarregar
+            </a>
         	<a href="<?php echo base_url()?>admin/permissoes/novo"
             	class="btn btn-info btn-sm btn-bitbucket tooltips" 
             	data-placement="top" title="Nova Permissão">

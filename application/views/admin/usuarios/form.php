@@ -1,5 +1,5 @@
 <div class="ibox-content">
-   	<?php echo form_open( base_url( 'admin/usuarios/salvar' ), 
+   	<?php echo form_open_multipart( base_url( 'admin/usuarios/salvar' ), 
 				array( 'id' => 'form-usuarios', 'method' => 'post', 
 						'class' => 'form-horizontal', 'role' =>'form', 
 						'autocomplete' => 'off' ) ); 
@@ -56,7 +56,28 @@
                 	placeholder="Email" value="<?php echo (isset($usuario)) ? $usuario->email : set_value('email');?>">
             </div>
         </div>
-        
+
+        <div class="form-group">
+        	<label class="col-sm-2 control-label">Foto</label>
+            <div class="col-sm-6">
+            <p>
+				<?php if(isset($usuario) and $usuario->foto):?>          
+                    <img src="<?php echo base_url() ?>public/admin/images/users/resized/<?php echo $usuario->foto;?>" alt="Foto do Perfil" />
+                <?php endif;?>
+            </p>
+            <p>            
+				<?php
+                    $image = array(
+                        'name'  =>  'arquivo',
+                        'id'    =>  'arquivo',
+                    );
+                ?>
+				<?php echo form_upload($image); ?>
+            </p>
+                
+            </div>         
+        </div>
+
         <?php 
 			$hiddenPass = '';
 			if(isset($usuario)):
@@ -121,7 +142,7 @@
  		<?php endif;?>
  
 		<div class="form-group">
-        	<label class="col-sm-2 control-label">Ativo</label>
+        	<label class="col-sm-2 control-label">Status</label>
 			<div class="col-sm-6">
                 <input type="checkbox" class="js-switch" value="1" id="status" name="status"
                		 <?php echo (isset($usuario) and $usuario->status == 1) ? "checked" : "";?>

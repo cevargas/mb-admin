@@ -24,17 +24,20 @@ class Usuarios extends CI_Controller {
 		parent::__construct();
 
 		//se nao tiver usuario logado redireciona para o login
-		if($this->session->has_userdata('logged_in') === false) {
+		if($this->session->has_userdata('logged_in') === FALSE) {
 			redirect('admin', 'location', 301);
 		}
 		//verifica se o grupo do usuario tem permissao para acessar o controlador, carrega no controller login
-		if($this->acl->has_perm() == false) {
+		if($this->acl->has_perm() === FALSE) {
 			$this->session->set_flashdata('error_msg', 'Você não possui permissão para acessar '. strtoupper($this->uri->segment(2, 0)));
 			redirect('admin/dashboard', 'refresh');
 		}
 	
+		//load models
 		$this->load->model('Grupos_model');
 		$this->load->model('Usuarios_model');
+		$this->load->model('Uploadimages_model');
+
 	}	
 	
 	public function index() {
@@ -69,7 +72,7 @@ class Usuarios extends CI_Controller {
 		
 		$data = array();
 		
-		$termo = ($this->input->post('termo', true)) ? $this->input->post('termo', true) : $this->uri->segment(4);
+		$termo = ($this->input->post('termo', TRUE)) ? $this->input->post('termo', TRUE) : $this->uri->segment(4);
 		$data['termo'] = $termo;
 
 		//paginacao
@@ -110,7 +113,7 @@ class Usuarios extends CI_Controller {
 		
 		$data = array();
 		
-		if(trim(is_numeric((int)$id))) {
+		if(trim((int)$id)) {
 		
 			$usuario = $this->Usuarios_model->getUsuario($id);			
 			$grupos = $this->Grupos_model->getList();
@@ -132,82 +135,116 @@ class Usuarios extends CI_Controller {
 		}
 	}
 	
-	public function salvar() {		
+	public function salvar() {	
+	
+		$id = trim($this->input->post('id', TRUE));	
 				
 		$this->form_validation->set_rules('nome', 'Nome', 'trim|required');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 		$this->form_validation->set_rules('grupo', 'Grupo', 'trim|required');
 	
 		//validacao e teste da senha no cadastro
-		if($this->input->post('alterar_senha', true) == 0 and !$this->input->post('id')) {
+		if($this->input->post('alterar_senha', TRUE) == 0 and !$id) {
 			$this->form_validation->set_rules('senha', 'Senha', 'trim|required');
 			$this->form_validation->set_rules('conf_senha', 'Confirmação da Senha', 'required|matches[senha]');
 			
 			//criptografa a senha
-			$senha = $this->Usuarios_model->cryptPass($this->input->post('senha', true));
+			$senha = $this->Usuarios_model->cryptPass($this->input->post('senha', TRUE));
 		}		
 		//validacao e testa da senha na alteracao do cadastro
-		elseif($this->input->post('alterar_senha', true) == 1 and $this->input->post('id')) {
+		elseif($this->input->post('alterar_senha', TRUE) == 1 and $id) {
 			$this->form_validation->set_rules('senha_atual', 'Senha Atual', 'trim|required|callback_checkSenhaAtual');
 			$this->form_validation->set_rules('nova_senha', 'Nova Senha', 'trim|required');
 			$this->form_validation->set_rules('conf_nova_senha', 'Confirmação da Nova Senha', 'trim|required|matches[nova_senha]');
 			
 			//criptografa a senha
-			$senha = $this->Usuarios_model->cryptPass($this->input->post('nova_senha', true));
+			$senha = $this->Usuarios_model->cryptPass($this->input->post('nova_senha', TRUE));
 		}
 
 		$data = array(
-		   'nome' => $this->input->post('nome', true),
-		   'email' => $this->input->post('email', true),
-		   'id_grupo' => $this->input->post('grupo', true),
-		   'status' => ($this->input->post('status', true)) ? $this->input->post('status', true) : 0,
+		   'nome' => $this->input->post('nome', TRUE),
+		   'email' => $this->input->post('email', TRUE),
+		   'id_grupo' => $this->input->post('grupo', TRUE)
 		);
+
+		if($this->session->userdata('usuario_id') != $id) {
+			$data['status'] = ($this->input->post('status', TRUE)) ? $this->input->post('status', TRUE) : 0;
+		}
 		
 		if(isset($senha)) {
 			$data['senha'] = $senha;
 		}
-		
+
 		//editar
-		if(trim($this->input->post('id'))) {
+		if(!empty($id)) {
 			
-			$usuario = $this->Usuarios_model->getUsuario($this->input->post('id', true));
+			$usuario = $this->Usuarios_model->getUsuario($id);
 			
 			if($usuario) {
 				
 				//se o email for diferente do que esta armazenado para o usuario
 				//significa que ele foi alterado, entao testa se o novo email
 				//esta cadastrado
-				if($usuario->email != $this->input->post('email', true)) {
+				if($usuario->email != $this->input->post('email', TRUE)) {
 					
-					$checkemail = $this->checkEmail($this->input->post('email', true));
+					$checkemail = $this->checkEmail($this->input->post('email', TRUE));
 					
 					if($checkemail) {
-						$this->set_error("Opss... O email " . $this->input->post('email', true) .  " não esta disponível!");	
+						$this->set_error("Opss... O email " . $this->input->post('email', TRUE) . " não esta disponível!");	
+						return;
 					}				
 				}			
 					
-				if ($this->form_validation->run() == TRUE) {			
-					$this->Usuarios_model->update($data, $this->input->post('id'));					
+				if ($this->form_validation->run() === TRUE) {
+					
+					if (!empty($_FILES['arquivo']['name'])) {
+					
+						//Fazendo o upload do arquivo e direcionando para a view de erro ou de sucesso						
+						$upload = $this->Uploadimages_model->do_upload();
+						if($upload[0] == TRUE) {
+							$data['foto'] = $upload[1];
+						}
+						else {	
+							$this->set_error($upload[1]);
+							return;
+						}
+					}
+
+					$this->Usuarios_model->update($data, $id);					
 					$this->set_success("Usuário editado com Sucesso.");
 				}
 				else {
-					$this->editar($this->input->post('id'));
+					$this->editar($id);
 					return;
 				}				
 			}
 			else {
 				$this->set_error();	
+				return;
 			}
 		}
 		else {		
 		
-			if ($this->form_validation->run() == TRUE) {
+			if ($this->form_validation->run() === TRUE) {
 						
-				$checkemail = $this->checkEmail($this->input->post('email', true));
+				$checkemail = $this->checkEmail($this->input->post('email', TRUE));
 			
 				if($checkemail) {
-					$this->set_error("Opss... O email " .$this->input->post('email', true) . " não esta disponível!");	
-				}	
+					$this->set_error("Opss... O email " .$this->input->post('email', TRUE) . " não esta disponível!");	
+					return;
+				}
+				
+				if (!empty($_FILES['arquivo']['name'])) {					
+					//Fazendo o upload do arquivo e direcionando para a view de erro ou de sucesso						
+					$upload = $this->Uploadimages_model->do_upload();
+					if($upload[0] == TRUE) {
+						$data['foto'] = $upload[1];
+					}
+					else {	
+						$this->set_error($upload[1]);
+						return;
+					}
+				}
 					
 				$this->Usuarios_model->insert($data);		
 				$this->set_success("Usuário adicionado com Sucesso.");
@@ -220,34 +257,44 @@ class Usuarios extends CI_Controller {
 	}
 	
 	public function excluir($id) {
+		
+		if(trim((int)$id)) {
+		
+			if($this->session->userdata('usuario_id') != $id) {
 
-		if(trim(is_numeric((int)$id))) {
-			
-			$usuario = $this->Usuarios_model->getUsuario($id);
-
-			//testa se o grupo existe			
-			if($usuario) {
-			
-				if($usuario->status == 1) {
-					$this->set_error("Usuário " . $usuario->nome . " está Ativo e não pode ser excluído! Desative-o antes.");
-				}	
-				else {				
-					$this->Usuarios_model->delete($id);						
-					$this->set_success("Usuário excluído com Sucesso.");
+				$usuario = $this->Usuarios_model->getUsuario($id);
+	
+				//testa se o grupo existe			
+				if($usuario) {
+				
+					if($usuario->status == 1) {
+						$this->set_error("Usuário " . $usuario->nome . " está Ativo e não pode ser excluído! Desative-o antes.");
+						return;
+					}	
+					else {
+						$this->Usuarios_model->delete($id);						
+						$this->set_success("Usuário excluído com Sucesso.");
+					}
+				}
+				else {
+					$this->set_error();	
+					return;
 				}
 			}
 			else {
-				$this->set_error();	
-			}
-		}
+				$this->set_error("Você não pode se excluir!");	
+				return;
+			}			
+		}		
 		else {
 			$this->set_error();	
+			return;
 		}
 	}
 	
 	//verifica se o email existe..caso ele seja alterado ou incluido quando cadastrar um usuario
 	function checkEmail($email){		
-		return $this->Usuarios_model->getUsuarioParam('usuarios.email', $this->input->post('email', true));
+		return $this->Usuarios_model->getUsuarioParam('usuarios.email', $this->input->post('email', TRUE));
 	}
 	
 	//verificacao da senha atual
@@ -255,19 +302,21 @@ class Usuarios extends CI_Controller {
 
 		try {
 			
-			$email = $this->input->post('email', true);
+			$email = $this->input->post('email', TRUE);
 			$hash = $this->Usuarios_model->getUsuarioCheckSenha($email, $senha);
 			$checksenha = $this->Usuarios_model->passVerify($senha, $hash->senha);
 
-			if($checksenha === false) {			
+			if($checksenha === FALSE) {			
 				$this->form_validation->set_message('checkSenhaAtual', 'Senha atual inválida!');
-				return false;
+				return FALSE;
 			}
 			
-			return true;
+			return TRUE;
 								   
 		} catch(Exception $e){
 			log_message('error', $e->getMessage());
+			redirect('admin/usuarios', 'location', 303);
+			exit;
         }
 	}
 	

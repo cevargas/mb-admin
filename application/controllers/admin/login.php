@@ -23,7 +23,7 @@ class Login extends CI_Controller {
 		$this->load->model('Usuarios_model');
 		
 		//se tiver usuario logado, redireciona para dashboard
-		if($this->session->has_userdata('logged_in') === true) {
+		if($this->session->has_userdata('logged_in') === TRUE) {
 			redirect('admin/dashboard', 'location', 301);
 		}
 	}
@@ -62,14 +62,15 @@ class Login extends CI_Controller {
         }
 		
 		//se encontrar o usuario
-		if(isset($usuario) and $usuario !== false) {
+		if(isset($usuario) and $usuario !== FALSE) {
 
 			//seta paramentros de sessao
-			$data_session_set = array('logged_in' => true, 
-										'usuario_id' => $usuario->usuarioId,
-										'usuario_nome' => $usuario->usuarioNome,
-										'grupo_id' => $usuario->grupoId,
-										'grupo_nome' => $usuario->grupoNome);						  
+			$data_session_set = array('logged_in' => TRUE, 
+									  'usuario_id' => $usuario->usuarioId,
+									  'usuario_nome' => $usuario->usuarioNome,
+									  'grupo_id' => $usuario->grupoId,
+									  'grupo_nome' => $usuario->grupoNome);		
+									  				  
 			$this->session->set_userdata($data_session_set);
 			
 			//carrega lista de permissoes do grupo / usuario

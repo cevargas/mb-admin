@@ -1,7 +1,12 @@
 <div class="ibox float-e-margins">
     <div class="ibox-title">
         <h5>GRUPOS DE USUÁRIOS </h5>
-         <div class="pull-right">        
+         <div class="pull-right">    
+         	<a href="<?php echo base_url()?>admin/grupos"
+            	class="btn btn-info btn-sm btn-bitbucket tooltips" 
+            	data-placement="top" title="Recarregar Grupos">
+            	<i class="fa fa-refresh"></i>&nbsp;Recarregar
+            </a>    
         	<a href="<?php echo base_url()?>admin/grupos/novo"
             	class="btn btn-info btn-sm btn-bitbucket tooltips" 
             	data-placement="top" title="Novo Grupo">

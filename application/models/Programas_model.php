@@ -30,12 +30,12 @@ class Programas_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('programas');
 		$this->db->where('status', 1);
-		$this->db->like('nome', $termo);
-		$this->db->or_like('descricao', $termo);
+		$this->db->like('nome', quotes_to_entities($termo));
+		$this->db->or_like('descricao', quotes_to_entities($termo));
 		$this->db->order_by('nome', 'ASC');
 		$this->db->limit($limit, $offset);
 		$query = $this->db->get();
-		
+
 		$result = $query->result();		
 		
 		return $result;

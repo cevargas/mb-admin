@@ -1,7 +1,12 @@
 <div class="ibox float-e-margins">
     <div class="ibox-title">
         <h5>USUÁRIOS </h5>        
-        <div class="pull-right">
+        <div class="pull-right">        
+        	<a href="<?php echo base_url()?>admin/usuarios"
+            	class="btn btn-info btn-sm btn-bitbucket tooltips" 
+            	data-placement="top" title="Recarregar Usuários">
+            	<i class="fa fa-refresh"></i>&nbsp;Recarregar
+            </a>
         	<a href="<?php echo base_url()?>admin/usuarios/novo"
             	class="btn btn-info btn-sm btn-bitbucket tooltips" 
             	data-placement="top" title="Novo Usuário">

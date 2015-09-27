@@ -99,7 +99,7 @@ class Programas extends CI_Controller {
 	
 	public function editar($id) {
 		
-		if(trim(is_numeric((int)$id))) {
+		if(trim((int)$id)) {
 		
 			$programa = $this->Programas_model->getPrograma($id);
 			 
@@ -184,7 +184,7 @@ class Programas extends CI_Controller {
 	
 	public function excluir($id) {		
 		
-		if(trim(is_numeric((int)$id))) {
+		if(trim((int)$id)) {
 			
 			$programa = $this->Programas_model->getPrograma($id);
 
