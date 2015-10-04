@@ -17,7 +17,7 @@ class Logout extends CI_Controller {
 		parent::__construct();	
 		
 		//se nao tiver sessao redireciona para o login
-		if($this->session->has_userdata('logged_in') === false) {
+		if($this->session->has_userdata('logged_in') === FALSE) {
 			redirect('admin', 'location', 301);
 		}		
 	}

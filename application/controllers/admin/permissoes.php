@@ -19,11 +19,11 @@ class Permissoes extends CI_Controller {
 		parent::__construct();
 
 		//se nao tiver usuario logado redireciona para o login
-		if($this->session->has_userdata('logged_in') === false) {
+		if($this->session->has_userdata('logged_in') === FALSE) {
 			redirect('admin', 'location', 301);
 		}
 		//verifica se o grupo do usuario tem permissao para acessar o controlador, carrega no controller login
-		if($this->acl->has_perm() == false) {
+		if($this->acl->has_perm() === FALSE) {
 			$this->set_error('Você não possui permissão para acessar '. strtoupper($this->uri->segment(2, 0)));
 		}
 	
@@ -62,7 +62,7 @@ class Permissoes extends CI_Controller {
 		
 		$data = array();
 		
-		$termo = ($this->input->post('termo', true)) ? $this->input->post('termo', true) : $this->uri->segment(4);
+		$termo = ($this->input->post('termo', TRUE)) ? $this->input->post('termo', TRUE) : $this->uri->segment(4);
 		$data['termo'] = $termo;
 
 		//paginacao
@@ -103,6 +103,7 @@ class Permissoes extends CI_Controller {
 			 
 			if(!$permissao) {
 				$this->set_error();	
+				return;
 			}					 
 			
 			$data['programa'] = 'Permissões';
@@ -114,6 +115,7 @@ class Permissoes extends CI_Controller {
 		}
 		else {
 			$this->set_error();	
+			return;
 		}
 	}
 	
@@ -134,10 +136,10 @@ class Permissoes extends CI_Controller {
 				if ($this->form_validation->run() == TRUE) {						
 					
 					$data = array(
-					   'nome' => $this->input->post('nome', true),
-					   'descricao' => $this->input->post('descricao', true),
-					   'chave' => $this->input->post('chave', true),
-					   'controlador' => $this->input->post('controlador', true)
+					   'nome' => $this->input->post('nome', TRUE),
+					   'descricao' => $this->input->post('descricao', TRUE),
+					   'chave' => $this->input->post('chave', TRUE),
+					   'controlador' => $this->input->post('controlador', TRUE)
 					);							
 				}
 				else {										
@@ -147,9 +149,11 @@ class Permissoes extends CI_Controller {
 
 				$this->Permissoes_model->update($data, $this->input->post('id'));				
 				$this->set_success("Permissão editada com Sucesso.");
+				return;
 			}
 			else {
 				$this->set_error();	
+				return;
 			}
 		}
 		//novo
@@ -158,14 +162,15 @@ class Permissoes extends CI_Controller {
 			if ($this->form_validation->run() == TRUE) {
 				
 				$data = array(
-				   'nome' => $this->input->post('nome', true),
-				   'descricao' => $this->input->post('descricao', true),
-				   'chave' => $this->input->post('chave', true),
-				   'controlador' => $this->input->post('controlador', true)
+				   'nome' => $this->input->post('nome', TRUE),
+				   'descricao' => $this->input->post('descricao', TRUE),
+				   'chave' => $this->input->post('chave', TRUE),
+				   'controlador' => $this->input->post('controlador', TRUE)
 				);	
 							
 				$this->Permissoes_model->insert($data);		
 				$this->set_success("Permissão adicionada com Sucesso.");
+				return;
 			}
 			else {										
 				$this->novo();
@@ -184,14 +189,17 @@ class Permissoes extends CI_Controller {
 					
 				$this->Permissoes_model->delete($id);						
 				$this->set_success("Permissão excluída com Sucesso.");	
+				return;
 				
 			}
 			else {
 				$this->set_error();	
+				return;
 			}
 		}
 		else {
 			$this->set_error();	
+			return;
 		}
 	}
 	

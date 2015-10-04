@@ -80,7 +80,7 @@ class Usuarios extends CI_Controller {
 		$config['total_rows'] = $this->Usuarios_model->getPesquisaNumRows($termo);
 		$config['uri_segment'] = 5;
 		
-		$this->pagination->initialize($config); 	
+		$this->pagination->initialize($config);
 		
 		$data['paginacao'] = $this->pagination->create_links();
 		$data['page'] = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
@@ -120,6 +120,7 @@ class Usuarios extends CI_Controller {
 			 
 			if(!$usuario) {
 				$this->set_error();	
+				return;
 			}					 
 			
 			$data['programa'] = 'Usuários';
@@ -132,6 +133,7 @@ class Usuarios extends CI_Controller {
 		}
 		else {
 			$this->set_error();	
+			return;
 		}
 	}
 	
@@ -197,12 +199,12 @@ class Usuarios extends CI_Controller {
 					
 				if ($this->form_validation->run() === TRUE) {
 					
-					if (!empty($_FILES['arquivo']['name'])) {
-					
-						//Fazendo o upload do arquivo e direcionando para a view de erro ou de sucesso						
+					if (!empty($_FILES['arquivo']['name'])) {				
 						$upload = $this->Uploadimages_model->do_upload();
 						if($upload[0] == TRUE) {
 							$data['foto'] = $upload[1];
+							//altera foto da sessao
+							$this->session->set_userdata('usuario_foto', $data['foto']);
 						}
 						else {	
 							$this->set_error($upload[1]);
@@ -235,7 +237,6 @@ class Usuarios extends CI_Controller {
 				}
 				
 				if (!empty($_FILES['arquivo']['name'])) {					
-					//Fazendo o upload do arquivo e direcionando para a view de erro ou de sucesso						
 					$upload = $this->Uploadimages_model->do_upload();
 					if($upload[0] == TRUE) {
 						$data['foto'] = $upload[1];
@@ -263,8 +264,7 @@ class Usuarios extends CI_Controller {
 			if($this->session->userdata('usuario_id') != $id) {
 
 				$usuario = $this->Usuarios_model->getUsuario($id);
-	
-				//testa se o grupo existe			
+			
 				if($usuario) {
 				
 					if($usuario->status == 1) {

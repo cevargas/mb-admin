@@ -19,11 +19,11 @@ class Programas extends CI_Controller {
 		parent::__construct();
 
 		//se nao tiver usuario logado redireciona para o login
-		if($this->session->has_userdata('logged_in') === false) {
+		if($this->session->has_userdata('logged_in') === FALSE) {
 			redirect('admin', 'location', 301);
 		}
 		//verifica se o grupo do usuario tem permissao para acessar o controlador, carrega no controller login
-		if($this->acl->has_perm() == false) {
+		if($this->acl->has_perm() === FALSE) {
 			$this->set_error('Você não possui permissão para acessar '. strtoupper($this->uri->segment(2, 0)));
 		}
 	
@@ -63,7 +63,7 @@ class Programas extends CI_Controller {
 		
 		$data = array();
 		
-		$termo = ($this->input->post('termo', true)) ? $this->input->post('termo', true) : $this->uri->segment(4);
+		$termo = ($this->input->post('termo', TRUE)) ? $this->input->post('termo', TRUE) : $this->uri->segment(4);
 		$data['termo'] = $termo;
 
 		//paginacao
@@ -105,6 +105,7 @@ class Programas extends CI_Controller {
 			 
 			if(!$programa) {
 				$this->set_error();	
+				return;
 			}					 
 			
 			$data['programa'] = 'Programas';
@@ -118,6 +119,7 @@ class Programas extends CI_Controller {
 		}
 		else {
 			$this->set_error();	
+			return;
 		}
 	}
 	
@@ -138,12 +140,12 @@ class Programas extends CI_Controller {
 				if ($this->form_validation->run() == TRUE) {						
 					
 					$data = array(
-					   'nome' => $this->input->post('nome', true),
-					   'descricao' => $this->input->post('descricao', true),
-					   'status' => ($this->input->post('status', true)) ? $this->input->post('status', true) : 0,
-					   'url' => $this->input->post('url', true),
-					   'icone' => $this->input->post('icone', true),
-					   'parent' => $this->input->post('programaPai', true)
+					   'nome' => $this->input->post('nome', TRUE),
+					   'descricao' => $this->input->post('descricao', TRUE),
+					   'status' => ($this->input->post('status', TRUE)) ? $this->input->post('status', TRUE) : 0,
+					   'url' => $this->input->post('url', TRUE),
+					   'icone' => $this->input->post('icone', TRUE),
+					   'parent' => $this->input->post('programaPai', TRUE)
 					);							
 				}
 				else {										
@@ -153,9 +155,11 @@ class Programas extends CI_Controller {
 
 				$this->Programas_model->update($data, $this->input->post('id'));				
 				$this->set_success("Programa editado com Sucesso.");
+				return;
 			}
 			else {
-				$this->set_error();	
+				$this->set_error();
+				return;
 			}
 		}
 		//novo
@@ -164,16 +168,17 @@ class Programas extends CI_Controller {
 			if ($this->form_validation->run() == TRUE) {
 				
 				$data = array(
-					   'nome' => $this->input->post('nome', true),
-					   'descricao' => $this->input->post('descricao', true),
-					   'status' => ($this->input->post('status', true)) ? $this->input->post('status', true) : 0,
-					   'url' => $this->input->post('url', true),
-					   'icone' => $this->input->post('icone', true),
-					   'parent' => $this->input->post('programaPai', true)
+					   'nome' => $this->input->post('nome', TRUE),
+					   'descricao' => $this->input->post('descricao', TRUE),
+					   'status' => ($this->input->post('status', TRUE)) ? $this->input->post('status', TRUE) : 0,
+					   'url' => $this->input->post('url', TRUE),
+					   'icone' => $this->input->post('icone', TRUE),
+					   'parent' => $this->input->post('programaPai', TRUE)
 					);		
 							
 				$this->Programas_model->insert($data);		
 				$this->set_success("Programa adicionado com Sucesso.");
+				return;
 			}
 			else {										
 				$this->novo();
@@ -190,22 +195,25 @@ class Programas extends CI_Controller {
 
 			//testa se o grupo existe			
 			if($programa) {
-			
 				
 				if($programa->status == 1) {
 					$this->set_error("Programa " . $programa->nome . " está Ativo e não pode ser excluído!");
+					return;
 				}	
 				else {					
 					$this->Programas_model->delete($id);						
 					$this->set_success("Programa excluído com Sucesso.");	
+					return;
 				}
 			}
 			else {
 				$this->set_error();	
+				return;
 			}
 		}
 		else {
 			$this->set_error();	
+			return;
 		}
 	}
 	

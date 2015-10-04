@@ -18,7 +18,7 @@ class Dashboard extends CI_Controller {
 		parent::__construct();
 
 		//se nao tiver usuario logado redireciona para o login
-		if($this->session->has_userdata('logged_in') === false) {
+		if($this->session->has_userdata('logged_in') === FALSE) {
 			redirect('admin', 'location', 301);
 		}
 	}

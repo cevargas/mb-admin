@@ -14,10 +14,11 @@ class Usuarios_model extends CI_Model {
 	public function checkLogin($email, $senha) {
 		
 		$this->db->select('usuarios.nome AS usuarioNome,
-							 grupos.nome AS grupoNome, 
-							 usuarios.senha AS senha,
-							 usuarios.id AS usuarioId, 
-							 grupos.id AS grupoId');				 
+						   grupos.nome AS grupoNome, 
+						   usuarios.senha AS senha,
+						   usuarios.id AS usuarioId, 
+						   grupos.id AS grupoId,
+						   usuarios.foto AS fotoPerfil');				 
 		$this->db->from('usuarios');
 		$this->db->join('grupos', 'usuarios.id_grupo = grupos.id');
 		$this->db->where('usuarios.email', $email);

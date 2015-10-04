@@ -55,7 +55,7 @@ class Login extends CI_Controller {
 		try {
 
 			//consulta no banco de dados se o usuario existe e se esta ativo	
-			$usuario = $this->Usuarios_model->checkLogin($email, $this->input->post('senha', true));
+			$usuario = $this->Usuarios_model->checkLogin($email, $this->input->post('senha', TRUE));
 				   
 		} catch(Exception $e){
 			log_message('error', $e->getMessage());
@@ -68,6 +68,7 @@ class Login extends CI_Controller {
 			$data_session_set = array('logged_in' => TRUE, 
 									  'usuario_id' => $usuario->usuarioId,
 									  'usuario_nome' => $usuario->usuarioNome,
+									  'usuario_foto' => $usuario->fotoPerfil,
 									  'grupo_id' => $usuario->grupoId,
 									  'grupo_nome' => $usuario->grupoNome);		
 									  				  
@@ -80,12 +81,12 @@ class Login extends CI_Controller {
 			$menu = new Menu; //libraries/menu
 			$menu->getMenu();
 			
-			return true;
+			return TRUE;
 			
 		}
 		else {
 			$this->form_validation->set_message('verificacao_login', 'Usuário ou Senha inválidos!');
-			return false;
+			return FALSE;
 		}
     }
 }

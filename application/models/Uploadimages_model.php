@@ -62,8 +62,8 @@ class Uploadimages_model extends CI_Model {
 						'source_image'      => $image_data['full_path'],
 						'new_image'         => $this->thumbs_path,
 						'maintain_ratio'    => TRUE,
-						'width'             => 40,
-						'height'            => 40);
+						'width'             => 48,
+						'height'            => 48);
 			
     	//here is the second thumbnail, notice the call for the initialize() function again
 		$this->image_lib->clear();

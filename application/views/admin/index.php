@@ -48,7 +48,19 @@
                     <li class="nav-header">
                         <div class="dropdown profile-element"> 
                         	<span>
-                           		<img alt="image" class="img-circle" src="<?php echo base_url()?>public/template/img/small_profile.jpg" />
+                            	
+							<?php
+                                if($this->session->userdata('usuario_foto')):
+                            ?>                            
+                           		<img alt="image" class="img-circle" src="<?php echo base_url()?>public/admin/images/users/thumbs/<?php echo $this->session->userdata('usuario_foto');?>" />
+                           <?php
+						   	else:
+						   ?>
+                           	<img alt="image" class="img-circle" src="<?php echo base_url()?>public/template/img/avatar.png" />                                
+                           <?php
+						   	endif;
+						   ?>      
+                               
                             </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear"> 
@@ -59,7 +71,7 @@
                                 </span> 
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a href="<?php echo base_url()?>admin/usuarios/editar/<?php echo $this->session->userdata('usuario_id');?>">Perfil</a></li>
+                                <li><a href="<?php echo base_url()?>admin/perfil/editar">Perfil</a></li>
                                 <li><a href="<?php echo base_url()?>admin/logout">Sair</a></li>
                             </ul>
                         </div>
