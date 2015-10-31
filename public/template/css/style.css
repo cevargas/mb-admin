@@ -2191,11 +2191,20 @@ table.dataTable thead .sorting:after {
   height: 300px;
 }
 /* Validation */
+
+label.error:before {
+	content: "\f071";
+	font-family: FontAwesome;
+	margin-right:3px;
+}
+
 label.error {
   color: #cc5965;
   display: inline-block;
   margin-left: 5px;
+  margin-top: 5px;
   font-weight:normal;
+  font-size:12px;
 }
 .form-control.error {
   border: 1px solid #cc5965;

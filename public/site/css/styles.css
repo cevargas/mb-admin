@@ -1,0 +1,324 @@
+/*
+ *---------------------------------------------------------------
+ * DEFAUL CSS
+ *---------------------------------------------------------------
+ *
+ * CSS padrao para elementos da pagina
+ * color:#ff6d00;
+*/
+
+html, body {
+	width: 100%;
+	height: 100%;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+	font-weight: 300;
+	font-style: normal;
+	color: #82837E;
+	color: rgba(130,131,126, 1);
+	font-size:1em;
+	font-family: 'Open Sans',sans-serif;	
+	text-rendering: optimizelegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+	background: #F8F8F8;
+	background: rgba(248, 248, 248, 1);
+}
+
+*,
+*:before,
+*:after {
+	border: 0 none;
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+
+ul { 
+	margin: 0; 
+	padding: 0; 
+	list-style-type: none; 
+	color:inherit;
+}
+
+a {
+	color:inherit;
+	text-decoration:none;
+	cursor:pointer;
+	transition: all 0.4s ease 0.1s;
+}
+
+a:hover {
+	text-decoration:none;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto auto;
+}
+
+/*
+ *---------------------------------------------------------------
+ * CUSTOM CSS
+ *---------------------------------------------------------------
+ *
+*/
+.radius {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.radius-bottom {
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.radius-top {
+	-moz-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	 border-top-left-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.shadow {
+	box-shadow: 0 5px 5px -5px #CCC;
+}
+
+.realign {
+	margin-top: -150px !important;
+	display:block;
+}
+
+.hidden {
+	display:none;
+	visibility:hidden;
+}
+
+.link:hover {
+	color:#ff6d00;
+	cursor:pointer !important;
+}
+
+.orange {
+	color:#ff6d00 !important;
+}
+
+/* CUSTOM BOOTSTRAP */
+.form-control:focus {
+  	border-color: #ff6d00;
+  	box-shadow: inset 0 1px 1px rgba(255, 109, 0, 0.075), 0 0 8px rgba(255, 109, 0, 0.6);
+}
+	
+.visible {
+	visibility: visible;
+	opacity: 1;
+	transition: opacity 2s linear;
+}	
+.hidden {
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s 2s, opacity 2s linear;
+}
+
+/*
+ *---------------------------------------------------------------
+ * SITE CSS
+ *---------------------------------------------------------------
+ *
+*/	
+		/* MENU */		
+		#menu {
+			padding-top:50px;
+			font-family:'Titillium Web',sans-serif;
+			text-align:left;
+		}
+		
+		#logo-menu {
+			display:block;
+			padding-bottom:30px;
+		}
+			#logo-nome {
+				font-weight:600;
+				font-size:38px;
+			}
+			
+			#logo-descricao {
+				margin-left:2px;
+				margin-top:-14px;
+				font-weight:400;
+				font-size:22px;
+				color:#CCC;
+			}
+			
+			#logo-sobre {
+				margin-left:2px;
+				margin-top:10px;
+				font-weight:400;
+				font-size:14px;
+				color:#999;
+			}
+		
+		#links-menu {
+			line-height:2;
+			font-size:16px;	
+			font-weight:400;
+			padding-bottom:40px;
+		}
+		
+			#links-menu li a div {
+				margin:2px 2px 4px 0;
+			}
+		
+			#links-menu li a:hover {
+				color:#ff6d00;
+			}
+		
+		#social-menu {
+			line-height:2;
+			font-size:14px;
+			color:#999;
+		}		
+		/* FIM MENU */
+		
+		/* CONTEUDO */		
+		#conteudo {
+			padding-top:50px;
+			display:block;
+			height:auto;
+		}
+		
+		.titulo {
+			display:block;
+			font-size:2em;
+			font-family:'Titillium Web',sans-serif;
+			color:#CCC;	
+		}
+		
+		.descricao {
+			display:block;
+			font-size:16px;
+			font-weight:500;
+		}
+				
+			.itens {
+				display:block;
+				overflow:hidden;
+				cursor:default;
+				margin:5px;
+			}
+				
+			/*.itens:hover {
+				border:1px solid #ff6d00;
+			}*/	
+			
+			.effect img {
+				-webkit-transition: all 1s ease;
+				   -moz-transition: all 1s ease;
+				     -o-transition: all 1s ease;
+				    -ms-transition: all 1s ease;
+					    transition: all 1s ease;
+						-webkit-filter: grayscale(100%); filter: grayscale(100%); 
+			}
+							
+			.effect:hover img {
+				opacity:0.9;
+				-webkit-filter: grayscale(0%); filter: grayscale(0%); 
+			}
+			
+			.item-image {
+				min-height:60px;
+			}
+			
+			.item-image img { 
+				width: 100%; 
+				height: 100%; 
+			}
+		
+			.item-descript {
+				display:block;
+				overflow:hidden;
+				text-align:center;
+				padding:10px;
+				bottom:0px;
+				min-height:40px;
+				background:#FFF;
+				text-transform:uppercase;
+				font-size:12px;
+				font-weight:400;
+			}
+				
+		#contato {
+			display:block;
+			margin-top:20px;			
+		}
+		
+		#footer {
+			margin-top:20px;
+			margin-bottom:30px;
+			display:block;
+			font-size:14px;
+			color:#CCC;
+		}		
+		/* FIM CONTEUDO */
+		
+		/* HOME ISOTOPE */		
+		.container-fluid.pg-inside {
+			padding: 10px 10px 10px 0;
+			display:block;
+			height:auto;
+		}
+		.container-fluid.pg-inside .row [class*='col-']:not(:first-child),
+		.container-fluid.pg-inside .row [class*='col-']:not(:last-child)
+		{
+		  padding-right: 0;
+		  padding-left: 0;
+		}
+		
+		.row {
+		   margin-left:0;
+		   margin-right:0;
+		}
+		
+		.item { 
+		  border: none;
+		}
+		
+		/* Isotope Transitions
+		------------------------------- */
+		.isotope,
+		.isotope .item {
+		  -webkit-transition-duration: 0.8s;
+			 -moz-transition-duration: 0.8s;
+			  -ms-transition-duration: 0.8s;
+			   -o-transition-duration: 0.8s;
+				  transition-duration: 0.8s;
+		}
+		
+		.isotope {
+		  -webkit-transition-property: height, width;
+			 -moz-transition-property: height, width;
+			  -ms-transition-property: height, width;
+			   -o-transition-property: height, width;
+				  transition-property: height, width;
+		}
+		
+		.isotope .item {
+		  -webkit-transition-property: -webkit-transform, opacity;
+			 -moz-transition-property:    -moz-transform, opacity;
+			  -ms-transition-property:     -ms-transform, opacity;
+			   -o-transition-property:         top, left, opacity;
+				  transition-property:         transform, opacity;
+		}

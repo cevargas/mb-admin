@@ -1,0 +1,42 @@
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Small devices (tablets, 768px and up) */
+@media (max-width: 768px) { 
+	#menu {
+		text-align:center;
+	}	
+	#logo-menu {
+		padding:0;	
+	}
+	#links-menu {
+		font-size:18px;
+	}
+	#social-menu {
+		font-size:16px;
+	}
+	#logo-sobre {
+		font-size:16px;
+	}
+	#conteudo {
+		padding-top:20px;
+	}	
+	.container-fluid.isotp {
+		padding:0;	
+	}
+	.itens {
+		margin:5px 0 5px 0;
+	}	
+	#contato .form-group:first-child input {
+		margin-top:15px;	
+	}
+	#links-menu, #social-menu {
+		display:none;
+	}
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) { }
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { }
