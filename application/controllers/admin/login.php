@@ -33,7 +33,6 @@ class Login extends CI_Controller {
 		//seta validacoes
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|callback_verificacao_login');
 		$this->form_validation->set_rules('senha', 'Senha', 'trim|required|min_length[5]');
-		//$this->form_validation->set_error_delimiters('<div class="alert alert-danger">', '</div>');
 		
 		//se NAO validar o login, retorna para o Formulario de login
   		if ($this->form_validation->run() == FALSE) {
@@ -70,7 +69,7 @@ class Login extends CI_Controller {
 									  'usuario_nome' => $usuario->usuarioNome,
 									  'usuario_foto' => $usuario->fotoPerfil,
 									  'grupo_id' => $usuario->grupoId,
-									  'grupo_nome' => $usuario->grupoNome);		
+									  'grupo_nome' => $usuario->grupoNome);
 									  				  
 			$this->session->set_userdata($data_session_set);
 			

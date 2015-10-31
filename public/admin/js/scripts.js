@@ -128,7 +128,7 @@ APP = {
 							 return $("#alterar_senha").val() == 1
 						}
 					}
-				},	
+				}
 			},
 			messages: {
 				grupo: "Selecione o Grupo do Usuário",
@@ -197,10 +197,80 @@ APP = {
 		});
 	},
 	
+	//form validacao form perfil
+	validatePerfil: function(){
+		
+		$("#form-perfil").validate({
+			errorElement: 'label',
+			errorClass: 'error',
+			focusInvalid: false,
+			ignore: "",
+			rules: {
+				email: {
+					required: true,
+					email: true
+				},
+				nome: "required",		
+				senha_atual: {
+					required: {
+						depends: function() {
+							return $("#alterar_senha").val() == 1
+					 	}
+					}
+				},
+				nova_senha: {
+					required: {
+						depends: function() {
+							return $("#alterar_senha").val() == 1
+					 	}
+					}
+				},
+				conf_nova_senha: {
+					required: {
+						 depends: function() {
+							 return $("#alterar_senha").val() == 1
+						 }
+					},
+					equalTo: {
+						param: '#nova_senha',
+						depends: function() {
+							 return $("#alterar_senha").val() == 1
+						}
+					}
+				},		
+			},
+			messages: {
+				nome: "Informe seu Nome",
+				email: {
+				  required: "Infome seu Email",
+				  email: "Informe um Email válido"
+				},			
+				senha_atual: "Informe sua Senha atual",
+				nova_senha: "Informe a Nova Senha",
+				conf_nova_senha: {
+					required: "Confirme a Nova Senha",
+					equalTo: "Confirmação da Nova Senha inválida"
+				}	
+			},
+			errorPlacement: function (error, element) { 				
+				if (element.parent().parent().parent(".i-checks").size() > 0) {
+					error.appendTo(element.parent().parent().parent().parent("div:first"));
+				}
+				else {
+					error.insertAfter(element);
+				}
+			},
+			submitHandler: function(form) {	
+				form.submit();
+			}
+		});
+	},
+	
 	init: function(){
 		this.jsSwitch();
 		this.validateUsuarios();
 		this.validateGrupos();
+		this.validatePerfil();
 		this.iCheck();
 		this.altPass();
 		this.confirmModal();

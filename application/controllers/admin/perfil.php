@@ -33,20 +33,12 @@ class Perfil extends CI_Controller {
 		
 	}
 	
-	public function editar($id = NULL) {
+	public function editar() {
 		
-		if($id != NULL) {
-			if($id != $this->session->userdata('usuario_id')) {
-				$this->set_error("Opss..o que você esta querendo fazer?");	
-				return;
-			}
-		}
-		
-		$id = $this->session->userdata('usuario_id');
-		
+		$id = $this->session->userdata('usuario_id');		
 		$data = array();
 		
-		if(trim((int)$id)) {
+		if($id) {
 		
 			$usuario = $this->Usuarios_model->getUsuario($id);			
 

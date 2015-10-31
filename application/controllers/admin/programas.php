@@ -24,7 +24,8 @@ class Programas extends CI_Controller {
 		}
 		//verifica se o grupo do usuario tem permissao para acessar o controlador, carrega no controller login
 		if($this->acl->has_perm() === FALSE) {
-			$this->set_error('Você não possui permissão para acessar '. strtoupper($this->uri->segment(2, 0)));
+			$this->session->set_flashdata('error_msg', 'Você não possui permissão para acessar '. strtoupper($this->uri->segment(2, 0)));
+			redirect('admin/dashboard', 'refresh');
 		}
 	
 		$this->load->model('Programas_model');

@@ -27,7 +27,7 @@
         <div class="form-group">
         	<label class="col-sm-2 control-label">Email</label>
             <div class="col-sm-6">
-            	<input type="text" autocomplete="off" class="form-control" id="email" name="email"
+            	<input type="email" autocomplete="off" class="form-control" id="email" name="email"
                 	placeholder="Email" value="<?php echo (isset($usuario)) ? $usuario->email : set_value('email');?>">
             </div>
         </div>
