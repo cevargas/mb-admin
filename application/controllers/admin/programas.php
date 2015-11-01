@@ -40,17 +40,31 @@ class Programas extends CI_Controller {
 		
 		$data = array();
 		
-		//paginacao
-		$config['base_url'] = base_url()."admin/programas/index";
-		$config['total_rows'] = $this->Programas_model->countAll();
-		$config['uri_segment'] = 4;
-		
-		$this->pagination->initialize($config); 	
-		
-		$data['paginacao'] = $this->pagination->create_links();
-		$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+		$data['per_page'] = ($this->input->get('per_page')) ? $this->input->get('per_page') : 1;	
+		$data['orderby'] = ($this->input->get('orderby')) ? $this->input->get('orderby') : 'nome';	
+		$data['order'] = ($this->input->get('order')) ? $this->input->get('order') : 'ASC';	
+		$data['termo'] = ($this->input->post('termo', TRUE)) ? $this->input->post('termo', TRUE) : $this->input->get('termo');
 
-		$programas = $this->Programas_model->getList($this->config->item('per_page'), $data['page']);
+		if($this->input->post('termo')) {
+			$config['total_rows'] = $this->Programas_model->getPesquisaNumRows($data['termo']);
+			$config['base_url'] = site_url("admin/programas/index?termo={$data['termo']}");
+		}
+		else {
+			$config['total_rows'] = $this->Programas_model->countAll();		
+			$config['base_url'] = site_url("admin/programas/index/");
+		}
+		
+		$offset = ($data['per_page'] == 1) ? 0 : ($data['per_page'] * $this->config->item('per_page')) - $this->config->item('per_page');
+		
+		$this->pagination->initialize($config);		
+		$data['paginacao'] = $this->pagination->create_links();	
+
+		if($data['order'] == 'ASC')
+			$data['ord'] = 'DESC';
+		else
+			$data['ord'] = 'ASC';
+		
+		$programas = $this->Programas_model->getList($this->config->item('per_page'), $offset, $data['orderby'], $data['order'], $data['termo']);
 		
 		$data['programa'] = 'Programas';
 		$data['acao'] = 'Lista de Programas';
@@ -60,7 +74,7 @@ class Programas extends CI_Controller {
 		$this->load->view('admin/index', $data);
 	}
 	
-	public function pesquisar() {
+	/*public function pesquisar() {
 		
 		$data = array();
 		
@@ -85,7 +99,7 @@ class Programas extends CI_Controller {
 		$data['listar_programas'] = $programas;
 		
 		$this->load->view('admin/index', $data);
-	}
+	}*/
 	
 	public function novo() {
 		
