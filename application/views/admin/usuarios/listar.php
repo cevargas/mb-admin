@@ -14,7 +14,7 @@
             </a>
         </div>
         <div class="col-sm-4 pull-right">
-            <?php echo form_open( base_url( 'admin/usuarios/pesquisar' ), array( 'id' => 'form-pesquisa', 'method' => 'post' ) ); ?>
+            <?php echo form_open( base_url( 'admin/usuarios/listar' ), array( 'id' => 'form-pesquisa', 'method' => 'post' ) ); ?>
             <div class="input-group">
                 <input type="text" name="termo" placeholder="Digite um termo" class="input-sm form-control" 
                     value="<?php if(isset($termo)) echo $termo;?>">
@@ -32,12 +32,42 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Grupo</th>
-                    <th>Status</th>
-                    <th>Opções</th>
+                 	<th class="col-md-1">
+                    <span class="text-left">
+                    <a href="<?php echo base_url()?>admin/usuarios/index?orderby=id&order=<?php if(isset($orderby) and $orderby == 'id') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Código</a> 
+                    </span>                    
+                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'id' and $ord == 'ASC') { ?>fa-sort-numeric-desc<?php } else {?>fa-sort-numeric-asc<?php }?>"></i></span>
+                    </th>
+                    
+                	<th class="col-md-3">
+                    <span class="text-left">
+                    <a href="<?php echo base_url()?>admin/usuarios/index?orderby=nome&order=<?php if(isset($orderby) and $orderby == 'nome') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Nome</a> 
+                    </span>                    
+                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'nome' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php } else {?>fa-sort-alpha-asc<?php }?>"></i></span>
+                    </th>
+                    
+                    <th class="col-md-3">
+                    <span class="text-left">
+                    <a href="<?php echo base_url()?>admin/usuarios/index?orderby=email&order=<?php if(isset($orderby) and $orderby == 'email') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Email</a> 
+                    </span>                    
+                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'email' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php } else {?>fa-sort-alpha-asc<?php }?>"></i></span>
+                    </th>
+                    
+                  	<th class="col-md-2">
+                    <span class="text-left">
+                    <a href="<?php echo base_url()?>admin/usuarios/index?orderby=grupos.nome&order=<?php if(isset($orderby) and $orderby == 'grupos.nome') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Grupo</a> 
+                    </span>                    
+                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'grupos.nome' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php } else {?>fa-sort-alpha-asc<?php }?>"></i></span>
+                    </th>
+                    
+                    <th class="col-md-2">
+                    <span class="text-left">
+                    <a href="<?php echo base_url()?>admin/usuarios/index?orderby=status&order=<?php if(isset($orderby) and $orderby == 'status') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Status</a> 
+                    </span>                    
+                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'status' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php } else {?>fa-sort-alpha-asc<?php }?>"></i></span>
+                    </th>
+                    
+                    <th class="col-md-1">Opções</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -50,7 +80,7 @@
                         <td><?php echo $usuarios->email?></td>
                         <td><?php echo $usuarios->grupoNome?></td>
                         <td>
-                            <?php echo ($usuarios->status == 1) ? '<i class="fa fa-check text-navy"></i> Ativo' : '<i class="fa fa-check text-primary"></i> Inativo';?>
+                            <?php echo ($usuarios->status == 1) ? '<span class="label label-primary">Ativo</span>' : '<span class="label label-danger">Inativo</span>';?>
                         </td>
                         <td>                    	
                             <a href="<?php echo base_url()?>admin/usuarios/editar/<?php echo $usuarios->id;?>" 

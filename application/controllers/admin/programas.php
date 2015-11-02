@@ -50,7 +50,7 @@ class Programas extends CI_Controller {
 			$config['base_url'] = site_url("admin/programas/index?termo={$data['termo']}");
 		}
 		else {
-			$config['total_rows'] = $this->Programas_model->countAll();		
+			$config['total_rows'] = $this->Programas_model->countAll();
 			$config['base_url'] = site_url("admin/programas/index/");
 		}
 		

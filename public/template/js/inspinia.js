@@ -57,6 +57,7 @@ $(document).ready(function () {
     $('.tooltips').tooltip({
         container: "body"
     });
+	
 
     // Move modal to body
     // Fix Bootstrap backdrop issu with animation.css

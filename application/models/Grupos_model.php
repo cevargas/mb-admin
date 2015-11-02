@@ -11,11 +11,21 @@ class Grupos_model extends CI_Model {
 		return $this->db->count_all('grupos');	
 	}
 	
-	public function getList($limit=0, $offset=20) {
+	public function getList($limit=0, $offset=20, $order_by=NULL, $order=NULL, $termo=NULL) {
 		
+		if( isset($order_by) && ! empty($order_by) && isset($order) && ! empty($order) ) { 
+			$this->db->order_by($order_by, $order);
+		}		
+		else {
+			$this->db->order_by('nome', 'ASC');	
+		}
+		
+		if(isset($termo)) {
+			$this->db->like('nome', quotes_to_entities($termo));
+			$this->db->or_like('descricao', quotes_to_entities($termo));
+		}	
 		$this->db->select('*');
 		$this->db->from('grupos');
-		$this->db->order_by('nome', 'ASC');
 		$this->db->limit($limit, $offset);
 		$query = $this->db->get();
 		$result = $query->result();		
@@ -23,7 +33,7 @@ class Grupos_model extends CI_Model {
 		return $result;
 	}   
 	
-	public function getPesquisa($limit=0, $offset=20, $termo) {
+	/*public function getPesquisa($limit=0, $offset=20, $termo) {
 
 		$this->db->select('*');
 		$this->db->from('grupos');
@@ -35,14 +45,14 @@ class Grupos_model extends CI_Model {
 		$result = $query->result();		
 		
 		return $result;
-	} 
+	}*/
 	
 	public function getPesquisaNumRows($termo) {
 
 		$this->db->select('*');
 		$this->db->from('grupos');
-		$this->db->like('nome', $termo);
-		$this->db->order_by('nome', 'ASC');
+		$this->db->like('nome', quotes_to_entities($termo));
+		$this->db->or_like('descricao', quotes_to_entities($termo));
 		$query = $this->db->get();
 		
 		$result = $query->num_rows();		

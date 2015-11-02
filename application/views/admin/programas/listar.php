@@ -35,28 +35,28 @@
                     <span class="text-left">
                     <a href="<?php echo base_url()?>admin/programas/index?orderby=id&order=<?php if(isset($orderby) and $orderby == 'id') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Código</a> 
                     </span>                    
-                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'id' and $ord == 'ASC') { ?>fa-sort-numeric-desc<?php } else {?>fa-sort-numeric-asc<?php }?> text-warning"></i></span>
+                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'id' and $ord == 'ASC') { ?>fa-sort-numeric-desc<?php } else {?>fa-sort-numeric-asc<?php }?>"></i></span>
                     </th>
                    
                     <th class="col-md-2">
                     <span class="text-left">
                     <a href="<?php echo base_url()?>admin/programas/index?orderby=nome&order=<?php if(isset($orderby) and $orderby == 'nome') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Nome</a> 
                     </span>
-                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'nome' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php  } else {?>fa-sort-alpha-asc<?php } ?> text-warning"></i></span>
+                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'nome' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php  } else {?>fa-sort-alpha-asc<?php } ?>"></i></span>
                     </th>
                     
-                    <th class="col-md-7">
+                    <th class="col-md-6">
                     <span class="text-left">
                     <a href="<?php echo base_url()?>admin/programas/index?orderby=descricao&order=<?php if(isset($orderby) and $orderby == 'descricao') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Descrição</a> 
                     </span>                    
-                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'descricao' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php  } else {?>fa-sort-alpha-asc<?php } ?> text-warning"></i></span>
+                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'descricao' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php  } else {?>fa-sort-alpha-asc<?php } ?>"></i></span>
                     </th>
                     
-                    <th class="col-md-1">
+                    <th class="col-md-2">
                     <span class="text-left">
                     <a href="<?php echo base_url()?>admin/programas/index?orderby=status&order=<?php if(isset($orderby) and $orderby == 'status') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Status</a>
                     </span>
-                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'status' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php  } else {?>fa-sort-alpha-asc<?php } ?> text-warning"></i></span>
+                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'status' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php  } else {?>fa-sort-alpha-asc<?php } ?>"></i></span>
                     </th>
                     
                     <th class="col-md-1">Opções</th>
@@ -71,7 +71,7 @@
                         <td><?php echo $programas->nome?></td>
                         <td><?php echo $programas->descricao?></td>
                         <td>
-                            <?php echo ($programas->status == 1) ? '<i class="fa fa-check text-navy"></i> Ativo' : '<i class="fa fa-check text-primary"></i> Inativo';?>
+                            <?php echo ($programas->status == 1) ? '<span class="label label-primary">Ativo</span>' : '<span class="label label-danger">Inativo</span>';?>
                         </td>
                         <td>                    	
                             <a href="<?php echo base_url()?>admin/programas/editar/<?php echo $programas->id;?>" 

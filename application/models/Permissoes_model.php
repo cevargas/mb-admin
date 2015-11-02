@@ -11,11 +11,22 @@ class Permissoes_model extends CI_Model {
 		return $this->db->count_all('permissoes');	
 	} 
 	
-	public function getList($limit=0, $offset=20) {
+	public function getList($limit=0, $offset=20, $order_by=NULL, $order=NULL, $termo=NULL) {
+		
+		if( isset($order_by) && ! empty($order_by) && isset($order) && ! empty($order) ) { 
+			$this->db->order_by($order_by, $order);
+		}		
+		else {
+			$this->db->order_by('nome', 'ASC');	
+		}
+		
+		if(isset($termo)) {
+			$this->db->like('nome', quotes_to_entities($termo));
+			$this->db->or_like('descricao', quotes_to_entities($termo));
+		}	
 		
 		$this->db->select('*');
 		$this->db->from('permissoes');
-		$this->db->order_by('controlador', 'ASC');
 		$this->db->limit($limit, $offset);
 		$query = $this->db->get();
 		
@@ -24,7 +35,7 @@ class Permissoes_model extends CI_Model {
 		return $result;
 	}   
 	
-	public function getPesquisa($limit=0, $offset=20, $termo) {
+	/*public function getPesquisa($limit=0, $offset=20, $termo) {
 
 		$this->db->select('*');
 		$this->db->from('permissoes');
@@ -37,14 +48,14 @@ class Permissoes_model extends CI_Model {
 		$result = $query->result();		
 		
 		return $result;
-	} 
+	}*/
 	
 	public function getPesquisaNumRows($termo) {
 
 		$this->db->select('*');
 		$this->db->from('permissoes');
-		$this->db->like('nome', $termo);
-		$this->db->or_like('descricao', $termo);
+		$this->db->like('nome', quotes_to_entities($termo));
+		$this->db->or_like('descricao', quotes_to_entities($termo));
 		$query = $this->db->get();
 		
 		$result = $query->num_rows();		

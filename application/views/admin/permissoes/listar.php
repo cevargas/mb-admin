@@ -14,7 +14,7 @@
             </a>
         </div>
         <div class="col-sm-4 pull-right">            
-			<?php echo form_open( base_url( 'admin/permissoes/pesquisar' ), array( 'id' => 'form-pesquisa', 'method' => 'post' ) ); ?>
+			<?php echo form_open( base_url( 'admin/permissoes/listar' ), array( 'id' => 'form-pesquisa', 'method' => 'post' ) ); ?>
             <div class="input-group">
                 <input type="text" name="termo" placeholder="Digite um termo" class="input-sm form-control" 
                     value="<?php if(isset($termo)) echo $termo;?>">
@@ -31,11 +31,35 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Nome</th>
-                    <th>Chave</th>
-                    <th>Controlador</th>
-                    <th>Opções</th>
+                    <th class="col-md-1">
+                    <span class="text-left">
+                    <a href="<?php echo base_url()?>admin/permissoes/index?orderby=id&order=<?php if(isset($orderby) and $orderby == 'id') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Código</a> 
+                    </span>                    
+                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'id' and $ord == 'ASC') { ?>fa-sort-numeric-desc<?php } else {?>fa-sort-numeric-asc<?php }?>"></i></span>
+                    </th>
+                    
+                    <th class="col-md-4">
+                    <span class="text-left">
+                    <a href="<?php echo base_url()?>admin/permissoes/index?orderby=nome&order=<?php if(isset($orderby) and $orderby == 'nome') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Nome</a> 
+                    </span>
+                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'nome' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php  } else {?>fa-sort-alpha-asc<?php } ?>"></i></span>
+                    </th>
+                    
+                    <th class="col-md-3">
+                    <span class="text-left">
+                    <a href="<?php echo base_url()?>admin/permissoes/index?orderby=chave&order=<?php if(isset($orderby) and $orderby == 'chave') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Chave</a> 
+                    </span>
+                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'chave' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php  } else {?>fa-sort-alpha-asc<?php } ?>"></i></span>
+                    </th>
+                    
+                    <th class="col-md-3">
+                    <span class="text-left">
+                    <a href="<?php echo base_url()?>admin/permissoes/index?orderby=controlador&order=<?php if(isset($orderby) and $orderby == 'controlador') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Controlador</a> 
+                    </span>
+                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'controlador' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php  } else {?>fa-sort-alpha-asc<?php } ?>"></i></span>
+                    </th>                    
+                    
+                    <th class="col-md-1">Opções</th>
                 </tr>
                 </thead>
                 <tbody>

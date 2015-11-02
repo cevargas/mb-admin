@@ -33,8 +33,6 @@
     <link href="<?php echo base_url()?>public/template/js/plugins/select2/select2.css" rel="stylesheet">
     <link href="<?php echo base_url()?>public/template/js/plugins/select2/custom.css" rel="stylesheet">   
     
-    <!--link href="<?php echo base_url()?>public/template/css/plugins/bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet"-->   
-    
     <!-- Custom CSS -->
     <link href="<?php echo base_url()?>public/admin/css/styles.css" rel="stylesheet">
  
@@ -138,14 +136,12 @@
                             <div class="col-lg-12 animated fadeInLeft">                            
                                <?php $this->load->view($view);?>
                             </div><!-- .col-lg-12 -->              
-                        </div><!-- .row -->
-                        
-                        <!--       
+                        </div><!-- .row -->                        
+                              
                         <div class="footer">
                             <div class="pull-right"></div>
                             <div>Moblin Web & Design &copy;2015</div>
-                        </div>.footer 
-                        -->
+                        </div>                     
                         
                     </div><!-- .wrapper .wrapper-content -->
                 </div><!-- .col-lg-12 -->
@@ -197,7 +193,7 @@
     <!-- Jquery Validate -->
     <script src="<?php echo base_url()?>public/template/js/plugins/validate/jquery.validate.js"></script>
     <script src="<?php echo base_url()?>public/template/js/plugins/validate/additional-methods.min.js"></script>
-    <script src="<?php echo base_url()?>public/template/js/plugins/validate/localization/messages_pt_BR.min.js"></script>  
+    <script src="<?php echo base_url()?>public/template/js/plugins/validate/localization/messages_pt_BR.min.js"></script>
     
     <!-- Custom and plugin javascript -->
     <script src="<?php echo base_url()?>public/template/js/inspinia.js"></script>
