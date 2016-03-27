@@ -7,11 +7,16 @@
             	data-placement="top" title="Recarregar Permissões">
             	<i class="fa fa-refresh"></i>&nbsp;Recarregar
             </a>
-        	<a href="<?php echo base_url()?>admin/permissoes/novo"
-            	class="btn btn-info btn-sm btn-bitbucket tooltips" 
-            	data-placement="top" title="Nova Permissão">
-            	<i class="fa fa-asterisk"></i>&nbsp;Adicionar
-            </a>
+            
+            <?php
+				if($this->acl->has_perm_list('permissoes', 'novo') == TRUE) :
+			?>
+                <a href="<?php echo base_url()?>admin/permissoes/novo"
+                    class="btn btn-info btn-sm btn-bitbucket tooltips" 
+                    data-placement="top" title="Nova Permissão">
+                    <i class="fa fa-asterisk"></i>&nbsp;Adicionar
+                </a>
+            <?php endif; ?>  
         </div>
         <div class="col-sm-4 pull-right">            
 			<?php echo form_open( base_url( 'admin/permissoes/listar' ), array( 'id' => 'form-pesquisa', 'method' => 'post' ) ); ?>
@@ -34,29 +39,19 @@
                     <th class="col-md-1">
                     <span class="text-left">
                     <a href="<?php echo base_url()?>admin/permissoes/index?orderby=id&order=<?php if(isset($orderby) and $orderby == 'id') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Código</a> 
-                    </span>                    
-                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'id' and $ord == 'ASC') { ?>fa-sort-numeric-desc<?php } else {?>fa-sort-numeric-asc<?php }?>"></i></span>
+                    </span>
                     </th>
                     
                     <th class="col-md-4">
                     <span class="text-left">
                     <a href="<?php echo base_url()?>admin/permissoes/index?orderby=nome&order=<?php if(isset($orderby) and $orderby == 'nome') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Nome</a> 
                     </span>
-                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'nome' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php  } else {?>fa-sort-alpha-asc<?php } ?>"></i></span>
                     </th>
-                    
-                    <th class="col-md-3">
-                    <span class="text-left">
-                    <a href="<?php echo base_url()?>admin/permissoes/index?orderby=chave&order=<?php if(isset($orderby) and $orderby == 'chave') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Chave</a> 
-                    </span>
-                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'chave' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php  } else {?>fa-sort-alpha-asc<?php } ?>"></i></span>
-                    </th>
-                    
+
                     <th class="col-md-3">
                     <span class="text-left">
                     <a href="<?php echo base_url()?>admin/permissoes/index?orderby=controlador&order=<?php if(isset($orderby) and $orderby == 'controlador') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Controlador</a> 
                     </span>
-                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'controlador' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php  } else {?>fa-sort-alpha-asc<?php } ?>"></i></span>
                     </th>                    
                     
                     <th class="col-md-1">Opções</th>
@@ -68,23 +63,31 @@
                 ?>
                     <tr>
                         <td><?php echo $permissao->id;?></td>
-                        <td><?php echo $permissao->nome?></td>
-                        <td><?php echo $permissao->chave?></td>
+                        <td><?php echo $permissao->nome?></td>                     
                         <td><?php echo $permissao->controlador?></td>
-                        <td>                    	
-                            <a href="<?php echo base_url()?>admin/permissoes/editar/<?php echo $permissao->id;?>" 
-                                    class="btn btn-info btn-bitbucket btn-xs tooltips"
-                                    data-placement="top" title="Editar">
-                                        <i class="fa fa-wrench"></i>
-                            </a>                        
-                            <button type="button" class="btn btn-info btn-bitbucket btn-xs tooltips modalConfirm" 
-                                data-toggle="modal" data-placement="top" title="Excluir" 
-                                data-id="<?php echo $permissao->id;?>" data-value="<?php echo $permissao->nome?>"
-                                data-url="<?php echo base_url()?>admin/permissoes/excluir/<?php echo $permissao->id;?>"
-                                data-target="#modal-confirm">
-                                    <i class="fa fa-trash"></i>
-                            </button>                               
-
+                        <td>                 
+                        
+                        	<?php
+								if($this->acl->has_perm_list('permissoes', 'editar') == TRUE) :
+							?>    	
+                                <a href="<?php echo base_url()?>admin/permissoes/editar/<?php echo $permissao->id;?>" 
+                                        class="btn btn-info btn-bitbucket btn-xs tooltips"
+                                        data-placement="top" title="Editar">
+                                            <i class="fa fa-wrench"></i>
+                                </a>    
+                            <?php endif; ?>  
+                            
+                            <?php
+								if($this->acl->has_perm_list('permissoes', 'excluir') == TRUE) :
+							?>                     
+                                <button type="button" class="btn btn-info btn-bitbucket btn-xs tooltips modalConfirm" 
+                                    data-toggle="modal" data-placement="top" title="Excluir" 
+                                    data-id="<?php echo $permissao->id;?>" data-value="<?php echo $permissao->nome?>"
+                                    data-url="<?php echo base_url()?>admin/permissoes/excluir/<?php echo $permissao->id;?>"
+                                    data-target="#modal-confirm">
+                                        <i class="fa fa-trash"></i>
+                                </button>                               
+							<?php endif; ?>  
                         </td>
                     </tr>
                  <?php

@@ -11,6 +11,27 @@ class Usuarios_model extends CI_Model {
 		return $this->db->count_all('usuarios');	
 	}
 	
+	public function setToken($data, $email) {
+		$this->db->where('email', $email);
+		$this->db->update('usuarios', $data);
+	}
+	
+	public function checkEmail($email) {
+		
+		$this->db->select('*');
+		$this->db->from('usuarios');
+		$this->db->where('email', quotes_to_entities($email));
+		//$this->db->where('status', 1);
+		$query = $this->db->get();
+		$result = $query->row();
+		
+		if($result) {
+			return $result;
+		}
+
+		return FALSE;
+	} 
+	
 	public function checkLogin($email, $senha) {
 		
 		$this->db->select('usuarios.nome AS usuarioNome,
@@ -115,6 +136,17 @@ class Usuarios_model extends CI_Model {
 		$this->db->from('usuarios');	
 		$this->db->where($param, $field);
 		$this->db->join('grupos', 'grupos.id = usuarios.id_grupo');
+		$query = $this->db->get();
+		$result = $query->row();		
+		
+		return $result;
+	} 
+	
+	public function getUsuarioResetPass($params) {
+		
+		$this->db->select('*');
+		$this->db->from('usuarios');
+		$this->db->where($params);
 		$query = $this->db->get();
 		$result = $query->row();		
 		

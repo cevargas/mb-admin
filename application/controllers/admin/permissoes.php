@@ -24,7 +24,10 @@ class Permissoes extends CI_Controller {
 		}
 		//verifica se o grupo do usuario tem permissao para acessar o controlador, carrega no controller login
 		if($this->acl->has_perm() === FALSE) {
-			$this->session->set_flashdata('error_msg', 'Você não possui permissão para acessar '. strtoupper($this->uri->segment(2, 0)));
+			$ctr = strtoupper($this->uri->segment(2, 0));
+			$mtd = ($this->uri->segment(3, 0)) ? ' / ' . strtoupper($this->uri->segment(3, 0)) : '';
+			
+			$this->session->set_flashdata('error_msg', 'Você não possui permissão para acessar '. $ctr . $mtd);
 			redirect('admin/dashboard', 'refresh');
 		}
 	
@@ -114,7 +117,8 @@ class Permissoes extends CI_Controller {
 		
 		if(trim((int)$id)) {
 		
-			$permissao = $this->Permissoes_model->getPermissao($id);
+			$permissao = $this->Permissoes_model->getPermissao($id);			
+			$roles = $this->Permissoes_model->getPermissoesRegra($id);
 			 
 			if(!$permissao) {
 				$this->set_error();	
@@ -125,6 +129,7 @@ class Permissoes extends CI_Controller {
 			$data['acao'] = 'Editar Permissão';
 			$data['view'] = 'admin/permissoes/form'; 
 			$data['permissao'] = $permissao;
+			$data['roles'] = $roles;
 			
 			$this->load->view('admin/index', $data);
 		}
@@ -138,7 +143,6 @@ class Permissoes extends CI_Controller {
 		
 		$this->form_validation->set_rules('nome', 'Nome', 'trim|required');
 		$this->form_validation->set_rules('descricao', 'Descrição', 'trim|required|max_length[255]');
-		$this->form_validation->set_rules('chave', 'Chave', 'trim|required');
 		$this->form_validation->set_rules('controlador', 'Controlador', 'trim|required');
 		
 		//editar
@@ -153,16 +157,31 @@ class Permissoes extends CI_Controller {
 					$data = array(
 					   'nome' => $this->input->post('nome', TRUE),
 					   'descricao' => $this->input->post('descricao', TRUE),
-					   'chave' => $this->input->post('chave', TRUE),
 					   'controlador' => $this->input->post('controlador', TRUE)
-					);							
+					);
 				}
 				else {										
 					$this->editar($this->input->post('id'));
 					return;
 				}
 
-				$this->Permissoes_model->update($data, $this->input->post('id'));				
+				$this->Permissoes_model->update($data, $this->input->post('id'));	
+			
+				//permissoes regras
+				if($this->input->post('chave')) {
+					
+					$this->Permissoes_model->deletePermissoesRegras($this->input->post('id'));
+
+					foreach($this->input->post('chave') as $gp) {
+						
+						if($gp) {						
+							$datac['id_permissao'] = $this->input->post('id');
+							$datac['chave'] = $gp;
+							$this->Permissoes_model->insertPermissoesRegras($datac);
+						}
+					}			
+				}
+							
 				$this->set_success("Permissão editada com Sucesso.");
 				return;
 			}

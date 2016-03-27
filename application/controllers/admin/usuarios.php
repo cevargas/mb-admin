@@ -29,7 +29,10 @@ class Usuarios extends CI_Controller {
 		}
 		//verifica se o grupo do usuario tem permissao para acessar o controlador, carrega no controller login
 		if($this->acl->has_perm() === FALSE) {
-			$this->session->set_flashdata('error_msg', 'Você não possui permissão para acessar '. strtoupper($this->uri->segment(2, 0)));
+			$ctr = strtoupper($this->uri->segment(2, 0));
+			$mtd = ($this->uri->segment(3, 0)) ? ' / ' . strtoupper($this->uri->segment(3, 0)) : '';
+			
+			$this->session->set_flashdata('error_msg', 'Você não possui permissão para acessar '. $ctr . $mtd);
 			redirect('admin/dashboard', 'refresh');
 		}
 	

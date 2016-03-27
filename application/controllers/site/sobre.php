@@ -5,9 +5,9 @@ class Sobre extends CI_Controller {
 
 	public function index()
 	{
-		$data = array("view" => "site/sobre", 
+		$data = array("view" => "site/sobre/index", 
 					  "title" => "Sobre",
 					  "currentmenu" => "sobre");
-		$this->load->view('site/app', $data);
+		$this->load->view('site/index', $data);
 	}
 }

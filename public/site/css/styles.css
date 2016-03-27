@@ -11,19 +11,20 @@ html, body {
 	width: 100%;
 	height: 100%;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
-	font-weight: 300;
+	font-weight: 400;
 	font-style: normal;
-	color: #82837E;
-	color: rgba(130,131,126, 1);
+	color: #373232;
+	color: rgba(55,50,50, 1);
 	font-size:1em;
-	font-family: 'Open Sans',sans-serif;	
+	font-family: 'Source Sans Pro', sans-serif;
 	text-rendering: optimizelegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
-	background: #F8F8F8;
-	background: rgba(248, 248, 248, 1);
+	background: #EDF2F4;
+	background: rgba(237, 242, 244, 1);
+	background-image:url(../images/subtle-pattern-7.jpg);
 }
 
 *,
@@ -38,22 +39,19 @@ html, body {
 	        box-sizing: border-box;
 }
 
-ul { 
-	margin: 0; 
-	padding: 0; 
-	list-style-type: none; 
-	color:inherit;
-}
-
 a {
 	color:inherit;
-	text-decoration:none;
+	text-decoration:none !important;
 	cursor:pointer;
 	transition: all 0.4s ease 0.1s;
 }
 
 a:hover {
-	text-decoration:none;
+	text-decoration:none !important;
+}
+
+a:active {
+	text-decoration:none !important;
 }
 
 img {
@@ -94,7 +92,7 @@ img {
 }
 
 .shadow {
-	box-shadow: 0 5px 5px -5px #CCC;
+	box-shadow: 0 5px 5px -5px #8D99AE;
 }
 
 .realign {
@@ -108,18 +106,22 @@ img {
 }
 
 .link:hover {
-	color:#ff6d00;
+	color:#00a39d;
 	cursor:pointer !important;
 }
 
-.orange {
-	color:#ff6d00 !important;
+.link:active {
+	text-decoration:none;	
+}
+
+.padding-bottom {
+	padding-bottom:10px;	
 }
 
 /* CUSTOM BOOTSTRAP */
 .form-control:focus {
-  	border-color: #ff6d00;
-  	box-shadow: inset 0 1px 1px rgba(255, 109, 0, 0.075), 0 0 8px rgba(255, 109, 0, 0.6);
+  	border-color: #00a39d; 
+	box-shadow: inset 0 1px 1px rgba(28, 68, 75, 0.075), 0 0 8px rgba(28, 68, 75, 0.6);
 }
 	
 .visible {
@@ -133,6 +135,51 @@ img {
 	transition: visibility 0s 2s, opacity 2s linear;
 }
 
+.hexagon {
+	position: relative;
+	width: 75px; 
+  	height: 43.30px;
+	background-color: #d90429;
+	margin: 21.65px 0;
+}
+
+.hexagon:before,
+.hexagon:after {
+	content: "";
+	position: absolute;
+	width: 0;
+	border-left: 37.5px solid transparent;
+  	border-right: 37.5px solid transparent;
+}
+
+.hexagon:before {
+	left:0;
+  	bottom: 100%;
+  	border-bottom: 21.65px solid #d90429;
+}
+
+.hexagon:after {
+	left:0;
+  	top: 100%;
+  	width: 0;
+  	border-top: 21.65px solid #d90429;
+}
+
+/* FORM */
+label.error {
+	font-size:12px;
+	color:#F66;
+	font-weight:normal;
+}
+
+input.error, textarea.error{
+	border:1px solid #F66 !important;
+}
+
+input.valid, textarea.valid{
+	border:1px solid #0C3 !important;
+}
+
 /*
  *---------------------------------------------------------------
  * SITE CSS
@@ -141,76 +188,80 @@ img {
 */	
 		/* MENU */		
 		#menu {
-			padding-top:50px;
-			font-family:'Titillium Web',sans-serif;
+			margin-top:20px;
 			text-align:left;
+			overflow:hidden;
+			line-height:6;
 		}
 		
+		#menu ul { 
+			padding: 0; 
+			list-style-type: none; 
+			color:inherit;
+		}
+				
 		#logo-menu {
 			display:block;
-			padding-bottom:30px;
 		}
-			#logo-nome {
-				font-weight:600;
-				font-size:38px;
-			}
-			
-			#logo-descricao {
-				margin-left:2px;
-				margin-top:-14px;
-				font-weight:400;
-				font-size:22px;
-				color:#CCC;
-			}
-			
-			#logo-sobre {
-				margin-left:2px;
-				margin-top:10px;
-				font-weight:400;
-				font-size:14px;
-				color:#999;
+			#logo-menu img {
+				margin-left:0;
 			}
 		
 		#links-menu {
-			line-height:2;
-			font-size:16px;	
-			font-weight:400;
-			padding-bottom:40px;
+			font-size:16px;
+			text-align:right;
 		}
 		
-			#links-menu li a div {
+			#links-menu li {	
+				margin-right:15px;
+				display:inline-block;
+			}
+			
+			#links-menu li a div {				
 				margin:2px 2px 4px 0;
 			}
 		
 			#links-menu li a:hover {
-				color:#ff6d00;
+				color:#00a39d;
 			}
 		
 		#social-menu {
+			padding-top:3px;
+			text-align:right;
+			font-size:12px;
+			opacity:0.7;	
+		}	
+		
+		#social-menu li a i {
+			font-size:18px;
+		}
+		
+		#social-menu li {
 			line-height:2;
-			font-size:14px;
-			color:#999;
-		}		
+			margin-right:10px;
+			display:inline-block;
+		}
 		/* FIM MENU */
 		
 		/* CONTEUDO */		
 		#conteudo {
-			padding-top:50px;
 			display:block;
 			height:auto;
+			overflow:hidden;
 		}
 		
 		.titulo {
 			display:block;
-			font-size:2em;
-			font-family:'Titillium Web',sans-serif;
-			color:#CCC;	
+			font-size:24px;
+			letter-spacing:-1px;	
+			color:#373232;
+			font-weight:500;
 		}
 		
 		.descricao {
+			margin-top:10px;
 			display:block;
-			font-size:16px;
-			font-weight:500;
+			font-size:14px;
 		}
 				
 			.itens {
@@ -219,11 +270,7 @@ img {
 				cursor:default;
 				margin:5px;
 			}
-				
-			/*.itens:hover {
-				border:1px solid #ff6d00;
-			}*/	
-			
+
 			.effect img {
 				-webkit-transition: all 1s ease;
 				   -moz-transition: all 1s ease;
@@ -257,12 +304,12 @@ img {
 				background:#FFF;
 				text-transform:uppercase;
 				font-size:12px;
-				font-weight:400;
 			}
-				
+			
 		#contato {
 			display:block;
-			margin-top:20px;			
+			clear:both;	
+			margin-top:15px;
 		}
 		
 		#footer {
@@ -270,13 +317,86 @@ img {
 			margin-bottom:30px;
 			display:block;
 			font-size:14px;
-			color:#CCC;
-		}		
+			opacity:0.7;
+		}
+			
+		/*servicos */
+		#servicos { 
+			margin:0;
+			padding: 0; 
+			list-style-type:none;
+			color:inherit;
+		}
+		
+		#servicos .servicos-item {
+			position:relative;
+			display:block;
+			margin:20px 20px 0 0;
+			padding:12px;			
+			left:0;
+			right:0;	
+			text-align:center;
+		}
+		
+		#servicos .servicos-item:first-child {
+			border-bottom:1px solid rgba(141,153,174, 0.1);
+		}
+		
+		#servicos .servicos-item:nth-child(2) {
+			border-bottom:1px solid rgba(141,153,174, 0.1);
+		}
+		
+		.servicos-icone {		
+			font-size:48px;
+			text-align:center;
+		}
+		
+		.servicos-titulo {			
+			text-align:center;		
+			font-size:20px;
+		}
+				
+		.servicos-descricao {
+			min-height:200px;
+			display:block;			
+		}
+		
+		.sobre-titulo {			
+			text-align:left;
+			font-size:20px;
+			letter-spacing:-1px;
+		}
+		
+		.servicos-items-descricao {
+			margin-top:10px;
+			text-align:center;
+			margin-left:30px;
+			list-style: none;
+   			list-style-position: outside;	
+		}
+		
+		.servicos-items-descricao li:before {
+			content: '✔';   
+			margin-left: -1em;
+			margin-right: .3em;
+			color:#25b87d;
+		}
+		
+		.ul-sobre {
+			margin-left:20px;
+		}
+		
+		.divline {
+			border:1px solid red;
+		}
+		
+		
 		/* FIM CONTEUDO */
 		
 		/* HOME ISOTOPE */		
 		.container-fluid.pg-inside {
-			padding: 10px 10px 10px 0;
+			clear:both;
+			margin-top:10px;
 			display:block;
 			height:auto;
 		}

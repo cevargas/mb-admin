@@ -1,5 +1,28 @@
 
 APP = {
+	
+	defaultInit: function(){
+		
+		$(document).off('mouseenter', '.tooltips').on('mouseenter', '.tooltips', function(){
+			$( this ).tooltip({
+				container: "body"
+			}).tooltip('show');
+		});		
+	},
+
+	cloneElementsChave: function() {
+		
+		$('body').on('click', 'button.add-chave',  function(){
+			$( ".div-chave" ).first().clone().appendTo( ".div-to-append" ).find('input').val('');
+		});	
+	},
+	
+	deleteElementsChave: function() {
+		
+		$('body').on('click', 'button.del-chave',  function(){
+			$( this ).parent().parent('.div-chave').remove();
+		});	
+	},
 
 	select2Comp: function(){
 		
@@ -274,6 +297,9 @@ APP = {
 		this.iCheck();
 		this.altPass();
 		this.confirmModal();
-		this.select2Comp();
+		this.select2Comp();		
+		this.cloneElementsChave();
+		this.deleteElementsChave();
+		this.defaultInit();
 	}
 };

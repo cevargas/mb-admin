@@ -29,10 +29,42 @@
         </div>
         
         <div class="form-group">
-        	<label class="col-sm-2 control-label">Chave</label>
-            <div class="col-sm-6">
-            	<input type="text" class="form-control" id="chave" name="chave"
-                	placeholder="Chave" value="<?php echo (isset($permissao)) ? $permissao->chave : set_value('chave');?>">
+        	<label class="col-sm-2 control-label">Regras</label>
+            <div class="col-sm-3 div-to-append">
+            	<?php			
+
+            		if(isset($roles) and count($roles) > 0) :	
+						foreach($roles as $role):?>                        
+                        	<div class="div-chave input-group m-b">
+                            	<input type="text" class="form-control"  name="chave[]" placeholder="Ação permitida" value="<?php echo $role->chave;?>">
+                            	<span class="input-group-btn"> 
+                                	<button type="button" class="del-chave btn btn-warning tooltips " title="Excluir">
+                            			<i class="fa fa-trash"></i>
+                            		</button>
+                                    <button type="button" class="add-chave btn btn-success tooltips " title="Adicionar">
+                            			<i class="fa fa-asterisk"></i>
+                            		</button>      
+                                 </span>
+                            </div>
+                        <?php 								
+						endforeach;		
+						
+					else:
+					?>
+						<div class="div-chave input-group m-b">
+                            <input type="text" class="form-control" name="chave[]" placeholder="Ação permitida">
+                            <span class="input-group-btn"> 
+                                <button type="button" class="del-chave btn btn-warning tooltips " title="Excluir">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                                <button type="button" class="add-chave btn btn-success tooltips " title="Adicionar">
+                                    <i class="fa fa-asterisk"></i>
+                                </button>      
+                             </span>
+                        </div>                        
+                    <?php    				
+					endif;		
+				?>
             </div>
         </div>
         

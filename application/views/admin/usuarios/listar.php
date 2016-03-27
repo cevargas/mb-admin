@@ -7,11 +7,17 @@
             	data-placement="top" title="Recarregar Usuários">
             	<i class="fa fa-refresh"></i>&nbsp;Recarregar
             </a>
+            
+            <?php
+				if($this->acl->has_perm_list('usuarios', 'novo') == TRUE) :
+			?>
         	<a href="<?php echo base_url()?>admin/usuarios/novo"
             	class="btn btn-info btn-sm btn-bitbucket tooltips" 
             	data-placement="top" title="Novo Usuário">
             	<i class="fa fa-asterisk"></i>&nbsp;Adicionar
             </a>
+            <?php endif; ?> 
+             
         </div>
         <div class="col-sm-4 pull-right">
             <?php echo form_open( base_url( 'admin/usuarios/listar' ), array( 'id' => 'form-pesquisa', 'method' => 'post' ) ); ?>
@@ -35,36 +41,31 @@
                  	<th class="col-md-1">
                     <span class="text-left">
                     <a href="<?php echo base_url()?>admin/usuarios/index?orderby=id&order=<?php if(isset($orderby) and $orderby == 'id') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Código</a> 
-                    </span>                    
-                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'id' and $ord == 'ASC') { ?>fa-sort-numeric-desc<?php } else {?>fa-sort-numeric-asc<?php }?>"></i></span>
+                    </span>          
                     </th>
                     
                 	<th class="col-md-3">
                     <span class="text-left">
                     <a href="<?php echo base_url()?>admin/usuarios/index?orderby=nome&order=<?php if(isset($orderby) and $orderby == 'nome') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Nome</a> 
-                    </span>                    
-                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'nome' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php } else {?>fa-sort-alpha-asc<?php }?>"></i></span>
+                    </span>
                     </th>
                     
                     <th class="col-md-3">
                     <span class="text-left">
                     <a href="<?php echo base_url()?>admin/usuarios/index?orderby=email&order=<?php if(isset($orderby) and $orderby == 'email') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Email</a> 
-                    </span>                    
-                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'email' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php } else {?>fa-sort-alpha-asc<?php }?>"></i></span>
+                    </span>
                     </th>
                     
                   	<th class="col-md-2">
                     <span class="text-left">
                     <a href="<?php echo base_url()?>admin/usuarios/index?orderby=grupos.nome&order=<?php if(isset($orderby) and $orderby == 'grupos.nome') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Grupo</a> 
-                    </span>                    
-                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'grupos.nome' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php } else {?>fa-sort-alpha-asc<?php }?>"></i></span>
+                    </span>
                     </th>
                     
                     <th class="col-md-2">
                     <span class="text-left">
                     <a href="<?php echo base_url()?>admin/usuarios/index?orderby=status&order=<?php if(isset($orderby) and $orderby == 'status') echo $ord; else echo 'ASC';?>&termo=<?=$termo?>&per_page=<?=$per_page?>">Status</a> 
-                    </span>                    
-                    <span class="text-right"><i class="fa <?php if(isset($orderby) and $orderby == 'status' and $ord == 'ASC') { ?>fa-sort-alpha-desc<?php } else {?>fa-sort-alpha-asc<?php }?>"></i></span>
+                    </span>
                     </th>
                     
                     <th class="col-md-1">Opções</th>
@@ -80,23 +81,34 @@
                         <td><?php echo $usuarios->email?></td>
                         <td><?php echo $usuarios->grupoNome?></td>
                         <td>
-                            <?php echo ($usuarios->status == 1) ? '<span class="label label-primary">Ativo</span>' : '<span class="label label-danger">Inativo</span>';?>
+                            <?php echo ($usuarios->status == 1) ? '<span class="label label-primary">Ativo</span>' 
+								: '<span class="label label-danger">Inativo</span>';?>
                         </td>
-                        <td>                    	
-                            <a href="<?php echo base_url()?>admin/usuarios/editar/<?php echo $usuarios->id;?>" 
-                                    class="btn btn-info btn-bitbucket btn-xs tooltips"
-                                    data-placement="top" title="Editar">
-                                        <i class="fa fa-wrench"></i>
-                            </a>
-                            <?php if($usuarios->id != $this->session->userdata('usuario_id')) :?>
-                            <button type="button" class="btn btn-info btn-bitbucket btn-xs tooltips modalConfirm" 
-                                    data-toggle="modal" data-placement="top" title="Excluir" 
-                                    data-id="<?php echo $usuarios->id;?>" data-value="<?php echo $usuarios->nome?>"
-                                    data-url="<?php echo base_url()?>admin/usuarios/excluir/<?php echo $usuarios->id;?>"
-                                    data-target="#modal-confirm">
-                                        <i class="fa fa-trash"></i>
-                            </button>
+                        <td>       
+                        
+                        	<?php
+								if($this->acl->has_perm_list('usuarios', 'editar') == TRUE) :
+							?>             	
+                                <a href="<?php echo base_url()?>admin/usuarios/editar/<?php echo $usuarios->id;?>" 
+                                        class="btn btn-info btn-bitbucket btn-xs tooltips"
+                                        data-placement="top" title="Editar">
+                                            <i class="fa fa-wrench"></i>
+                                </a>
                             <?php endif;?>
+                            
+                            <?php
+								if($this->acl->has_perm_list('usuarios', 'excluir') == TRUE) :
+							?>
+                                <?php if($usuarios->id != $this->session->userdata('usuario_id')) :?>
+                                <button type="button" class="btn btn-info btn-bitbucket btn-xs tooltips modalConfirm" 
+                                        data-toggle="modal" data-placement="top" title="Excluir" 
+                                        data-id="<?php echo $usuarios->id;?>" data-value="<?php echo $usuarios->nome?>"
+                                        data-url="<?php echo base_url()?>admin/usuarios/excluir/<?php echo $usuarios->id;?>"
+                                        data-target="#modal-confirm">
+                                            <i class="fa fa-trash"></i>
+                                </button>
+                                <?php endif;?>
+                             <?php endif;?>
                         </td>
                     </tr>
                  <?php

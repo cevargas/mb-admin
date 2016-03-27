@@ -25,13 +25,13 @@
                 	placeholder="Descrição" value="<?php echo (isset($grupo)) ? $grupo->descricao : set_value('descricao');?>">
             </div>
         </div>
-        
+
         <div class="form-group">
         	<label class="col-sm-2 control-label">Programas</label>
             <div class="col-sm-6">     
             	<select name="programas_grupos[]" class="form-control select2 input-large" multiple="multiple">
  				<?php
-					if(isset($programas)) {						
+					if(isset($programas)) {		
 						foreach($programas as $programa):	
 							if($programa->programaPai == 0) {
 								echo "<optgroup label=".$programa->programaNome.">";							

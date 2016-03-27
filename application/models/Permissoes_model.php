@@ -96,6 +96,52 @@ class Permissoes_model extends CI_Model {
 		return $result;
 	} 
 	
+	public function getPermissoesRegras() {
+		
+		$this->db->select('*');
+		$this->db->from('permissoes');
+		$this->db->join('permissoes_regras', 'permissoes.id = permissoes_regras.id_permissao');
+
+		$query = $this->db->get();
+		$result = $query->result();
+		
+		return $result;
+	}
+	
+	public function getPermissoesRegra($id) {
+		
+		$this->db->select('permissoes_regras.*');
+		$this->db->from('permissoes');
+		$this->db->join('permissoes_regras', 'permissoes.id = permissoes_regras.id_permissao');
+
+		$this->db->where('permissoes.id', $id);
+		$query = $this->db->get();
+		$result = $query->result();
+		
+		return $result;
+	}
+	
+	public function deletePermissoesRegras($id) {
+		
+		$this->db->where('id_permissao', $id);
+		$result = $this->db->delete('permissoes_regras'); 
+		
+		return $result;
+	}
+	
+	public function insertPermissoesRegras($data) {		
+		
+		try {
+						
+			$result = $this->db->insert('permissoes_regras', $data);				
+			return $result;	
+				 
+		} catch (Exception $e) {			
+		  log_message('error', $e->getMessage());
+		  return;		  
+		}		
+	} 
+	
 	public function insert($data) {		
 		
 		try {

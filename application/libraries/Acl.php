@@ -33,37 +33,56 @@ class Acl {
 		$this->CI->db->select('*');
 		$this->CI->db->from('grupos_permissoes');
 		$this->CI->db->join('permissoes', 'grupos_permissoes.id_permissao = permissoes.id');
+		//$this->CI->db->join('permissoes_regras', 'permissoes_regras.id_permissao = permissoes.id', 'left');
 		$this->CI->db->where('id_grupo', $grupo_id);
 		$query = $this->CI->db->get();
 		$permissoes = $query->result();
 		   
 		if($permissoes) {		
 			$arr = array();
+			
 			foreach($permissoes as $key => $val) {
+
+				$arr[$val->controlador] = array();
 				
-				//$this->_config[$key]['id'] = $val->getIdPermissao()->getId();			
-				$arr[$val->id_permissao] = $val->controlador;
-				//$this->_config[$key]['chave'] = $val->getIdPermissao()->getChave();
-				//$this->_config[$key]['descricao'] = $val->getIdPermissao()->getDescricao();				
-			}
+				$this->CI->db->select('*');
+				$this->CI->db->from('permissoes_regras');
+				$this->CI->db->where('id_permissao', $val->id_permissao);
+				$query = $this->CI->db->get();
+				$regras = $query->result();
 				
-			$data_session_set = array('permissoes' => $arr);				  
-			$this->CI->session->set_userdata($data_session_set);
+				if($regras) {
+					foreach($regras as $k => $regra) {
+						$arr[$val->controlador][] = $regra->chave;
+					}
+				}				
+			}				
+			$data_session_set = array('permissoes' => $arr);
+			$this->CI->session->set_userdata($data_session_set);	
+			
+			/*$roles = array();
+			foreach($permissoes as $key => $val) {		
+				$roles[$key] = $val->chave;		
+			}				
+			$data_session_set_roles = array('roles' => $roles);								  
+			$this->CI->session->set_userdata($data_session_set_roles);*/
 			
 		}
 		else {
 			log_message('debug', 'Sem permissoes definidas em Entities\GruposPermissoes');
 			$this->CI->session->sess_destroy();	
-			exit("403 Forbidden");
+			exit("403 Forbidden sadas");
 		}
 	}
 	
 	public function has_perm() {
-		
+
 		if($this->CI->session->userdata('permissoes')) {
 			$perms = $this->CI->session->userdata('permissoes');
 			
-			if (in_array($this->CI->uri->segment(2, 0), $perms)) { 
+			if ( (array_key_exists($this->CI->uri->segment(2, 0), $perms))
+				 and ((in_array($this->CI->uri->segment(3, 0), $perms[$this->CI->uri->segment(2, 0)])
+				 	or !$this->CI->uri->segment(3, 0) or $this->CI->uri->segment(3, 0) == 'index') )) { 
 				return true;
 			}
 			else {
@@ -72,6 +91,25 @@ class Acl {
 		}
 		log_message('debug', 'Session de permissoes nao retornou valor');
 		$this->CI->session->sess_destroy();	
-		exit("403 Forbidden");
-	}	
+		exit("403 Forbidden 1");
+	}
+	
+	public function has_perm_list($controller, $method) {
+
+		if($this->CI->session->userdata('permissoes')) {
+			$perms = $this->CI->session->userdata('permissoes');
+			
+			if ( (array_key_exists($controller, $perms))
+				 and ((in_array($method, $perms[$controller])
+				 	or !$method or $method == 'index') )) { 
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		log_message('debug', 'Session de permissoes nao retornou valor');
+		$this->CI->session->sess_destroy();	
+		exit("403 Forbidden 1");
+	}
 }

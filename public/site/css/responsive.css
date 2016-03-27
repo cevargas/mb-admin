@@ -5,12 +5,13 @@
 @media (max-width: 768px) { 
 	#menu {
 		text-align:center;
+		line-height:2;
 	}	
 	#logo-menu {
 		padding:0;	
 	}
 	#links-menu {
-		font-size:18px;
+		font-size:16px;
 	}
 	#social-menu {
 		font-size:16px;
@@ -30,8 +31,43 @@
 	#contato .form-group:first-child input {
 		margin-top:15px;	
 	}
-	#links-menu, #social-menu {
+	
+	/*#links-menu, #social-menu {
 		display:none;
+	}*/
+	
+	.form-group div[class*="col-"]:first-child {
+		margin-bottom:15px;	
+	}
+	
+	#servicos .servicos-item {
+		border-bottom:1px solid rgba(141,153,174, 0.1);
+		margin:0;
+		padding-bottom:20px;
+	}
+	
+	#logo-menu img {
+		display: block;
+    	margin-left: auto !important;
+    	margin-right: auto !important;
+	}
+	
+	.servicos-descricao {
+		min-height:0;
+	}
+	
+	#links-menu {
+		margin-top:20px;
+		display:block;
+		height:auto;
+	}
+	
+	#links-menu li {
+		width:100%;
+		margin:0;
+		padding:0;
+		height:0;
+		float:none;	
 	}
 }
 

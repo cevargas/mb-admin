@@ -10,6 +10,8 @@
 
     <title>Moblin Admin</title>
     
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
+    
     <link href="<?php echo base_url()?>public/template/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url()?>public/template/font-awesome/css/font-awesome.css" rel="stylesheet">
 
@@ -47,7 +49,7 @@
                         <div class="dropdown profile-element"> 
                         	<span>
                             	
-							<?php
+							<?php					
                                 if($this->session->userdata('usuario_foto')):
                             ?>                            
                            		<img alt="image" class="img-circle" src="<?php echo base_url()?>public/admin/images/users/thumbs/<?php echo $this->session->userdata('usuario_foto');?>" />
