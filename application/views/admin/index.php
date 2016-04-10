@@ -8,9 +8,7 @@
     <meta name="keywords" content="">
     <meta name="author" content="Carlos Eduardo de Vargas">
 
-    <title>Moblin Admin</title>
-    
-    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
+    <title>Moblin Web Studio :: Área de Administração</title>
     
     <link href="<?php echo base_url()?>public/template/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url()?>public/template/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -142,7 +140,7 @@
                               
                         <div class="footer">
                             <div class="pull-right"></div>
-                            <div>Moblin Web & Design &copy;2015</div>
+                            <div>Moblin Web Studio &copy;<?php echo date("Y");?></div>
                         </div>                     
                         
                     </div><!-- .wrapper .wrapper-content -->
@@ -150,7 +148,7 @@
 			</div><!-- .row -->            
     	</div><!-- #page-wrapper -->        
 	</div><!-- #wrapper --> 
-    
+
     <!-- Mainly scripts -->
     <script src="<?php echo base_url()?>public/template/js/jquery-2.1.1.js"></script>
     <script src="<?php echo base_url()?>public/template/js/bootstrap.min.js"></script>
@@ -167,9 +165,6 @@
     <!-- Peity -->
     <script src="<?php echo base_url()?>public/template/js/plugins/peity/jquery.peity.min.js"></script>
     <script src="<?php echo base_url()?>public/template/js/demo/peity-demo.js"></script>
-
-    <!-- jQuery UI DA PROBLEMA COM O TOOLTIP ****************
-    <script src="<?php echo base_url()?>public/js/plugins/jquery-ui/jquery-ui.min.js"></script>-->
 
     <!-- GITTER -->
     <script src="<?php echo base_url()?>public/template/js/plugins/gritter/jquery.gritter.min.js"></script>

@@ -20,10 +20,21 @@
     <!--link href='https://fonts.googleapis.com/css?family=Lato:400,700,300' rel='stylesheet' type='text/css'-->
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
     
-    <link href="<?php echo base_url()?>public/site/components/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <?php
+		$this->minify->css(array('site/components/bootstrap/css/bootstrap.min.css',
+								 'site/css/fonts.css', 
+								 'site/css/styles.css',
+								 'site/css/responsive.css',
+								 'site/components/simplelineicons/css/simple-line-icons.css'));
+		echo $this->minify->deploy_css(false, "site.css");
+	?>
+
+    <?php /*
+    <!--link href="<?php echo base_url()?>public/site/components/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url()?>public/site/css/styles.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url()?>public/site/css/responsive.css" rel="stylesheet" type="text/css" />
-    <link href="<?php echo base_url()?>public/site/components/simplelineicons/css/simple-line-icons.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url()?>public/site/components/simplelineicons/css/simple-line-icons.css" rel="stylesheet" type="text/css" /-->
+	*/ ?>
         
 </head>
 <body>
@@ -106,12 +117,25 @@
    
 </div><!-- .container -->
 
+<?php
+	$this->minify->js(array('site/js/jquery-1.11.1.min.js',
+							'site/components/bootstrap/js/bootstrap.min.js',
+ 							'site/components/isotope/jquery.isotope.min.js',
+							'template/js/plugins/validate/jquery.validate.min.js',
+							'template/js/plugins/validate/localization/messages_pt_BR.min.js',
+ 							'site/js/scripts.js'));
+ 	echo $this->minify->deploy_js(false, "site.js");
+?>
+
+<?php /*
 <script type="text/javascript" src="<?php echo base_url()?>public/site/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>public/site/components/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>public/site/components/isotope/jquery.isotope.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>public/template/js/plugins/validate/jquery.validate.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>public/template/js/plugins/validate/localization/messages_pt_BR.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>public/site/js/scripts.js"></script>
+*/
+?>
 
 </body>
 </html>
