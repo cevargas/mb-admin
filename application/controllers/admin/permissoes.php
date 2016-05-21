@@ -116,14 +116,14 @@ class Permissoes extends CI_Controller {
 	public function editar($id) {
 		
 		if(trim((int)$id)) {
-		
+
 			$permissao = $this->Permissoes_model->getPermissao($id);			
 			$roles = $this->Permissoes_model->getPermissoesRegra($id);
 			 
 			if(!$permissao) {
 				$this->set_error();	
 				return;
-			}					 
+			}		
 			
 			$data['programa'] = 'Permissões';
 			$data['acao'] = 'Editar Permissão';

@@ -74,7 +74,7 @@
                             </ul>
                         </div>
                         <div class="logo-element">
-                            MO+
+                            <i class="fa fa-code"></i>
                         </div>
                     </li>
                     
